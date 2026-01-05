@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Methods in Lexical Semantics — LOT Winter School 2026</h1>
+<h3>Overview</h3>
+
+  <p>
+<a href='https://fcbond.github.io/'>
+  <ruby>
+    <rb>Francis</rb>
+    <rp>(</rp><rt>フランシス</rt><rp>)</rp>
+</ruby>
+  <ruby>
+    <rb><b>Bond</b></rb>
+    <rp>(</rp><rt>凡土</rt><rp>)</rp></a>
+</ruby>
+
+(<strong>2026</strong>)
+
+<p>12-16 January (11:15-13:15)
+
+
+<p>In this course, students will explore how lexical graphs can be used to represent and analyze word meaning across languages. We will focus on WordNet, and use it as a case study in how semantic relations—such as synonymy, antonymy, hyponymy, and meronymy—can be encoded in a structured network. Through hands-on exercises, students will learn how meanings are grouped into synsets, how these synsets are linked by semantic relations, and how such networks can model lexical organization in a way that supports linguistic inquiry.
+
+A central theme of the course is cross-linguistic comparison. Using the Open Multilingual WordNet (OMW), students will investigate how different languages carve up conceptual space, identifying cases of one-to-many sense correspondences, lexical gaps, and differences in morphology. This exploration highlights both the strengths of graph-based approaches—explicit structure, interpretability, and linguistic grounding—and their limitations, including issues of coverage, granularity, and cross-lingual alignment.
+
+In the final part of the course, we will contrast these symbolic representations with distributional and embedding-based approaches to meaning. Students will see how large-scale statistical models capture lexical similarity in high-dimensional space, and will discuss how graph-based and vector-based representations can complement one another in modern research.
+
+The course is hands-on and skills-focused. By the end, students will be able to navigate WordNet and OMW data programmatically, use them to test linguistic hypotheses, and critically assess how different computational models represent meaning. The methods introduced will provide a foundation for empirical research in lexical semantics, computational linguistics, and cross-linguistic analysis.
+  
+   <h2>Learning Objectives</h2>
+    <p>By the end of this course, students will be able to:</p>
+    
+
+<h3 class="text-center">Course Table of Contents</h3>
+<table class="table table-striped table-hover">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">Day</th>
+            <th scope="col">Date</th>
+            <th scope="col">Topic</th>
+            <th scope="col">Other</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for key, week in weeks.items() %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ week.date }}</td>
+            <td><a href="{{ url_for('week', week_key=key) }}">{{ week.title }}</a></td>
+            <td>{{ week.other if week.other else '' }}</td>
+        </tr>
+        {% endfor %}
+	<!-- <tr> -->
+        <!--     <th colspan=2>2026-01-15</th> -->
+        <!--     <td>Assignment Due</td> -->
+        <!--     <td>Submit in moodle/edit in wikipedia</td> -->
+        <!-- </tr> -->
+ 
+	
+    </tbody>
+</table>
+
+<h3>Readings and Resources</h3>
+
+<h3>Assessment</h3>
+
+<p>The prerequisites for successful completion are the following:
+
+<ul>
+  <li> Regular attendance and active participation in class
+</ul>
+
+<hr>
+
+<p>Source code for this course available
+here <a href='https://github.com/bond-lab/Lexical-Semantics'>https://github.com/bond-lab/Lexical-Semantics</a>
+under
+a <a href='https://creativecommons.org/licenses/by/4.0/'>Creative
+Commons Attribution 4.0 International Licence &mdash; CC BY 4.0</a>.
+
+
+  
+{% endblock %}
