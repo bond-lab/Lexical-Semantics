@@ -1,18 +1,25 @@
-\PassOptionsToPackage{xetex}{xcolor}
-\PassOptionsToPackage{xetex}{graphicx}
-\documentclass[a4paper,landscape,headrule,footrule,xetex]{foils}
+\documentclass{beamer}
+\input{shared.tex}
+\title[Lexical Relations]{Methods in Lexical Semantics \\
+From Lexical Relations to Lexical Resources}
+\author{Francis \textbf{Bond}}
+\institute[Palacký]{Department of Asian Studies,
+\\  Palacký University, Olomouc, Czechia
+\\[1.5ex] \url{<bond@ieee.org>}}
 
-\input{headx.tex}
+
+\date{LOT Winter School 2026}
 \usepackage{forest}
+
+
 \begin{document}
-\header{Lecture 2}{Word meaning and close reading}{}
+
 \maketitle
 
 %\include{schedule}
 
 
-
-\myslide{Welcome!}
+\begin{frame}{Welcome!}
 
 \begin{itemize}
 \item In this course we will introduce you to the study of meaning
@@ -27,8 +34,9 @@
   \end{itemize}
 \end{itemize}
 
+\end{frame}
 
-\myslide{Overview of today}
+\begin{frame}{Overview of today}
 
 \begin{itemize}
 \item How this course is organized
@@ -41,8 +49,9 @@
 
 
 
+\end{frame}
 
-\myslide{Textbook and Readings}
+\begin{frame}{Textbook and Readings}
 
 \begin{itemize}
 \item No required text book and not much reading
@@ -55,8 +64,9 @@
   \end{itemize}
 \item Between now and next week, I expect you to read the first chapter of the assigned story.
 \end{itemize}
+\end{frame}
 
-\myslide{Studying meaning}
+\begin{frame}{Studying meaning}
 
 \begin{itemize}
 \item You'll learn to analyze meaning systematically, using examples from the \textit{War with the Newts}
@@ -89,9 +99,10 @@
 
 
 
+\end{frame}
 \section{Introduction to Semantics}
 
-\myslide{What is Semantics}
+\begin{frame}{What is Semantics}
 \begin{itemize}
 \item Very broadly, semantics is the study of meaning
   \begin{itemize}
@@ -101,8 +112,9 @@
 \item Why do we want to study meaning?
 \item What kind of knowledge does it take for a speaker to produce language and for a hearer to comprehend language? 
 \end{itemize}
+\end{frame}
 
-\myslide{Layers of Linguistic Analysis}
+\begin{frame}{Layers of Linguistic Analysis}
 \begin{enumerate}\addtolength{\itemsep}{-0.75ex}
 \item Phonetics \& Phonology
 \item Morphology
@@ -119,8 +131,9 @@
 %   \item linguistic knowledge is inseparable from encyclopedic knowledge
 %   \end{itemize}
 % \end{itemize}
+\end{frame}
 
-\myslide{Do people share a common conceptual system?}
+\begin{frame}{Do people share a common conceptual system?}
 
 \begin{itemize}
 \item What is a \lex{high school}?
@@ -140,10 +153,11 @@ the Japanese government decided in 1973 to change the color of the go
 light to the bluest possible hue of green!
 
 
-\href{https://www.japantimes.co.jp/life/2013/02/25/language/the-japanese-traffic-light-blues-stop-on-red-go-on-what/#.WRmAuuWGNPZ}{The Japanese traffic light blues: Stop on red, go on what?}
+\href{https://www.japantimes.co.jp/life/2013/02/25/language/the-japanese-traffic-light-blues-stop-on-red-go-on-what/}{The Japanese traffic light blues: Stop on red, go on what?}
  
+\end{frame}
 
-\myslide{Word Meaning and Sentence Meaning}
+\begin{frame}{Word Meaning and Sentence Meaning}
 
 \begin{itemize}
 \item We store information about words in our \txx{mental lexicon}
@@ -156,8 +170,9 @@ light to the bluest possible hue of green!
   \item If the meaning of the whole can be deduced from the parts then it is \txx{compositional}
   \end{itemize}
 \end{itemize}
+\end{frame}
 
-\myslide{Reference and Sense}
+\begin{frame}{Reference and Sense}
 
 \begin{itemize}
 \item Words \txx{refer} to things in the world (like \iz{unicorn}s)
@@ -181,8 +196,9 @@ light to the bluest possible hue of green!
 
 
 
+\end{frame}
 
-\myslide{Representing meaning}
+\begin{frame}{Representing meaning}
 \MyLogo{Also vector space, description, images, video, \ldots}
 \begin{itemize}
 \item One of our goals will be to represent meaning
@@ -201,45 +217,49 @@ Can you think of others?
 \end{itemize}
 
 
+\end{frame}
 
-\myslide{Language is normally under-specified}
+\begin{frame}{Language is normally under-specified}
 \MyLogo{There are many meanings}
 \begin{center}
-\large We get \blu{words}: \\[2ex]
+\large We get \txx{words}: \\[2ex]
     \Large \eng{I saw a kid with a cat.} \\[3ex]
 We want \emp{meaning}:
-\\  \includegraphics[width=0.3\textwidth]{pics/1.png}
+\\  \includegraphics[width=0.3\textwidth]{img/1.png}
+
 \end{center}
 
 
+\end{frame}
 
-\myslide{I saw a kid with a cat$_1$}
+\begin{frame}{I saw a kid with a cat$_1$}
 \MyLogo{Thanks to Eddy and Zina Pozen for the pictures}
 
-\hspace{-3em}\begin{tabular}{ll}
+\begin{tabular}{ll}
 
-  \includegraphics[width=0.5\textwidth]{pics/1.png}
+  \includegraphics[width=0.45\textwidth]{img/1.png}
 &
   \begin{minipage}{0.45\textwidth}
-    \vspace*{-8ex}
-\begin{scriptsize}
- {%
- \leaf{\emph{I}}
- \branch{1}{NP}
- \leaf{\emph{saw}}
- \branch{1}{V:see}
- \leaf{\emph{a}}
- \branch{1}{DET}
- \leaf{\emph{kid}}
- \branch{1}{N}
- \leaf{\emph{with a cat}}
-\branch{1}{PP[together]}
-%\branch{2}{\ibar{N}}
-\branch{3}{NP}
- \branch{2}{VP}
- \branch{2}{S}
- \qobitree}
-\end{scriptsize}
+    \vspace*{-8ex}\scriptsize
+  \begin{forest}
+  for tree={
+    s sep=6pt,
+    l sep=10pt,
+    align=center,
+  }
+  [S
+    [NP [\emph{I}]]
+    [VP
+      [V:see [\emph{saw}]]
+      [NP
+      [DET [\emph{a}]]
+      [N'
+        [N   [\emph{kid}]]
+        [PP:together [\emph{with a cat}]]]
+      ]
+    ]
+  ]
+\end{forest}  
 \\[3ex]
  \small \iz{see(I, kid: \textsc{past});  with(kid, cat)}
 \\[1ex] \iz{see $\subset$ perceive}
@@ -248,31 +268,29 @@ We want \emp{meaning}:
 \end{minipage}
 
 \end{tabular}
+\end{frame}
 
-\myslide{I saw a kid with a cat$_2$}
+\begin{frame}{I saw a kid with a cat$_2$}
 \MyLogo{}
 \hspace{-3em}\begin{tabular}{ll}
-  \includegraphics[width=0.5\textwidth]{pics/2.png}
+  \includegraphics[width=0.5\textwidth]{img/2.png}
 &
   \begin{minipage}{0.45\textwidth}
-    \vspace*{-10ex}
-\begin{scriptsize}
- {%
- \leaf{\emph{I}}
- \branch{1}{NP}
- \leaf{\emph{saw}}
- \branch{1}{V:see}
- \leaf{\emph{a}}
- \branch{1}{DET}
- \leaf{\emph{kid}}
- \branch{1}{N}
-\branch{2}{NP}
- \leaf{\emph{with a cat}}
-\branch{1}{PP[together]}
- \branch{3}{VP}
- \branch{2}{S}
- \qobitree}
-\end{scriptsize}
+    \vspace*{-10ex}\scriptsize
+\begin{forest}
+  for tree={s sep=6pt,l sep=10pt,align=center}
+  [S
+    [NP [\emph{I}]]
+    [VP
+      [V:see [\emph{saw}]]
+      [NP
+        [DET [\emph{a}]]
+        [N   [\emph{kid}]]
+      ]
+      [PP:together [\emph{with a cat}]]
+    ]
+  ]
+\end{forest}
 \\[3ex]
  \small 
  \iz{see(I, kid: \textsc{past}) with(I, cat)}
@@ -283,32 +301,31 @@ We want \emp{meaning}:
 \end{tabular}
 
 
+\end{frame}
 
-
-\myslide{I saw a kid with a cat$_3$}
+\begin{frame}{I saw a kid with a cat$_3$}
 \hspace{-3em}\begin{tabular}{ll}
-  \includegraphics[width=0.5\textwidth]{pics/3.png}
+  \includegraphics[width=0.5\textwidth]{img/3.png}
 
 &
   \begin{minipage}{0.45\textwidth}
     \vspace*{-20ex}
 \begin{scriptsize}
- {%
- \leaf{\emph{I}}
- \branch{1}{NP}
- \leaf{\emph{saw}}
- \branch{1}{V:saw}
- \leaf{\emph{a}}
- \branch{1}{DET}
- \leaf{\emph{kid}}
- \branch{1}{N}
- \leaf{\emph{with a cat}}
-\branch{1}{PP[together]}
-%\branch{2}{\ibar{N}}
-\branch{3}{NP}
- \branch{2}{VP}
- \branch{2}{S}
- \qobitree}
+\begin{forest}
+  for tree={s sep=6pt,l sep=10pt,align=center}
+  [S
+    [NP [\emph{I}]]
+    [VP
+      [V:saw [\emph{saw}]]
+      [NP
+      [DET [\emph{a}]]
+      [N'
+        [N   [\emph{kid}]]
+        [PP:together [\emph{with a cat}]]]
+      ]
+    ]
+  ]
+\end{forest}
 \end{scriptsize}
 \\[3ex]
  \small 
@@ -319,30 +336,29 @@ We want \emp{meaning}:
 \end{minipage}
 \end{tabular}
 
+\end{frame}
 
-
-\myslide{I saw a kid with a cat$_4$}
+\begin{frame}{I saw a kid with a cat$_4$}
 \hspace{-3em}\begin{tabular}{ll}
-  \includegraphics[width=0.5\textwidth]{pics/4.png}
+  \includegraphics[width=0.5\textwidth]{img/4.png}
 &
   \begin{minipage}{0.45\textwidth}
     \vspace*{-20ex}
 \begin{scriptsize}
- {%
- \leaf{\emph{I}}
- \branch{1}{NP}
- \leaf{\emph{saw}}
- \branch{1}{V:saw}
- \leaf{\emph{a}}
- \branch{1}{DET}
- \leaf{\makebox[1em]{\emph{kid} [goat]}}
- \branch{1}{N}
-\branch{2}{NP}
- \leaf{\emph{with a cat}}
-\branch{1}{PP[together]}
- \branch{3}{VP}
- \branch{2}{S}
- \qobitree}
+ \begin{forest}
+   for tree={s sep=6pt,l sep=10pt,align=center}
+   [S
+     [NP [\emph{I}]]
+     [VP
+       [V:saw [\emph{saw}]]
+       [NP
+          [DET [\emph{a}]]
+          [N:goat   [\emph{kid}]]
+       ]
+       [PP:instrument [\emph{with a cat}]]
+     ]
+   ]
+ \end{forest}
 \end{scriptsize}
 \\[3ex]
  \small 
@@ -353,31 +369,28 @@ We want \emp{meaning}:
 \end{minipage}
 \end{tabular}
 
+\end{frame}
 
-\myslide{I saw a kid with a cat$_5$}
+\begin{frame}{I saw a kid with a cat$_5$}
 \hspace{-3em}\begin{tabular}{ll}
-  \includegraphics[width=0.5\textwidth]{pics/5.png}
+  \includegraphics[width=0.5\textwidth]{img/5.png}
 &
   \begin{minipage}{0.45\textwidth}
-    \vspace*{-20ex}
-\begin{scriptsize}
- {%
- \leaf{\emph{I}}
- \branch{1}{NP}
- \leaf{\emph{saw}}
- \branch{1}{V:see}
- \leaf{\emph{a}}
- \branch{1}{DET}
- \leaf{\emph{kid}}
- \branch{1}{N}
-\branch{2}{NP}
- \leaf{\emph{with a cat}}
-\branch{1}{PP[instrument]}
- \branch{3}{VP}
- \branch{2}{S}
- \qobitree}
-\end{scriptsize}
-\\[3ex]
+    \vspace*{-20ex}\scriptsize
+\begin{forest}
+  for tree={s sep=6pt,l sep=10pt,align=center}
+  [S
+    [NP [\emph{I}]]
+    [VP
+      [V:see [\emph{saw}]]
+      [NP
+        [DET [\emph{a}]]
+        [N   [\emph{kid}]]
+      ]
+      [PP:instrument [\emph{with a cat}]]
+    ]
+  ]
+\end{forest}
  \small 
  \iz{see(I, kid: \textsc{past}) with(I, cat) }
 \\[1ex] \iz{see $\subset$ perceive}
@@ -386,8 +399,9 @@ We want \emp{meaning}:
  \end{minipage}
 \end{tabular}
 
+\end{frame}
 
-% \myslide{People are good at understanding}
+% \begin{frame}{People are good at understanding}
 % \MyLogo{We do this too}
 % \begin{itemize}
 % \item The words only hint at the meaning
@@ -409,8 +423,9 @@ We want \emp{meaning}:
 % %   \end{itemize}
 % %\item Then build statistical language models (machine learning)
 % \end{itemize}
+%\end{frame}
 
-\myslide{We can also use translations}
+\begin{frame}[allowframebreaks]{We can also use translations}
 %\MyLogo{Work smarter}
 %\addtocounter{exx}{-13}
 \begin{exe}
@@ -443,12 +458,13 @@ I use one cat saw one child \\
 \end{exe}
 
 \bigskip
-\begin{center} \large
+\begin{taskb}{Paraphrase} 
   Your turn: try to paraphrase --- translate into English
-  \\ aim to be unambiguous, even if slightly disfluent\task
-\end{center}
+  \\ aim to be unambiguous, even if slightly disfluent
+\end{taskb}
+\end{frame}
 
-\myslide{Overview}
+\begin{frame}{Overview}
 
 \begin{itemize}
 \item Word Meaning
@@ -463,13 +479,14 @@ I use one cat saw one child \\
 \item Close Reading and Word Sense Disambiguation
 \end{itemize}
 
+
+\end{frame}
 \section{The meanings of words}
- \MyLogo{}
 
 
-\myslide{Words carry different meanings: \lex{leave}}
+\begin{frame}[allowframebreaks]{Words carry different meanings: \lex{leave}}
 \MyLogo{\url{https://compling.upol.cz/ntumc/cgi-bin/showcorpus.cgi?sid_from=10000&sid_to=11000&clemma=leave}}
-\begin{itemize} \addtolength{\itemsep}{0ex}
+\begin{itemize} %\addtolength{\itemsep}{0ex}
 \item[10070] \eng{Nothing was \ul{left} save a few acres of ground , and the
   two-hundred-year-old house , which is itself crushed under a heavy
   mortgage .}
@@ -508,8 +525,11 @@ I use one cat saw one child \\
 
 How many different meanings?\task
 
+\bigskip
+From the \href{https://compling.upol.cz/ntumc/cgi-bin/showcorpus.cgi?sid_from=10000&sid_to=11000&clemma=leave}{NTU Multilingual Corpus} (\textit{Adventure of the Speckled band}, concept lemma = \eng{leave})
+\end{frame}
 
-\myslide{How can we represent the differences?}
+\begin{frame}{How can we represent the differences?}
 
 \begin{itemize}
 \item Definitions
@@ -519,8 +539,9 @@ How many different meanings?\task
 \item Word Embeddings
 \end{itemize}
 
+\end{frame}
 
-\myslide{Semantic Representations of Words}
+\begin{frame}{Semantic Representations of Words}
 
 \begin{itemize}\addtolength{\itemsep}{-1ex}
 \item Divide meaning into
@@ -550,27 +571,32 @@ How many different meanings?\task
 \end{itemize}
 
 
+\end{frame}
 
-\myslide{Definitional Semantics}
+\begin{frame}{Definitional Semantics}
 
 %\MyLogo{\citet{Jackson:2002,Wilks+:1996}}
 
-\begin{itemize}
-\item Standard lexicographic approach to lexical semantics:
-  \begin{quote}
-    \textbf{semantics} = \eng{the \textcolor{blue}{study} of \textcolor{brown}{language meaning}}\\
-    \textbf{tailor} = \eng{a \textcolor{blue}{person} whose \textcolor{brown}{occupation is making and altering garments}}
-  \end{quote}
-\item Definitions are conventionally made up of;
   \begin{itemize}
-  \item \textcolor{blue}{genus}: what class the lexical item belongs to
-  \item \textcolor{brown}{differentiae}: what attributes distinguish it from
-  other members of that class
-\end{itemize}
-% \item ``Decoding'' vs.\ ``encoding'' dictionaries
-\item Often hard to understand if you don't already know the meaning!
-\myslide{Definitional Semantics: pros and cons}
-\item Pros:
+  \item Standard lexicographic approach to lexical semantics:
+    \begin{quote}
+      \textbf{semantics} = \eng{the \textcolor{blue}{study} of \textcolor{brown}{language meaning}}\\
+      \textbf{tailor} = \eng{a \textcolor{blue}{person} whose \textcolor{brown}{occupation is making and altering garments}}
+    \end{quote}
+  \item Definitions are conventionally made up of;
+    \begin{itemize}
+    \item \textcolor{blue}{genus}: what class the lexical item belongs to
+    \item \textcolor{brown}{differentiae}: what attributes distinguish it from
+      other members of that class
+    \end{itemize}
+    % \item ``Decoding'' vs.\ ``encoding'' dictionaries
+  \item Often hard  to understand if you don't already know the meaning!
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Definitional Semantics: pros and cons}
+  \begin{itemize}
+  \item Pros:
   \begin{itemize}
   \item familiarity (we are taught to use dictionaries)
   \end{itemize}
@@ -583,15 +609,17 @@ How many different meanings?\task
   \item often focus on diachronic (historical) rather than synchronic (current) semantics 
   \end{itemize}
 \end{itemize}
+\end{frame}
 
-\myslide{Entries for \lex{leave}}
-\MyLogo{\url{https://compling.upol.cz/ntumc/cgi-bin/cgi-bin/wn-gridx.cgi?gridmode=ntumc-noedit&lang=eng&lemma=leave}}
+\begin{frame}[allowframebreaks]{Entries for \lex{leave}}
+%\MyLogo{\url{https://compling.upol.cz/ntumc/cgi-bin/cgi-bin/wn-gridx.cgi?gridmode=ntumc-noedit&lang=eng&lemma=leave}}
 \begin{description}
 %  00613683-v (63)
 % V2 	leave 	     	go and leave behind, either intentionally or by neglect or forgetfulness
 \item [02015598-v] (72)
 V1, V2 	\lex{get out, go out, leave, exit} ``move out of or depart from''
-% 01494310-v (328)
+
+%01494310-v (328)
 % V2 	put, place, set, lay, position, pose, leave 	     	put into a certain place or abstract location
 \item [02356230-v] (8)
 V3 	\lex{leave, entrust} ``put into the care or protection of someone''
@@ -621,12 +649,12 @@ V3 	\lex{leave, will, bequeath} ``leave or give by will after one's death''
 % 00613018-v (3)
 % V2
 \item [06690114-n] (1) \lex{leave} ``permission to do something''
-
 \end{description}
 
 Not to be confused with \eng{\ul{left} hand} and \eng{the \ul{leaves} fell}, \ldots .
+\end{frame}
 
-\myslide{Paraphrases and translation}
+\begin{frame}{Paraphrases and translation}
 
 \begin{itemize}
 \item Saying the same thing in different words
@@ -642,29 +670,32 @@ Not to be confused with \eng{\ul{left} hand} and \eng{the \ul{leaves} fell}, \ld
   \item \lex{get out, go out, leave, exit} = 去る \jpn{saru}
   \item \lex{leave, will, bequeath} = 遺す \jpn{nokosu}
   \end{itemize}
-\item Can you explain the ambiguity in \eng{The money which my mother
-    had \ul{left} was enough for all our wants}?\task
+  \begin{taskb}
+    Can you explain the ambiguity in \eng{The money which my mother
+    had \ul{left} was enough for all our wants}?
+  \end{taskb}
 \end{itemize}
+\end{frame}
 
-\myslide{Paraphrase cues}
+% \begin{frame}{Paraphrase cues}
 
-\begin{itemize}
-\item \lex{that is to say}
-  \begin{itemize}
-  \item  \eng{I met him that night, and he called next day to ask if we had got home all safe, and after that we met him - that is to say, Mr Holmes, I met him twice for walks, \ldots} IDEN
-  \item \eng{In three days, that is to say on Monday next  \ldots} FINA
-  \end{itemize}
-\item \lex{in other words}
-  \begin{itemize}
-  \item \eng{\ldots there is a possibility that these initials are those of the second person who was present - in other words, of the murderer. \ldots} BLAC
-  \item \eng{\ldots when they closed their League offices that was a sign that they cared no longer about Mr. Jabez Wilson's presence; in other words, that they had completed their tunnel.} REDH
-  \end{itemize}
-\end{itemize}
+% \begin{itemize}
+% \item \lex{that is to say}
+%   \begin{itemize}
+%   \item  \eng{I met him that night, and he called next day to ask if we had got home all safe, and after that we met him - that is to say, Mr Holmes, I met him twice for walks, \ldots} IDEN
+%   \item \eng{In three days, that is to say on Monday next  \ldots} FINA
+%   \end{itemize}
+% \item \lex{in other words}
+%   \begin{itemize}
+%   \item \eng{\ldots there is a possibility that these initials are those of the second person who was present - in other words, of the murderer. \ldots} BLAC
+%   \item \eng{\ldots when they closed their League offices that was a sign that they cared no longer about Mr. Jabez Wilson's presence; in other words, that they had completed their tunnel.} REDH
+%   \end{itemize}
+% \end{itemize}
 
+% \end{frame}
+\section{Lexical Semantics}
 
-\myslide{Lexical Semantics}
-
-\MyLogo{}
+\begin{frame}{Lexical Semantics}
 
 \begin{itemize}
 \item Lexical semantics is concerned with the identification and
@@ -690,8 +721,9 @@ Not to be confused with \eng{\ul{left} hand} and \eng{the \ul{leaves} fell}, \ld
 
 
 
+\end{frame}
 
-% \myslide{Polysemy}
+% \begin{frame}{Polysemy}
 
 % \MyLogo{\citet{Cruse:1986,Hirst:1987,_Ravin:Leacock:2000,Pustejovsky:1995}}
 
@@ -704,10 +736,9 @@ Not to be confused with \eng{\ul{left} hand} and \eng{the \ul{leaves} fell}, \ld
 % \item Regular vs.\ complementary polysemy (cf.\ \eng{door} vs.\ \eng{farm})
 % \end{itemize}
 
+%\end{frame}
 
-
-
-\myslide{Distinguishing Polysemes}
+\begin{frame}{Distinguishing Polysemes}
 
 %The polysemy of a word can be tested by a variety of means, including:
 \begin{itemize}
@@ -728,8 +759,9 @@ Not to be confused with \eng{\ul{left} hand} and \eng{the \ul{leaves} fell}, \ld
  \eng{Hitmen were quite expensive, so she decided to take out a loan and her husband.} \task
   \item  \txx{Paraphrase/Translation}: Is there more than one (clearly different) way to paraphrase/translate the word.
   \end{itemize}
+\end{frame}
 
-\myslide{Necessary and Sufficient Conditions}
+\begin{frame}{Necessary and Sufficient Conditions}
 
 \begin{itemize}
 \item Can we define words in terms of \txx{conditions}?
@@ -737,13 +769,13 @@ Not to be confused with \eng{\ul{left} hand} and \eng{the \ul{leaves} fell}, \ld
   \item \lex{zebra}
     \begin{itemize}
     \item quadruped
-    \item animal \com{redundant}
+    \item animal \txx{redundant}
     \item black and white striped
     \item herbivore
     \end{itemize}
   \end{itemize}
 \item These are \txx{intrinsic}, \txx{generic} properties
-  ]
+  
   \begin{itemize}
   \item An albino zebra with three legs is still a zebra
   \end{itemize}
@@ -758,9 +790,9 @@ Not to be confused with \eng{\ul{left} hand} and \eng{the \ul{leaves} fell}, \ld
   \end{itemize}
 \end{itemize}
 
+\end{frame}
 
-
-\myslide{Words/Concepts are related in many ways}
+\begin{frame}{Words/Concepts are related in many ways}
 
 We can also look at words (or more properly senses) in terms of their
 relations to other words.
@@ -781,8 +813,9 @@ relations to other words.
 
 
 
+\end{frame}
 
-\myslide{Hypernymy and Hyponymy}
+\begin{frame}{Hypernymy and Hyponymy}
 
 \begin{itemize}
 \item \txx{Hyponymy}: X is a hyponym of Y iff
@@ -804,17 +837,19 @@ relations to other words.
   \end{exe}
 \end{itemize}
 
+\end{frame}
 
-\myslide{What is \txx{entailment}}
+\begin{frame}{What is \txx{entailment}}
 \begin{quote}
   \txx{Entailment} ($\vDash$): A sentence $p$ entails a sentence $q$ when the
   truth of the first ($p$) guarantees the truth of the second ($q$),
   and the falsity of the second ($q$) guarantees the falsity of the
   first ($p$).
 \end{quote}
+\end{frame}
 
-\myslide{Properties of hypernymy/hyponymy}
-  \begin{itemize}\addtolength{\itemsep}{-1ex}
+\begin{frame}{Properties of hypernymy/hyponymy}
+  \begin{itemize}\addtolength{\itemsep}{-0.5ex}
   \item Asymmetric; applies at the sense level
   \item applies only to lexical items of the same word class
   \item Transitive: \lex{dog$_1$} $\subset$ \lex{mammal$_1$} $\subset$ \lex{animal$_1$}
@@ -829,30 +864,38 @@ relations to other words.
       \lex{dog} &  \lex{\ul{dog}} &  \lex{bitch} &\lex{puppy} \\
       \lex{snake} & \lex{\ul{snake}}& \lex{\ul{snake}}& \lex{\ul{snake}}\\
     \end{tabular}
-  \item Can you do this for \lex{pig}, \lex{cat} or \lex{chicken}?\task
-  \item Can you give an example of this in another language?\task
+    \begin{taskb}
+      Can you do this for \lex{pig}, \lex{cat} or \lex{chicken}?
+    \end{taskb}
+   \begin{taskb}
+ Can you give an example of this in another language?
+\end{taskb}
+
   \end{itemize}
+\end{frame}
 
-\myslide{Language Change}
+\begin{frame}[allowframebreaks]{Language Change and Auto-hyponyms}
 
-\begin{itemize}\addtolength{\itemsep}{-1ex}
+\begin{itemize}%\addtolength{\itemsep}{-1ex}
 \item The meanings of words change over time
-\item \lex{guitar} --- ``a stringed instrument usually having six
-  strings'': originally these all used the body to make sound
+  \begin{itemize}
+  \item \lex{guitar} --- ``a stringed instrument usually having six
+    strings'': originally these all used the body to make sound
+    
 \item We then get \lex{electric guitar} --- ``a guitar with a built-in
   pickup or pickups which convert string vibrations into electrical
   signals for amplification''
 \item To refer to non-electric guitars we get a new coining
   \lex{acoustic guitar} -- ``a guitar that does not require electrical
   amplification'': which used to just be guitar
-  \begin{itemize}
+\end{itemize}
   \item \lex{guitar} is now a hypernym of them both and can refer to
     either
-  % \item we can also refer to the prototypical guitar (acoustic) using
-  %   reduplication
-  %   \\ \eng{What kind of guitar do you play?}  \eng{Guitar guitar}
-  \end{itemize}
-\newpage
+ \item we can also refer to the prototypical guitar (acoustic) using
+   reduplication
+   \\ \eng{What kind of guitar do you play?}  \eng{\ul{Guitar guitar}}
+
+\framebreak
   
 \item Sometimes this practice becomes politically charged, although
   linguistically it is unremarkable
@@ -861,16 +904,20 @@ relations to other words.
   \item \lex{trans woman} ``a person who identifies as a woman but was assigned male at birth''
   \item \lex{cis woman}  ``a person who identifies as a woman and was assigned female at birth''
   \end{itemize}
-  \item Can you give other examples of this in English or other languages?\task  
-  
-\end{itemize}
+  \end{itemize}
+  \begin{taskb}
+    Can you give other examples of this in English or other languages?
+  \end{taskb}
+
+  % milk, dairy milk
 %mother, surrogate mother, stepmother, foster mother, god mother,
 %adoptive mother, biological mother
 
 % rice, cooked rice, chocolate rice, wild rice, brown rice
 % 
+\end{frame}
 
-\myslide{Synonymy}
+\begin{frame}{Synonymy}
 
 \begin{itemize}
 \item \txx{Propositional synonymy}: X is a propositional synonym of Y if
@@ -886,41 +933,47 @@ relations to other words.
   \item gradability (cf.\ \lex{sofa}/\lex{settee} vs.\ \lex{boundary/frontier})
   \end{itemize}
 \end{itemize}
+\end{frame}
 
-\myslide{Near Synonymy}
+\begin{frame}{Near Synonymy}
 \begin{itemize}
-\item Synonyms are substitutable in \textbf{some/most} rather than \textbf{all} contexts
+\item Near synonyms are substitutable in \textbf{some/most} rather than \textbf{all} contexts
 \item Synonymy via semantics: synonyms share ``common traits'' or
   attributional overlap, walking the fine line between ``necessary
   resemblances'' and ``permissible differences'':
   \begin{quote}
       \lex{grain} vs. \lex{granule};  \lex{green} vs.\ \lex{purple}; \lex{alsation} vs. \lex{spaniel}
   \end{quote}
-\item Permissible differentiation via \textbf{clarification}:
+\item Permissible differentiation via \textbf{clarification}.
   \begin{quote}
     \eng{Here is a \underline{grain}, or \underline{granule}, of the substance.}\\
     \eng{* The cover is \underline{green}, \{or, that is to say\} \underline{purple}.}
+    \\   \eng{* He likes alsations, in other words, \underline{spaniels}}
+    
   \end{quote}
-  and \textbf{contrast}:
-  \begin{quote}
-    \eng{Here is a \underline{grain} or, more exactly, \underline{granule}}\\
-    \eng{* He likes alsations, or more exactly, \underline{spaniels}}
-  \end{quote}
+%   and \textbf{contrast}:
+%   \begin{quote}
+%     \eng{Here is a \underline{grain} or, more exactly, \underline{granule}}\\
+%     \eng{* He likes alsations, or more exactly, \underline{spaniels}}
+%   \end{quote}
+%
 \end{itemize}
+\end{frame}
 
-\myslide{Properties of synonymy}
+\begin{frame}{Properties of synonymy}
 
   \begin{itemize}
   \item Symmetric
   \item traditionally applies only to lexical items of the same word class
     \\ but pairs like \lex{can} vs \lex{be able to} suggest otherwise
-  \item applied at the sense level?
+  \item applied at the sense level
   \item $\approx$ converse of polysemy
   \end{itemize}
 
 
+\end{frame}
 
-\myslide{Antonymy (opposites)}
+\begin{frame}[allowframebreaks]{Antonymy (opposites)}
 
 %\MyLogo{\citet{Cruse:1986,Miller:1990}}
 
@@ -940,7 +993,7 @@ relations to other words.
     \ex \eng{ascend/descend}
     \ex \eng{up/down; right/left}
   \end{exe}
-\newpage
+\framebreak
 \item \txx{Converses}: the same act from different points of view
   \begin{exe}
     \ex \eng{above/below; right/left}
@@ -955,8 +1008,9 @@ relations to other words.
     \\  \textnormal{Context dependent}
   \end{exe}
 \end{itemize}
+\end{frame}
 
-\myslide{Meronymy}
+\begin{frame}{Meronymy}
 
 \begin{itemize}
 \item \txx{Meronomy} refers to the part-whole relation
@@ -964,22 +1018,35 @@ relations to other words.
   \item \txx{meronym} is the part
   \item \txx{holonym} is the whole
   \end{itemize}
-  \begin{tree}
-    \br{\lex{car}}{
-      \br{\lex{wheel}}{\lf{\lex{tire}} \lf{\lex{rim}}}
-      \br{\lex{engine}}{\br{\lex{piston}}{} \br{\lex{valve}}{}}
-      \br{\lex{door}}{}
-      \br{\lex{steering wheel}}{}}
-  \end{tree}
-\item It is not always transitive
-  \begin{tree}
-      \br{\lex{shirt}}{
-        \br{\lex{button}}{\br{\lex{button hole}}{}}}
-   \end{tree} \\
-  But we don't normally say that a \lex{button hole} is part of a \lex{shirt}.
-\end{itemize}
+\begin{forest}
+  [car
+    [wheel
+      [tire]
+      [rim]
+    ]
+    [engine
+      [piston]
+      [valve]
+    ]
+    [door]
+    [steering wheel]
+  ]
+\end{forest}
+\item It is not always transitive:
+  
+\begin{forest}
+  [shirt
+    [button
+      [button hole]
+    ]
+  ]
+\end{forest}
 
-\myslide{Member-Collection}
+We don't normally say that a \lex{button hole} is part of a \lex{shirt}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Member-Collection}
 
 \begin{itemize}
 \item The relation between a collection and one of the units that makes it up
@@ -993,8 +1060,9 @@ relations to other words.
     \ex \eng{student--class}
   \end{exe}
 \end{itemize}
+\end{frame}
 
-\myslide{Portion-Mass}
+\begin{frame}{Portion-Mass}
 
 \begin{itemize}
 \item The relation between a mass noun and a typical unit of measurement
@@ -1012,8 +1080,9 @@ relations to other words.
     \ex \eng[human]{orang}--\eng{person}
   \end{exe}
 \end{itemize}
+\end{frame}
 
-\myslide{Domain (lexical field)}
+\begin{frame}{Domain (lexical field)}
 \MyLogo{Examples from WordNet 3.0}
 The domain in which a word is typically used with this meaning.
 
@@ -1084,8 +1153,9 @@ Some \con{golf} terms: \lex{approach$_9$}, \lex{approach shot$_1$}, \lex{golf co
        % TOPIC TERM->(verb) double bogey#1
        % TOPIC TERM->(verb) bogey#1
 
+\end{frame}
 
-\myslide{And More}
+\begin{frame}{And More}
 \MyLogo{}
 \begin{itemize}
 \item There are many, many more lexical relations advocated by various
@@ -1105,15 +1175,18 @@ Some \con{golf} terms: \lex{approach$_9$}, \lex{approach shot$_1$}, \lex{golf co
 \end{itemize}
 % \section{Sentence Types}
 
+\end{frame}
 \section{Componential Analysis}
 
-\myslide{Break word meaning into its components}
+
+\begin{frame}{Break word meaning into its components}
 \MyLogo{Inspired by work on phonetics in the Prague School}
 \begin{itemize}
 \item For example:
   \\[2ex] \begin{tabular}{lllll}
     \lex{woman} & \cmp{female} & \cmp{adult} & \cmp{human} & \\
     \lex{spinster} & \cmp{female} & \cmp{adult} & \cmp{human} & \cmp{unmarried} \\
+    \lex{man} & \cmp{male} & \cmp{adult} & \cmp{human} & \\
     \lex{bachelor} & \cmp{male} & \cmp{adult} & \cmp{human} & \cmp{unmarried} \\
     \lex{wife} & \cmp{female} & \cmp{adult} & \cmp{human} & \cmp{married} \\
     \lex{girl} & \cmp{female} & \cmp{child} & \cmp{human} & \\
@@ -1126,8 +1199,9 @@ Some \con{golf} terms: \lex{approach$_9$}, \lex{approach shot$_1$}, \lex{golf co
   \item form part of our cognitive architecture
   \end{itemize}
 \end{itemize}
+\end{frame}
 
-\myslide{Defining Relations using Components}
+\begin{frame}{Defining Relations using Components}
 
 \begin{itemize}
 \item \txx{hyponymy}
@@ -1155,8 +1229,9 @@ Some \con{golf} terms: \lex{approach$_9$}, \lex{approach shot$_1$}, \lex{golf co
   \lex{spinster} $\not\approx$ \lex{wife}
 
 \end{itemize}
+\end{frame}
 
-\myslide{Binary Features}
+\begin{frame}{Binary Features}
 
 \begin{itemize}
 \item We can make things more economical (fewer components):
@@ -1174,8 +1249,9 @@ Some \con{golf} terms: \lex{approach$_9$}, \lex{approach shot$_1$}, \lex{golf co
   \item \txx{antonyms} differ in only one binary component
   \end{itemize}
 \end{itemize}
+\end{frame}
 
-\myslide{Redundancy Rules}
+\begin{frame}{Redundancy Rules}
 
 \begin{itemize}
 \item We can add relations between components:
@@ -1195,8 +1271,9 @@ Some \con{golf} terms: \lex{approach$_9$}, \lex{approach shot$_1$}, \lex{golf co
   \end{tabular}
   \\[2ex] Can we say  \cmp{--married}  \into\  \cmp{+human}?
 \end{itemize} 
+\end{frame}
 
-\myslide{More Complex Breakdowns}
+\begin{frame}{More Complex Breakdowns}
 
 \begin{itemize}
 \item We can add relations between components:
@@ -1213,17 +1290,18 @@ Some \con{golf} terms: \lex{approach$_9$}, \lex{approach shot$_1$}, \lex{golf co
 \item There are various ways you can formalize such relationships
   \begin{itemize}
   \item Many parts of language can be formalized in such a way
-  \item We did this for demonstratives
-    \\ \lex{this, that, these, those, what, here, there, where}\task
+  % \item We did this for demonstratives
+  %   \\ \lex{this, that, these, those, what, here, there, where}\task
   \end{itemize}
 \end{itemize}
 
 
 These are great for many sub-systems of language, but it is hard to make components for everything, \ldots
 
-%%% FIXME inheritance
 
-\myslide{Word Embeddings}
+\end{frame}
+
+\begin{frame}{Word Embeddings}
 \MyLogo{Slides based on \href{https://www.shanelynn.ie/get-busy-with-word-embeddings-introduction/}{An introduction to word embeddings for text analysis} by Shane Lynn (2017)}
 
 
@@ -1240,17 +1318,21 @@ These are great for many sub-systems of language, but it is hard to make compone
 
 \end{itemize}
 
-\myslide{Derivational Relations}
+More in lesson~3.
+\end{frame}
+
+\begin{frame}{Derivational Relations}
 
 \begin{itemize}
 \item Often words are linked by more or less systematic relations, sometimes morphologically marked
   \begin{itemize}
-  \item beauty/beautiful/beautify
-  \item cute/cuteness
+  \item \lex{beauty}/\lex{beautiful}/\lex{beautify}
+  \item \lex{cute}/\lex{cuteness}
   \end{itemize}
 \end{itemize}
+\end{frame}
 
-\myslide{Agentive Nouns}
+\begin{frame}{Agentive Nouns}
 \MyLogo{}
 \begin{itemize}
 \item An \txx{agentive noun} is a word that is typically derived from
@@ -1265,18 +1347,19 @@ the dictionary? Why or why not?
 \item Also \txx{recipient noun}s that show the undergoer:
   \textbf{verb} + \lex{-ee}: \lex{employee}, \lex{trustee}
 \end{itemize}
+\end{frame}
 
-\myslide{Agentive Nouns in Other Languages}
+\begin{frame}{Agentive Nouns in Other Languages}
 \MyLogo{Thanks to Yeo Jia Qi (Malay)}
 
 \begin{itemize}
 \item Japanese (suffix distinguishes person/machine)
   
   \begin{itemize}
-  \item \jpn{運転する} → \jpn{運転者} \jpn[driver]{unten-sha}
-  \item \jpn{計算する} → \jpn{計算者} \jpn{計算機} \jpn[computer]{keisan-sha/ki}
-  \item \jpn{研究する} → \jpn{研究者} \jpn{研究員} \jpn[researcher]{kenkyuu-sha/in}
-  \item \jpn{読む} → \jpn{読み手} \jpn{読者} \jpn[reader]{yomite/dokusha}
+  \item \jpf{運転する} → \jpf{運転者} \eng[driver]{unten-sha}
+  \item \jpf{計算する} → \jpf{計算者} \jpf{計算機} \eng[computer]{keisan-sha/ki}
+  \item \jpf{研究する} → \jpf{研究者} \jpf{研究員} \eng[researcher]{kenkyuu-sha/in}
+  \item \jpf{読む} → \jpf{読み手} \jpf{読者} \jpn[reader]{yomite/dokusha}
   \end{itemize}
 \item Malay (prefix can convert any part  of speech)
   \begin{itemize}
@@ -1285,87 +1368,15 @@ the dictionary? Why or why not?
   \item \eng[fly]{terbang (v)} → \eng[pilot (not passenger)]{penerbang}
 %  \item \zsm[scissors]{gunting (n)} → \zsm[(editor – human)]{penyunting}
   \end{itemize}
-
-
-
-
-
-\myslide{Word Embeddings}
-\begin{itemize}
-\item In the simplest case, each word is a number
 \end{itemize}
-\includegraphics[width=\linewidth]{pics/one-hot-word-embedding-vectors-768x276.png}
-\begin{itemize}\addtolength{\itemsep}{-2ex}
-\item Two many dimensions
-\item No shared information
-\item Mainly zeros
-\end{itemize}
-\newpage
-\begin{itemize}
-\item We want fewer, more meaningful, dimensions (like components!) 
-\end{itemize}
-\includegraphics[width=\linewidth]{pics/3-dimensional-word-embeddings-example-768x362.png}
-
-\begin{itemize}
-\item How would you add \eng{child}? or \eng{emperor}?
-\end{itemize}
-
-\myslide{Similar words should be close}
-\MyLogo{src: \url{http://suriyadeepan.github.io}}
+\end{frame}
 
 
-\hspace{-4em}\includegraphics[width=1.1\linewidth]{pics/word-vector-space-similar-words.jpg}
-
-\myslide{We can learn these from raw text}
-
-\begin{itemize}
-\item In LLMs, models are constructed to predict the context words from a
-centre word, or the centre word from a set of context words.
-\item By training on large amounts of text, embeddings that model human
-intuitions can be built.
-\item By using multilingual text, we can link languages
-\item More about this in \textbf{DAS/LTI}: Language Technology and the Internet
-\end{itemize}
-\myslide{Semantic relations are also learned}
-
-
-\includegraphics[width=\linewidth]{pics/vocabulary-linear-relationships.jpg}
-
-We can do arithmetic on the vectors 
-
-
-\begin{tabular}{rcl}
-  $\vec{king}$ + $\vec{woman}$ $-$ $\vec{man}$  & $\approx$ & $\vec{queen}$ \\[2ex]
-  $\vec{Paris}$ $-$ $\vec{France}$ + $\vec{Germany}$  & $\approx$ & $\vec{Berlin}$
-\end{tabular}
-
-
-
-\myslide{Corpora contain stereotypes, ML learns them!}
-
-\begin{itemize}
-\item We can test if things are closer to $\vec{he}$ or $\vec{she}$
-  \\[2ex]
-  \begin{tabular}{lcr}
-    $\vec{nurse}.\vec{she}$ & = & 0.38 \\
-    $\vec{nurse}.\vec{he}$ & = & $-0.12$ \\
-    $\vec{programmer}.\vec{she}$ & = & 0.07 \\
-    $\vec{programmer}.\vec{he}$ & = & 0.28 \\
-  \end{tabular}
-\end{itemize}
-
-\begin{itemize}
-\item This is an accurate description of the state of the world described in the corpus
-\item But may not be what we want to use as a basis for reasoning, \ldots
-\end{itemize}
-
-\MyLogo{\citet{10.5555/3157382.3157584}}
 
 
 \section{Wordnet}
-\MyLogo{A graph-based approach}
 
-\myslide{WordNet}
+\begin{frame}{WordNet}
 
 \MyLogo{\citet{Miller:1998:foreword,_Fellbaum:1998}}
 
@@ -1389,19 +1400,20 @@ We can do arithmetic on the vectors
   \item Czech
 \end{itemize}
 \end{itemize}
+\end{frame}
 
-\myslide{Wordnet Structure}
+\begin{frame}{Wordnet Structure}
 \begin{itemize}
 \item Lexical items are categorised into $\sim$115K (and counting) glossed \textbf{synsets} (= synonym sets)
 
-  \begin{quote}\smaller[2]
-\begin{verbatim}
-1. enrichment -- (act of making fuller or more 
-   meaningful or rewarding)
-2. enrichment -- (a gift that significantly increases 
-   the recipient's wealth)
-\end{verbatim}
-  \end{quote}
+%   \begin{quote}\smaller[2]
+% \begin{verbatim}
+% 1. enrichment -- (act of making fuller or more 
+%    meaningful or rewarding)
+% 2. enrichment -- (a gift that significantly increases 
+%    the recipient's wealth)
+% \end{verbatim}
+%   \end{quote}
 \item Lexical relations at either the synset level or sense (=
   combination of lexical item and synset) level 
 \item Strongly lexicalist (orginally):
@@ -1422,11 +1434,9 @@ We can do arithmetic on the vectors
 %   \end{itemize}
 \end{itemize}
 
+\end{frame}
 
-
-
-
-\myslide{Psycholinguistic Foundations of WordNet}
+\begin{frame}{Psycholinguistic Foundations of WordNet}
 
 \MyLogo{}
 
@@ -1453,10 +1463,11 @@ We can do arithmetic on the vectors
   \item Or the shorter the path to the nearest shared hypernym, \ldots
   \end{itemize}
 \end{itemize}
+\end{frame}
 
-\myslide{Word Meaning as a Graph}
+\begin{frame}{Word Meaning as a Graph}
 \MyLogo{It ends up being a very big graph}
-%\includegraphics[height=0.75\textheight]{pics/Semantic_Net.eps}
+%\includegraphics[height=0.75\textheight]{img/Semantic_Net.eps}
  \begin{forest}
    [entity
    [object [artifact [equipment [golf-club [driver,name=d1] ] ] ]
@@ -1484,22 +1495,24 @@ We can do arithmetic on the vectors
  % \draw[double] (d2) to [out=-75, in=110](d21);
 %\end{forest} 
 
+\end{frame}
 
-% \myslide{Word Meaning as a Graph}
+% \begin{frame}{Word Meaning as a Graph}
 % \MyLogo{}
 % \bigskip
 % \bigskip
 % \bigskip
-% \includegraphics[height=0.75\textheight]{pics/Semantic_Net.eps}
+% \includegraphics[height=0.75\textheight]{img/Semantic_Net.eps}
 
 % \begin{itemize}
 % \item You need a very big graph to capture all meanings
 % \end{itemize}
 
+%\end{frame}
 
 
-\myslide{Wordnet in this course}
-
+\begin{frame}{Wordnet in this course}
+%%% FIXME inheritance
 
 \begin{itemize}
 \item We will use wordnet to test our skills in determining word meaning
@@ -1523,175 +1536,184 @@ relations \citep{Bond:Wei:2019}
 \item [\ldots]
 \end{itemize}
 \end{itemize}
-\section{Word Sense Disambiguation \\ for Close Reading}
+\end{frame}
+
+
+% \section{Word Sense Disambiguation \\ for Close Reading}
+
+% \begin{frame}{Close Reading}
+% \MyLogo{The idea comes from the study of poetry and is part of the
+%   school of \textit{New Criticism}  \citep[e.g.,][]{Brooks:Warre:1938,Brooks:Warre:1943}}
+
+% \begin{itemize}
+% \item Reading (and often re-reading) a text to uncover multiple
+%   aspects of meaning that lead you to understand a text better
+% \item Looking at what the text actually says, as well as the
+%   inferences you make from reading it
+% \item After a close reading you should be able to support your
+%   conclusions with specific examples from the text
+% \item You can consider many aspects of the text, such as
+%   \begin{itemize}
+%   \item The Title
+%   \item Word Choice
+%   \item The Tone and Style
+%   \item Discerning Patterns
+%     % Does an image here remind you of an image elsewhere in the book? Where? What's the connection?
+%     % How might this image fit into the pattern of the book as a whole?
+%     % Could this passage symbolize the entire work? Could this passage serve as a microcosm--a little picture--of what's taking place in the whole work?
+%     % What is the sentence rhythm like? Short and choppy? Long and flowing? Does it build on itself or stay at an even pace? What is the style like?
+%     % Look at the punctuation. Is there anything unusual about it?
+%     % Is there any repetition within the passage? What is the effect of that repetition?
+%     % How many types of writing are in the passage? (For example, narration, description, argument, dialogue, rhymed or alliterative poetry, etc.)
+%     % Can you identify paradoxes in the author's thought or subject?
+%     % What is left out or kept silent? What would you expect the author to talk about that the author avoided?
+%   \item  Point of View and Characterization
+%   \item Symbolism
+
+%     % How does the passage make us react or think about any characters or events within the narrative?
+%     % Are there colors, sounds, physical description that appeals to the senses? Does this imagery form a pattern? Why might the author have chosen that color, sound or physical description?
+%     % Who speaks in the passage? To whom does he or she speak? Does the narrator have a limited or partial point of view? Or does the narrator appear to be omniscient, and he knows things the characters couldn't possibly know? (For example, omniscient narrators might mention future historical events, events taking place "off stage," the thoughts and feelings of multiple characters, and so on).
+%   \end{itemize}
+%   \end{itemize}
+% \end{frame}
+
+% \begin{frame}{Word Choice and Diction}
+% \MyLogo{We will focus on this}
+
+% \begin{itemize}
+% \item What word(s) stand out? Why? (typically vivid words, unusual choices, or a contrast to what a reader expects)
+% \item How do particular words get us to look at characters or events in a particular way? Do they evoke an emotion?
+% \item Did the author use nonstandard language or words in another language? Why? What is the effect?
+% \item Are there any words that could have more than one meaning? Why might the author have played with language in this way?
+% \item Do some words have extra connotations?
+% \end{itemize}
+% \end{frame}
+
+% \begin{frame}{Word Sense Disambiguation}
+
+% \begin{itemize}
+% \item Knowing what individual words mean is the first step towards understanding
+% \item We will try to identify the \txx{sense} of words
+%   \begin{itemize}
+%   \item We use \href{https://wordnet.princeton.edu/}{Wordnet} \citep{_Fellbaum:1998} as the sense inventory
+%     \\ because it contains semantic relations as well as definitions
+%     \\ and it is accessible: there are good interfaces to it
+%   \item For every word we chose the most appropriate sense in wordnet
+%     \\ or write a comment if we think there isn't one
+%   \item Once we have identified a sense, it is then easy to look at
+%     synonyms and other closely related words
+%   \item We use the Czech wordnet \citep{Pala:Smrz:2004} for Czech
+%   \item Both wordnets have been extended as part of the the Natural Text Understanding --- Multilingual Corpus (\txx{ntu-mc})
+%   \end{itemize}
+%   \newpage\end{frame}
+
+% \begin{frame}{WSD: Example}
+
+%  \eng{Sherlock Holmes had been leaning back in his chair with his
+%     eyes closed and his head sunk in a cushion, but he half opened his
+%     \ul{lids} now and glanced across at his visitor.}\task{}
+%   \begin{enumerate}\small
+%   \item \lex{hat, chapeau, lid} ``headdress that protects the head
+%     from bad weather; has shaped crown and usually a brim''
+%   \item \lex{lid, eyelid, palpebra} ``either of two folds of skin that
+%     can be moved to cover or open the eye''
+%   \item \lex{lid} ``a movable top or cover (hinged or separate) for closing the opening at the top of a box, chest, jar, pan, etc.''  \end{enumerate}
+% \end{itemize} 
+% \newpage\end{frame}
+
+% \begin{frame}{WSD: A challenging task!}
+% This is difficult for many reasons
+%   \begin{itemize}
+%   \item Meaning boundaries are not clear: the sense distinctions
+%     impose a structure on something that is actually fuzzy
+%   \item Dictionaries are imperfect
+%     \begin{itemize}
+%     \item senses may be missing
+%     \item senses may be too fine-grained
+%     \end{itemize}
+%   \item Processing a text by computer is difficult
+%     \begin{itemize}
+%     \item The computer may have misinterpreted
+%     \begin{itemize}
+%     \item the part-of-speech
+%       \\ \eng{Does that go}  ``Female deer which go'' ``Is it the case that is goes?''
+%       \\ \eng{The speckled band} ``the band that is speckled'' ``the band that someone speckled''
+%     \item Or the sentence boundaries
+%     \item Or the words boundaries
+%     \end{itemize}
+%         \end{itemize}
+%   \item People use language idiosyncratically 
+%     \begin{itemize}
+%     \item extending meanings metaphorically
+%     \item sometimes so strangely that we might even say wrongly
+%     \end{itemize}
+%   \end{itemize}\end{frame}
+
+%   \begin{frame}{WSD:  not impossible}
+%     \begin{itemize}
+%   \item Typically people agree around 72.5\% of the time \citep{Snyder:Palmer:2004}.
+%     \begin{itemize}
+%     \item  Verbs are hardest (67.8\%), then nouns (74.9\%) and adjectives (78.5\%)
+%     \item Disagreements tend to cluster around a relatively small group of difficult words.
+%     \item For example \lex{national}
+%       \begin{itemize}
+%       \item In six out of seven instances one annotator chose
+%         ``limited to or in the interests of a particular nation'' and
+%         the other annotator chose ``concerned with or applicable to or
+%         belonging to an entire nation or country''
+%       \item They are hard to distinguish!
+%       \end{itemize}
+%     \end{itemize}
+%   \end{itemize}
+% \end{itemize}
+% \end{frame}
+
+% \begin{frame}{Projects 1 and 2}
+% \MyLogo{Details online: we will give a demo}
+% \begin{itemize}
+% \item[1] Identify and annotate word meaning for your own passage of
+%   one of the stories using wordnet as the sense inventory: 3 or 4 people do
+%   the same set of sentences.
+%   \begin{itemize}
+%   \item For every word that needs to be tagged, either
+%     \begin{itemize}
+%     \item Chose a sense in wordnet
+%     \item Identify it as a named entity
+%     \item Identify a problem in the corpus or wordnet
+%       \\ and leave a comment saying what the it should be
+%     \end{itemize}
+%   \item Do this on your own --- the goal is to think about the words' meanings
+%   \end{itemize}
+% \item[2] Compare and contrast your annotations with other annotators;
+%   re-annotate based on your discussion and leave comments for at least
+%   five words.
+%   \begin{itemize}
+%   \item We expect you to disagree 30-40\% of the time (more often than experts)
+%   \item Sometimes you will have made a careless mistake
+%   \item Sometimes you will have interpreted wordnet differently
+%   \item Sometimes you will have interpreted the passage differently
+%   \item Discussing meaning deepens your understanding of it
+%   \end{itemize}
+% \end{itemize}
 
 
 
-\myslide{Close Reading}
-\MyLogo{The idea comes from the study of poetry and is part of the
-  school of \textit{New Criticism}  \citep[e.g.,][]{Brooks:Warre:1938,Brooks:Warre:1943}}
-
-\begin{itemize}
-\item Reading (and often re-reading) a text to uncover multiple
-  aspects of meaning that lead you to understand a text better
-\item Looking at what the text actually says, as well as the
-  inferences you make from reading it
-\item After a close reading you should be able to support your
-  conclusions with specific examples from the text
-\item You can consider many aspects of the text, such as
-  \begin{itemize}
-  \item The Title
-  \item Word Choice
-  \item The Tone and Style
-  \item Discerning Patterns
-    % Does an image here remind you of an image elsewhere in the book? Where? What's the connection?
-    % How might this image fit into the pattern of the book as a whole?
-    % Could this passage symbolize the entire work? Could this passage serve as a microcosm--a little picture--of what's taking place in the whole work?
-    % What is the sentence rhythm like? Short and choppy? Long and flowing? Does it build on itself or stay at an even pace? What is the style like?
-    % Look at the punctuation. Is there anything unusual about it?
-    % Is there any repetition within the passage? What is the effect of that repetition?
-    % How many types of writing are in the passage? (For example, narration, description, argument, dialogue, rhymed or alliterative poetry, etc.)
-    % Can you identify paradoxes in the author's thought or subject?
-    % What is left out or kept silent? What would you expect the author to talk about that the author avoided?
-  \item  Point of View and Characterization
-  \item Symbolism
-
-    % How does the passage make us react or think about any characters or events within the narrative?
-    % Are there colors, sounds, physical description that appeals to the senses? Does this imagery form a pattern? Why might the author have chosen that color, sound or physical description?
-    % Who speaks in the passage? To whom does he or she speak? Does the narrator have a limited or partial point of view? Or does the narrator appear to be omniscient, and he knows things the characters couldn't possibly know? (For example, omniscient narrators might mention future historical events, events taking place "off stage," the thoughts and feelings of multiple characters, and so on).
-  \end{itemize}
-  \end{itemize}
-
-\myslide{Word Choice and Diction}
-\MyLogo{We will focus on this}
-
-\begin{itemize}
-\item What word(s) stand out? Why? (typically vivid words, unusual choices, or a contrast to what a reader expects)
-\item How do particular words get us to look at characters or events in a particular way? Do they evoke an emotion?
-\item Did the author use nonstandard language or words in another language? Why? What is the effect?
-\item Are there any words that could have more than one meaning? Why might the author have played with language in this way?
-\item Do some words have extra connotations?
-\end{itemize}
-
-\myslide{Word Sense Disambiguation}
-
-\begin{itemize}
-\item Knowing what individual words mean is the first step towards understanding
-\item We will try to identify the \txx{sense} of words
-  \begin{itemize}
-  \item We use \href{https://wordnet.princeton.edu/}{Wordnet} \citep{_Fellbaum:1998} as the sense inventory
-    \\ because it contains semantic relations as well as definitions
-    \\ and it is accessible: there are good interfaces to it
-  \item For every word we chose the most appropriate sense in wordnet
-    \\ or write a comment if we think there isn't one
-  \item Once we have identified a sense, it is then easy to look at
-    synonyms and other closely related words
-  \item We use the Czech wordnet \citep{Pala:Smrz:2004} for Czech
-  \item Both wordnets have been extended as part of the the Natural Text Understanding --- Multilingual Corpus (\txx{ntu-mc})
-  \end{itemize}
-  \newpage
-\myslide{WSD: Example}
-
- \eng{Sherlock Holmes had been leaning back in his chair with his
-    eyes closed and his head sunk in a cushion, but he half opened his
-    \ul{lids} now and glanced across at his visitor.}\task{}
-  \begin{enumerate}\small
-  \item \lex{hat, chapeau, lid} ``headdress that protects the head
-    from bad weather; has shaped crown and usually a brim''
-  \item \lex{lid, eyelid, palpebra} ``either of two folds of skin that
-    can be moved to cover or open the eye''
-  \item \lex{lid} ``a movable top or cover (hinged or separate) for closing the opening at the top of a box, chest, jar, pan, etc.''  \end{enumerate}
-\end{itemize} 
-\newpage
-\myslide{WSD: A challenging task!}
-This is difficult for many reasons
-  \begin{itemize}
-  \item Meaning boundaries are not clear: the sense distinctions
-    impose a structure on something that is actually fuzzy
-  \item Dictionaries are imperfect
-    \begin{itemize}
-    \item senses may be missing
-    \item senses may be too fine-grained
-    \end{itemize}
-  \item Processing a text by computer is difficult
-    \begin{itemize}
-    \item The computer may have misinterpreted
-    \begin{itemize}
-    \item the part-of-speech
-      \\ \eng{Does that go}  ``Female deer which go'' ``Is it the case that is goes?''
-      \\ \eng{The speckled band} ``the band that is speckled'' ``the band that someone speckled''
-    \item Or the sentence boundaries
-    \item Or the words boundaries
-    \end{itemize}
-        \end{itemize}
-  \item People use language idiosyncratically 
-    \begin{itemize}
-    \item extending meanings metaphorically
-    \item sometimes so strangely that we might even say wrongly
-    \end{itemize}
-  \end{itemize}
-  \myslide{WSD:  not impossible}
-    \begin{itemize}
-  \item Typically people agree around 72.5\% of the time \citep{Snyder:Palmer:2004}.
-    \begin{itemize}
-    \item  Verbs are hardest (67.8\%), then nouns (74.9\%) and adjectives (78.5\%)
-    \item Disagreements tend to cluster around a relatively small group of difficult words.
-    \item For example \lex{national}
-      \begin{itemize}
-      \item In six out of seven instances one annotator chose
-        ``limited to or in the interests of a particular nation'' and
-        the other annotator chose ``concerned with or applicable to or
-        belonging to an entire nation or country''
-      \item They are hard to distinguish!
-      \end{itemize}
-    \end{itemize}
-  \end{itemize}
-\end{itemize}
-
-\myslide{Projects 1 and 2}
-\MyLogo{Details online: we will give a demo}
-\begin{itemize}
-\item[1] Identify and annotate word meaning for your own passage of
-  one of the stories using wordnet as the sense inventory: 3 or 4 people do
-  the same set of sentences.
-  \begin{itemize}
-  \item For every word that needs to be tagged, either
-    \begin{itemize}
-    \item Chose a sense in wordnet
-    \item Identify it as a named entity
-    \item Identify a problem in the corpus or wordnet
-      \\ and leave a comment saying what the it should be
-    \end{itemize}
-  \item Do this on your own --- the goal is to think about the words' meanings
-  \end{itemize}
-\item[2] Compare and contrast your annotations with other annotators;
-  re-annotate based on your discussion and leave comments for at least
-  five words.
-  \begin{itemize}
-  \item We expect you to disagree 30-40\% of the time (more often than experts)
-  \item Sometimes you will have made a careless mistake
-  \item Sometimes you will have interpreted wordnet differently
-  \item Sometimes you will have interpreted the passage differently
-  \item Discussing meaning deepens your understanding of it
-  \end{itemize}
-\end{itemize}
 
 
 
 
+% \end{frame}
 
-
-
-
-\myslide{Conclusions}
+\begin{frame}{Conclusions}
 
 \begin{itemize}
 \item We learned a little about word meaning, wordnet, close reading and your assignment
 \item This is covered in more detail in \citet[Chapter 3]{Saeed:2015}
 \end{itemize}
 
+\end{frame}
 
-\myslide{Acknowledgments and References}
+\begin{frame}{Acknowledgments and References}
 
 \begin{itemize}
 \item Definitions from WordNet: \url{http://wordnet.princeton.edu/}
@@ -1708,17 +1730,19 @@ This is difficult for many reasons
 
 
 
+\end{frame}
 
 
 
 
 
 
-  
-\small
-\bibliographystyle{aclnat}
-\bibliography{abb,mtg,nlp,ling}
 
+\begin{frame}[allowframebreaks]
+  \frametitle{References}
+  \bibliographystyle{aclnat}
+  \bibliography{abb,mtg,ling,nlp}
+\end{frame}
 
 
 

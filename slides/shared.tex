@@ -1,14 +1,33 @@
 % ---- Minimal setup (LuaLaTeX) ----
 \usepackage{fontspec}
-\usepackage{luatexja}
-\usepackage{luatexja-fontspec}
-\ltjsetparameter{jacharrange={-9}}
+\defaultfontfeatures{Ligatures=TeX}
+%\usepackage{luatexja}
+%\usepackage{luatexja-fontspec}
+%\ltjsetparameter{jacharrange={-9}}
 \setmainfont{TeX Gyre Pagella}
 \setsansfont{TeX Gyre Heros}
-\setmainjfont{Noto Serif CJK JP}  % for Japanese/CJK in roman text
-\setsansjfont{Noto Sans CJK JP}   % if you switch to \sffamily and still want CJK
-\newfontfamily\emoji{Noto Color Emoji}[Renderer=Harfbuzz,Scale=MatchLowercase]
-\newcommand{\e}[1]{{\emoji #1}}
+% Auto-switch by Unicode block
+\usepackage[CJK,Emoticons]{ucharclasses}
+\newfontfamily\devanagarifont{Noto Sans Devanagari}
+\setTransitionsFor{Devanagari}{\devanagarifont}{\normalfont}
+\newfontfamily\jafont{Noto Sans CJK JP}
+\newfontfamily\krfont{Noto Sans CJK KR}
+\newfontfamily\hanfont{Noto Sans CJK SC} % or TC
+\setTransitionsForChinese{\hanfont}{\normalfont}
+\setTransitionsForKorean{\krfont}{\normalfont}
+\setTransitionsForJapanese{\jafont}{\normalfont}
+\pdfstringdefDisableCommands{%
+  \def\jafont{}%
+  \def\devanagarifont{}%
+}
+ \newcommand{\jpf}[1]{{\jafont #1}}
+
+%\newfontfamily\emojifont{Symbola}
+%\setTransitionsFor{Emoticons}{\emojifont}{\normalfont}
+
+%\setTransitionsFor{Han}{\hanfont}{\normalfont}
+% \newfontfamily\emoji{Noto Color Emoji}[Renderer=Harfbuzz,Scale=MatchLowercase]
+% \newcommand{\e}[1]{{\emoji #1}}
 
 \usepackage{graphicx}
 \usepackage{hyperref}
@@ -50,3 +69,64 @@
 
 % ---- other packages
 \usepackage{tikz}
+
+% ---- Linguistics
+
+\usepackage{mygb4e}
+\usepackage{avm}
+
+\usepackage[normalem]{ulem}
+\newcommand{\ul}{\uline}
+\newcommand{\ull}{\uuline}
+\newcommand{\udl}{\dashuline}
+\newcommand{\uwl}{\uwave}
+
+\usepackage[e,f,j]{mtg2e}
+\newcommand{\cmn}{\mtciteform}
+\newcommand{\kor}{\mtciteform}
+\renewcommand{\mtcitestyle}[1]{\textcolor{teal}{\textit{#1}}}
+\usepackage{xcolor}
+ \newcommand{\bs}{\textbackslash}   % backslash
+ \newcommand{\cmd}[1]{{\bf \color{red}#1}}   % highlights command
+ \newcommand{\wemp}[1]{\ul{#1}}   % highlight
+ \newcommand{\emp}[1]{\textbf{\color{blue}{#1}}}   % highlight
+ \newcommand{\rel}[1]{\textsc{\color{blue}{#1}}}
+ %%% imi zokusei
+ \newcommand{\iz}[1]{\textup{\texttt{\color{blue}{\textbf{#1}}}}}
+ \newcommand{\con}{\iz}
+ \newcommand{\lnk}[1]{\rel{#1}}
+\newcommand{\cmp}[1]{{[\textsc{#1}]}}
+
+ \newcommand{\lex}[1]{\textbf{\color{teal}{\textit{#1}}}}
+ \newcommand{\lng}[1]{\textcolor{teal}{\textit{#1}}}
+\newcommand{\wn}[3]{\lex{#1}\ensuremath{_{#2:#3}}}
+\usepackage{relsize,xspace}
+\newcommand{\wnida}[1]{\asort{\wnid{#1}}}
+\newcommand{\wnid}[1]{\textsf{\smaller #1}}
+\newcommand{\into}{\ensuremath{\rightarrow}\xspace}
+\newcommand{\ent}{\ensuremath{\Rightarrow}\xspace}
+\newcommand{\nent}{\ensuremath{\not\Rightarrow}\xspace}
+\newcommand{\tot}{\ensuremath{\leftrightarrow}\xspace}
+
+\newcommand{\MyLogo}[1]{}
+
+% \newcommand{\task}{\marginpar{\raisebox{-2ex}{
+%       \hspace{-0.5em}\reflectbox{\includegraphics[width=2em]{img/detective.pdf}}}}}
+\newcommand{\task}{?}
+
+
+\setbeamercolor{taskc}{fg=black,bg=red!10}
+
+\newenvironment{taskb}[1][]{%
+  \begin{beamercolorbox}[rounded=true,shadow=true,wd=\linewidth,sep=0.5em]{taskc}
+    \ifx\relax#1\relax
+      % No title - just show content
+    \else
+      % Title provided
+      \textbf{\large ?} #1
+      \par\vspace{0.3em}
+    \fi
+}{%
+  \end{beamercolorbox}
+  \vspace{0.5em}
+}
