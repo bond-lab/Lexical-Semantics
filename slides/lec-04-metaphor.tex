@@ -1,0 +1,579 @@
+\documentclass[dvipsnames]{beamer}
+\input{shared.tex}
+
+%\usepackage{orcidlink}
+%\usepackage{authblk}
+\usepackage{fontawesome}
+
+\title[Multilingual Metonymy \& Metaphor]{Metonymy is more multilingual than metaphor: \\ Analysing tropes using ChainNet and the Open Multilingual Wordnet}
+
+
+\usepackage[normalem]{ulem}
+\newcommand{\ul}{\uline}
+\newcommand{\email}[1]{\href{mailto:#1}{#1}}
+\author[Bond \& Maudslay]{Francis \ul{Bond}$^\spadesuit$ and Rowan Hall \ul{Maudslay}$^\diamondsuit$ } 
+
+\institute[UPOL \& Cambridge]{$^\spadesuit$Department of Asian Studies and Sinofon Project\\
+  Palacký University Olomouc \\[1ex]
+ $^\diamondsuit$   Dept.\ of Computer Science \& Technology \\
+  University of Cambridge \\[1ex]
+  \email{bond@ieee.org rh635@cam.ac.uk}  
+}
+\date[2025-01-30 (GWC 2025)]{2025-01-30 \\
+13th Global Wordnet Conference, Pavia}
+
+% \usetheme{Boadilla}
+% \usecolortheme{seahorse}%spruce}
+% \usepackage{polyglossia}
+% \setmainlanguage{english}
+% \setsansfont{Linux Libertine O}
+% \usepackage{xeCJK}
+% \setCJKmainfont{Noto Sans CJK JP}
+% \setCJKsansfont{Noto Sans CJK JP}
+% \usefonttheme{professionalfonts}
+
+% \usepackage[round]{natbib}
+% \newcommand{\citeplanguageresource}{\citep}
+
+\usepackage{expex}
+\usepackage{makecell}
+\newfontfamily{\ipafont}{Gentium}
+\newcommand{\ipa}[1]{{\ipafont\selectfont #1}}
+\usepackage{tabularx}
+
+\usepackage[e,f,j]{mtg2e}
+\newcommand{\cmn}{\mtciteform}
+\newcommand{\kor}{\mtciteform}
+\renewcommand{\mtcitestyle}[1]{\textcolor{teal}{\textit{#1}}}
+\usepackage{xcolor}
+ \newcommand{\bs}{\textbackslash}   % backslash
+ \newcommand{\cmd}[1]{{\bf \color{red}#1}}   % highlights command
+ \newcommand{\wemp}[1]{\ul{#1}}   % highlight
+ \newcommand{\emp}[1]{\textbf{\color{blue}{#1}}}   % highlight
+ \newcommand{\rel}[1]{\textsc{\color{blue}{#1}}}
+ \newcommand{\lnk}[1]{\rel{#1}}
+ \newcommand{\dff}[1]{\texttt{\color{blue}{#1}}}
+  \newcommand{\ghost}[1]{\color{gray}{#1}} 
+%\newcommand{\txx}[1]{\textbf{\textcolor{blue}{#1}}}
+
+\usepackage{chainnet}
+\usepackage{booktabs}
+\newcommand{\clex}[1]{\textbf{\texttt{#1}}}
+\newcommand{\ldiff}[1]{\textbf{\texttt{#1}}}
+\newcommand{\dom}[1]{\textbf{\texttt{#1}}}
+
+\newcommand{\LEX}[6][]{\textbf{\textit{#2}} \textit{#1} (#3: #4) #5 --- \textit{#6}}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Metaphor and Metonymy}
+
+  \begin{itemize}
+  \item Metonymy and metaphor are two fundamental tropes (figures of speech)
+  \item Both play crucial roles in the way we understand and use language
+  \item \txx{Metonymy} involves the substitution of one term for
+    another to which it is closely related
+    \begin{itemize}
+    \item \eng{I ate a \ul{chestnut}}
+    \item \eng{I pruned the \ul{chestnut} [tree]}
+    \item \eng{This table is made from \ul{chestnut} [wood]}
+    \item Metonymy works by contiguity or association between concepts,
+      usually by some shared attribute, or by a part-whole relation
+    \end{itemize}
+  \item \txx{Metaphor} involves understanding one concept in terms of
+    another, often unrelated, concept.
+     \begin{itemize}
+    \item \eng{This horse has a \ul{chestnut} on its leg} ``a small horny bump''
+    \item Metaphors create new concepts in the target domain by
+      mapping elements from the source domain
+    \end{itemize}
+    \item They are crucial in understanding novel uses of words
+  \end{itemize}
+
+\end{frame}
+
+
+
+
+\begin{frame}{ChainNet}
+
+  \begin{itemize}
+  \item ChainNet is an attempt to comprehensively model these tropes \citep{maudslay-etal-2024-chainnet-structured,Bond:Maudslay:2025}
+    \begin{itemize}
+    \item All nouns (word + synset combinations) in the
+      Princeton Wordnet \citep{_Fellbaum:1998} with three or more senses$^*$
+      were annotated
+  \item Every sense linked to another sense, or treated as a homonym (unrelated) 
+  \item Most annotated by 1 annotator, some by 2 annotators
+    \begin{itemize}
+    \item Inter-annotator agreement 70\% (88\% for same prototype)
+    \item Intra-annotator agreement 81\% (92\% for same prototype)
+    \end{itemize}
+  \item Originally grew out of work in determining homonyms --- which senses of a word are related
+  \end{itemize}
+  \item There was some early work on metaphor$^{**}$  \citep{alonge-2006-italian} and more recent work on metonymy \citep{khishigsuren_bella_brochhagen_marav_giunchiglia_batsuren_2022} which we discuss briefly  in the paper.
+
+\end{itemize}
+
+\begin{small}
+ $^*$ almost, and some with two senses.   All should eventually be annotated \\
+$^{**}$ if anyone knows where the Italian Metaphor Database is, please let us know
+\end{small}
+\end{frame}
+
+
+\begin{frame}{chestnut}
+    \begin{center}
+\begin{tikzpicture}[derivation]
+
+\litbox[4cm]{1}{at (0,0)}{\sense{chestnut}{3} edible nut of any of various chestnut trees}
+
+\assbox[4cm]{3}{[below right = -5mm and 2cm of 1]}{%
+\sense{chestnut}{2} any of several attractive deciduous trees yellow-brown in autumn; yield a hard wood and edible nuts in a prickly bur}
+
+\assbox[2cm]{4}{[below right = 0.85cm and -1cm of 1]}%
+{\sense{chestnut}{4} the brown color of chestnuts}
+
+\assbox[3cm]{6}{[below  = 8mm of 4]}{\sense{chestnut}{6} a dark golden-brown or reddish-brown horse }
+
+\metbox[3cm]{5}{[below left = 0.8cm and -3cm of 1]}%
+{\sense{chestnut}{5} a small horny callus on the inner surface of a horse's leg}
+
+\assbox[4cm]{2}{[below = 13mm  of 3]}{\sense{chestnut}{1}  [\synonym{chestnut tree}] wood of any of various chestnut trees of the genus Castanea }
+
+   \path[related] (1) edge node[anchor=south, font={\footnotesize}] {\relatededgelabel} (3);
+
+%  \node[shape=coordinate] (origin) [above = .8cm of 4, node contents={}];
+
+  \path[related] (3) edge node[anchor=west, font={\footnotesize}] {\relatededgelabel} (2);
+
+    % \node[shape=coordinate] (origin2) [above left = .8cm and -.5cm of 2, node contents={}];
+    % \node[shape=coordinate] (origin3) [below = .8cm of origin2, node contents={}];
+
+ % \path[analogy] (origin2) edge node[anchor=west, font={\footnotesize}] {\metaphoricaledgelabel} (origin3);
+
+ \path[analogy] (1) edge node[anchor=south, xshift = -8mm, yshift=-3mm, font={\footnotesize}] {\metaphoricaledgelabel} (5);
+ %\node[shape=coordinate] (origin) [above = .4cm of 5, node contents={}];
+ 
+ \path[related] (1) edge node[anchor=south,  xshift = 9mm, yshift=-3mm, font={\footnotesize}] {\relatededgelabel} (4);
+
+ \path[related] (4) edge node[anchor=south,  xshift = 9mm, yshift=-3mm, font={\footnotesize}] {\relatededgelabel} (6);
+
+%  \node[shape=coordinate] (origin) [above = .4cm of 5, node contents={}];
+
+\end{tikzpicture}
+\end{center}
+
+\end{frame}
+
+
+
+\begin{frame}{Can we see how English metaphors are used cross-lingually?}
+  \begin{itemize}
+  \item For example, are translations of linked pairs likely to be
+    translated with the same word
+    \begin{itemize}
+    \item If so then metaphor/metonomy holds cross language
+    \item[\ldots] or this may indicate issues with automatic construction of wordnets
+    \end{itemize}
+  \item For example \eng{head} ``body part'' is metaphorically
+    extended to ``person in charge'' in English and this is also true in Japanese,
+    (頭) Italian (\eng{capo}) and many other languages
+  \item But not all metaphors are shared:  \eng{head} ``main part of a grammatical constituent'' is not 頭 in Japanese
+    \bigskip
+  \item ChainNet is made for English, but we can expect many of the
+    tropes to work with other languages
+  \item And we have many wordnets linked to English in the Open Multilingual Wordnet
+    
+
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Measure the translation overlap with OMW}
+
+  \begin{itemize}
+  \item For every English word that has been annotated
+    \begin{itemize}
+    \item For each pair of English senses
+    \item Look up all translations of each sense
+      \\ measure the overlap (we use Jaccard similarity)
+      \item Store and note if the senses are linked or not
+    \end{itemize}
+  \item So for example \eng{head} has 3 senses (really many more)
+    \begin{enumerate}
+    \item head, caput
+      \\ ヘッド, \ul{頭}, 頭部 
+    \item head, chief, top dog
+      \\ 大頭, 主任者, 御頭, 頭領, \ul{頭}
+    \item head,  head word
+      \\ 主要語
+    \end{enumerate}
+  \item Overlap
+    \begin{itemize}
+    \item 1-2: 0.125 %(/ 1.0  8) 0.125
+    \item 2-3: 0
+    \item 1-3: 0
+    \end{itemize}
+  \end{itemize}
+  
+
+\end{frame}
+
+\begin{frame}[allowframebreaks]{We do this for all the lexicons in OMW-1.4}
+
+ 
+  \begin{center}
+  \begin{tabular}{lrrrr}
+    Lang & Unlinked & Metaphor & Metonomy & Non-Zero Instances \\ \hline
+sv & 0.70 & 1.71 & 2.10 & 417   \\
+he & 0.69 & 1.58 & 2.31 & 472   \\
+eu & 0.82 & 1.30 & 1.80 & 5,562  \\
+ja & 0.89 & 1.11 & 1.55 & 8,130 \\
+ro & 0.83 & 1.30 & 1.71 & 6,429 \\
+sq & 0.74 & 1.27 & 2.38 & 822 \\
+%en & 0.97 & 1.08 & 1.07 & 33415 \\
+da & 0.74 & 1.46 & 2.09 & 332 \\
+lt & 0.63 & 1.46 & 2.86 & 692 \\
+ \end{tabular}
+\end{center}
+
+\begin{itemize}
+\item \txx{unlinked} has no link
+\item \txx{metaphor} is linked by metaphor
+\item \txx{metonymy} is linked by metonymy
+\end{itemize}
+Normalize by dividing  by the average distance for all senses.
+
+  \begin{center}
+  \begin{tabular}{lrrrr}
+    Lang & Unlinked & Metaphor & Metonomy & Non-Zero Instances \\ \hline
+es & 0.85 & 1.17 & 1.79 & 5,915 \\
+ hr & 0.81 & 1.22 & 1.98 & 3,576 \\
+    fr & 0.94 & 1.10 & 1.25 & 18,975 \\
+nb & 0.73 & 1.49 & 2.12 & 339 \\
+bg & 0.73 & 1.54 & 2.11 & 380 \\
+gl & 0.70 & 2.13 & 1.55 & 271 \\
+cmn & 0.74 & 1.57 & 1.97 & 1,347 \\
+it & 0.80 & 1.39 & 1.81 & 4,614 \\
+arb & 0.74 & 1.28 & 2.38 & 1,337 \\
+pl & 0.75 & 1.43 & 2.07 & 1,326 \\
+el & 0.72 & 1.30 & 2.45 & 1,274 \\
+iwn & 0.79 & 1.46 & 1.80 & 968 \\
+nn & 0.73 & 1.52 & 2.10 & 340 \\
+id & 0.87 & 1.21 & 1.58 & 9,803 \\
+  \end{tabular}
+\end{center}
+
+    \begin{center}
+      \begin{tabular}{lrrrr}
+    Lang & Unlinked & Metaphor & Metonomy & Non-Zero Instances \\ \hline
+is & 0.73 & 1.51 & 2.13 & 388 \\
+ca & 0.83 & 1.23 & 1.84 & 6,000 \\
+sk & 0.73 & 1.35 & 2.31 & 2,067 \\
+fi & 0.82 & 1.35 & 1.76 & 7,971 \\
+nl & 0.79 & 1.38 & 1.90 & 2,991 \\
+sl & 0.81 & 1.41 & 1.74 & 6,243 \\
+th & 0.80 & 1.48 & 1.71 & 2,336 \\
+pt & 0.80 & 1.26 & 1.96 & 5,414 \\
+        zsm & 0.87 & 1.22 & 1.60 & 10,272 \\
+        \midrule
+Mean & 0.78 & 1.39 & 1.96 &  3,774\makebox[0mm]{~~~.3} 
+  \end{tabular}
+    \end{center}
+    
+  Unlinked  share fewer translations, metaphor shares more and metonomy shares much more.
+
+  \Large Metonomy is more likely to hold cross linguistically!
+  
+\end{frame}
+
+\begin{frame}{Discussion}
+
+  \begin{itemize}
+  \item The wordnets are of vastly different sizes: the number of sense
+    pairs that have a translation varies from 271 (Galician) to 18,975 (French). 
+  \item   Only Galician has the     score for metaphor (2.13) larger the score for metonymy (1.55), probably due to data sparsity. We would expect it to behave much like
+    Portuguese (1.26/1.96).
+  \item In order to measure perfectly how well tropes carry
+    over between languages, we would need to mark metonymy and metaphor
+    systematically for each language, and make sure all synsets for all
+    senses have all relevant translations, \ldots 
+  \item Without exception, senses linked by tropes are more likely to have an identical translation that those senses which are not linked
+  \item With one exception, metonymy is more likely to have  an identical translation then metaphor  
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Translations of the senses of \protect\eng{cherry}}
+  \begin{center}
+ \small 
+  \begin{tabular}{llllll}% \toprule
+    Sense & Mandarin & Japanese & Finnish & Italian & Portuguese \\ \midrule
+
+    \sense{cherry}{1}   & 樱桃木 & 桜,   \ul{桜材} & kirsikkapuumetsä & ciliegio  & cerejeira \\ 
+
+    \sense{cherry}{2}  & 樱桃树 & 桜, 櫻 & kirsikkapuu & ciliegio  &  cerejeira\\
+
+    \sense{cherry}{3}  & 樱桃  & 桜桃, 桜ん坊 & kirsikka & cerasa , ciliegia  & ginja , cereja \\ 
+    
+    \sense{cherry}{4} &  \ul{樱桃红} & \ul{桜ん坊色}   &  kirsikanpunainen & ciliegia,  \ghost{rosso ciliegia}\ & cereja\ %\bottomrule
+  \end{tabular}
+\end{center}
+
+\begin{itemize}
+\item When we look at the translations, we see that the metonymy that is unmarked in English, is marked in other languages
+\item Even within English, other synonyms have information
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Can we use other lemmas to classify links}
+
+  \begin{itemize}
+  \item Synsets have sets of synonyms, so the other senses may include useful information
+  \item Consider the synsets with a sense of chestnut
+    \begin{itemize}
+    \item[s1] chestnut ``edible nut of any of various chestnut trees of the genus Castanea'' (NATURAL\_BODY)
+
+    \item[s2] chestnut, chestnut tree ``any of several attractive deciduous trees yellow-brown in autumn; yield a hard wood and edible nuts in a prickly bur'' (PLANT)
+    \item[s3] chestnut ``wood of any of various chestnut trees of the genus Castanea''
+      (CHEMICAL!)
+    \end{itemize}
+  \item These are annotated as s1 → s2 → s3 (metonomy)
+  \item If we look at all the senses
+    \begin{itemize}
+    \item  s1 → s2 has a diff: ``+ tree''
+    \item s2 → s3 has a diff: ``- tree''
+    \end{itemize}
+  \item These patterns repeat \ldots
+    \\ Cherry → Cherry Tree → Cherry\hfill (en)
+  \end{itemize}
+
+ 
+\end{frame}
+\begin{frame}{They can be found across languages}
+
+  \begin{itemize}
+  \item s1 → s2: kastanje  →  kastanjetræ \hfill (da)
+  \item s1 → s2: chestnut  →  chestnut tree \hfill (en)
+  \item s1 → s2: marron →	marronnier \hfill (fr)
+  \item s1 → s2: kastanja →	kastanjapuu \hfill (fi)
+  \item  s1 → s2:	kastanje →	kastanjeboom \hfill (nl)
+  \item  s1 → s2:	castană →	castan \hfill (ro)
+  \item  s1 → s2:	castanăcomestibilă →	castan \hfill (ro)
+    
+  \end{itemize}	
+\end{frame}
+
+% \begin{frame}{Different languages mark different things}
+%     \begin{itemize}
+%     \item 
+%       accounting, accountancy
+%       ``the occupation of maintaining and auditing records and preparing financial reports for a business''
+% \\      アカウンティング, 経理, \ul{会計}, 会計業務, 主計 
+%     \item accounting 
+%       ``a system that provides quantitative information about finances''
+% \\      アカウンティング, 経理, 会計, 簿記, 主計, \ul{会計学}, 計数 
+% \item history ``all that is remembered of the past as preserved in writing; a body of knowledge''
+% \ul{歴史}, 青史, ヒストリ, 史, 史乗
+    	
+%       \item history ``the discipline that records and interprets past events involving human beings''
+% 歴史, 史学, \ul{歴史学}  
+  
+% \end{itemize}
+
+% Japanese marks fields of study with   \ul{学}.   So we can use it to sub-type the unmarked metaphor relation in English, \ldots
+% \end{frame}
+
+% \begin{frame}{Issues}
+  
+% \begin{itemize}
+% \item Some of the derivation links are spelling variants
+%   \\ ('i60334', 'toilet', 'i39761', 'toilette'), ('i73661', 'duet', 'i80460', 'duette'), ('i109102', 'quartet', 'i79264', 'quartette'), ('i80466', 'sextet', 'i73665', 'sextette'), \ldots
+%   \begin{itemize}
+%   \item  In OMW 2.0 these should not be separate senses (just orthographic variants)
+%   \item Someone has to discover and fix the entries
+%   \end{itemize}
+% \item There are many small sub-regularities, it would be good to capture cheaply
+%   \\	('i109106', 'eight', 'i53316', 'eight-spot'), ('i109110', 'ten', 'i60122', 'ten-spot'), ('i109105', 'seven', 'i58705', 'seven-spot'), ('i109102', 'four', 'i54015', 'four-spot'), ('i109104', 'six', 'i58979', 'six-spot'), ('i109107', 'nine', 'i56605', 'nine-spot'), ('i109103', 'five', 'i53789', 'five-spot')]
+%  \\ \textbf{metonomy:-spot}
+%   \\ and why are we missing two-spot ``deuce'', three-spot?
+% \end{itemize}
+
+% \end{frame}
+\begin{frame}{Ongoing Research to Find Patterns}
+  
+\begin{itemize}
+\item We have made a searchable database where the edges are decorated by the morphological differences
+  \begin{itemize}
+  \item So we can see all pairs linked by \dff{en:+ tree} or \dff{da:+træ} 
+  \item The nodes link to synsets, so we can look
+    up supertypes: we can say this link is of type  \lnk{food:plant}
+  \\ or  \lnk{plant is food} in the cognitive linguistic style
+  \item In this way we can group the tropes together in families
+  \item Similar to \citet{Stoyanova:Mititelu:Leseva:Iordachioaia:2025}
+  \end{itemize}
+\item Other people have done this top down \cite[e.g start at \lnk{food:plant} and looked for examples]{khishigsuren_bella_brochhagen_marav_giunchiglia_batsuren_2022} 
+\item With ChainNet we can go bottom-up and find many more patterns
+  \begin{itemize}
+  \item We can use multi-lingual features
+  \item We need to investigate methods of clustering
+  \item We need to find a good way of evaluating
+  \end{itemize}
+\item We would like to also map to existing Conceptual Metaphors
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{The Patterns can be used Generatively}
+  \begin{itemize}
+  \item If we see a word that is of type \lnk{food}, then we can expect that
+    there may be a kind of plant using the same word
+    \begin{itemize}
+    \item Useful for analyzing texts that otherwise don't make sense
+    \item Can be used to analyse humour and word play \\
+    \end{itemize}
+  \end{itemize}
+
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{spaghetti-tree.png} \\
+    \href{https://en.wikipedia.org/wiki/Spaghetti-tree_hoax}{BBC Spaghetti Tree hoax (1957)}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Metaphor in Large Language Models}
+  \begin{itemize}
+  \item Because these tropes are so established, LLMs capture the
+    patterns well, and can generalise to novel examples, at least for languages with a lot of online data
+  \item E.g. For Spanish, \citet{puraivan2024metaphor} found ChatGPT
+    could differentiate literal from metaphorical senses with an
+    accuracy of 85-88\% (on a small dataset)
+    \begin{itemize}
+    \item This is high enough to cause \txx{automation blindness}
+    \item It is very hard for a human to spot mistakes
+    \end{itemize}
+  \item We expect that this accuracy will go down for languages with
+    less data and for less common senses, but have not yet confirmed
+    this
+  \item There are also interesting questions of how much metaphor
+    interpretation in multilingual models is effected by other languages
+    \\ The DanNet group have found metaphors in Danish not ofund in English are less likely to be recognized
+  \item So we feel it is important to
+    keep working on producing reliable
+    manually annotated data
+  \end{itemize}%     
+
+  
+ \end{frame}
+
+
+\begin{frame}{Future Work}
+
+  \begin{itemize}
+  \item We are interested in looking at
+    the relation between in-context uses
+    and tropes
+  \\  Using sense-tagged corpora we can see 
+    \begin{itemize}
+    \item If basic uses or extended uses are more common
+    \item Do similar tropes cluster?
+    \item Do different genres use different tropes?
+    \end{itemize}
+  \item We would like to do large scale
+    annotation on another language
+    (probably start with Japanese)
+  \item We are looking in detail at a small sample: currently investigating
+    \lnk{animal:person} metaphors
+    \begin{itemize}
+    \item  \eng{Be a \ul{lamb} and give me a hand, ...}
+    \item In Chinese, Czech, English, French,
+      Indonesian, Japanese, Javanese,
+      Korean, Slovak and Vietnamese  --- it would be good to include some sign
+    \end{itemize}
+  \item We would like to investigate similarities and differences in images, \ldots
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Summary}
+  
+\begin{itemize}
+\item The combination of detailed annotation of meaning and
+  cross-lingual links allow us to explore differences in meaning
+  representation
+  \begin{itemize}
+  \item  Metonymy is based on association and contiguity
+    \\ \txx{more universal}
+  \item  Metaphor often requires analogical reasoning and cultural framing
+    \\ \txx{more culture and language specific}
+  \end{itemize}
+\item We don't know if the tropes are independently discovered, come from a common ancestor, or are borrowed (the same problem as with cognates in etymology)
+\item We need to add to wordnet and make searchable
+  \begin{itemize}
+  \item Add as sense-level relations, not etymology, contra \citet{khan-etal-2020-modelling}
+  \end{itemize}
+\item LLMs may capture these regularities, but are hard to explore with
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Acknowledgements}
+  
+\begin{itemize}
+\item Thanks to Bolette Pederson and the DanNet group for some very useful discussions
+\item ChainNet is primarily the work of Rowan Hall-Maudslay \email{r.hallmaudslay@gmail.com}
+  \\ \url{https://github.com/rowanhm/ChainNet}
+\item The Open Multilingual Wordnet brings together wordnets made by many projects, we thank them all
+\item Data and code for the cross-lingual analysis is available at \url{https://github.com/bond-lab/chainnet-xling}
+  \\ (still changing a lot)
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{OMW 1.4}
+  \begin{itemize}
+  \item The OMW is a collection of wordnets for different languages.
+  \item These languages are linked through the collaborative interlingual index \citep[CILI;][]{Bond:Vossen:McCrae:Fellbaum:2016}, a language-neutral list of concepts that is linked to by the various wordnets.
+    
+  \item The combined wordnets include 
+English \citep{_Fellbaum:1998}, 
+Albanian \citep{Ruci:2008}, 
+Arabic \citep{Black:Elkateb:Rodriguez:Alkhalifa:Vossen:Pease:Bertran:Fellbaum:2006}, 
+Chinese \citep{Huang:Hsieh:Hong:Chen:Su:Chen:Huang:2010}, 
+Danish \citep{Pedersen:2009}, 
+Finnish \citep{Linden:Carlson:2010}, 
+French \citep{Sagot:Fiser:2008}, 
+Hebrew \citep{Ordan:Wintner:2007},
+Indonesian and Malaysian (Nurril Hirfana et al., \citeyear{Noor:Sapuan:Bond:2011}), 
+Italian \citep{Pianta:Bentivogli:Girardi:2002,Toral:Bracale:Monachini:Soria:2010}, 
+Japanese \citep{Isahara:Bond:Uchimoto:Utiyama:Kanzaki:2008}, 
+Norwegian Bokm\r{a}l and Norwegian Nynorsk (Lars Nygaard, personal communication 2012),
+Persian \citep{Montazery:Faili:2010}, 
+Portuguese \citep{Paiva:Rademaker:2012};
+Polish \citep{Piasecki:Szpakowicz:Broda:2009}, 
+Thai \citep{Thoongsup:Charoenporn:Robkop:Sinthurahat:Mokarat:Sornlertlamvanich:Isahara:2009},
+and Basque, Catalan, Galician and Spanish \citep{Gonzalez-Agirre:Laparra:Rigau:2012}.
+\item Data is available from \url{https://github.com/omwn/omw-data}
+\item We used the python \defn{wn} module \citep{Goodman:Bond:2021}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[allowframebreaks]{References}
+  \bibliographystyle{acl_natbib}
+  \bibliography{mtg.bib,local.bib}
+\end{frame}
+
+\end{document}
+
+%%% Local Variables:
+%%% coding: utf-8
+%%% mode: latex
+%%% TeX-PDF-mode: t
+%%% TeX-engine: lualatex
+%%% TeX-master: t
+%%% End: 
+

@@ -1,0 +1,145 @@
+%%%
+%%% Macros for typesetting ChainNet metaphors
+%%%
+
+\usepackage{tikz}
+\usepackage{tikz-dependency}
+
+% \begin{tikzpicture}[derivation]
+% \node[lit_definition, text width=2.7cm] (1) at (0,0) {\sense{march}{{2}} [\synonym{marching}] the act of marching; walking with regular steps};
+% \node[ass_definition, text width=2.cm] (3) [right = 1.6cm of 1] {\sense{march}{{4}} a procession of people walking together};
+% \node[lit_definition, text width=2.9cm] (4) [below right = .6cm and -2.8cm of 1] {\sense{march}{{1}} the month following February and preceding April};
+% 
+%     \path[related] (1) edge node[anchor=south, font={\footnotesize}] {\relatededgelabel} (3);
+% \node[met_definition, text width=2.6cm] (2) [below = .65cm of 3] {\sense{march}{{3}} a steady advance, e.g.\ ``the march of science''};
+%         \path[analogy] (3) edge node[anchor=west, font={\footnotesize}] {\metaphoricaledgelabel} (2);
+% \end{tikzpicture}
+
+
+\newcommand{\lexbox}[5]{\node[#2, text width=#1, anchor=north] (#3) #4 {#5};}
+
+\newcommand{\litbox}[4][3cm]{\lexbox{#1}{lit_definition}{#2}{#3}{#4}}
+\newcommand{\assbox}[4][3cm]{\lexbox{#1}{ass_definition}{#2}{#3}{#4}}
+\newcommand{\metbox}[4][3cm]{\lexbox{#1}{met_definition}{#2}{#3}{#4}}
+
+% typesetting:
+\newcommand{\defn}[1]{{\textbf{#1}}}
+\newcommand{\metaphor}[1]{\textsc{#1}}
+\newcommand{\word}[1]{\textit{#1}}
+\newcommand{\concept}[1]{\textsc{#1}}
+\newcommand{\letter}[1]{\texttt{#1}}
+\newcommand{\sense}[2]{\word{#1}\textsubscript{${#2}$}} %%% FCB
+\newcommand{\synonym}[1]{\textit{#1}}
+
+% % maths:
+% \newcommand{\calP}{{\mathcal{P}}}
+% \newcommand{\calS}{\mathcal{S}}
+% \newcommand{\calW}{\mathcal{W}}
+% \newcommand{\calE}{\mathcal{E}}
+% \newcommand{\calM}{\mathcal{M}}
+% \newcommand{\calZ}{\mathcal{Z}}
+% \newcommand{\calC}{\mathcal{C}}
+% \newcommand{\calR}{\mathcal{R}}
+% \newcommand{\calX}{\mathcal{X}}
+% \newcommand{\calF}{\mathcal{F}}
+% \newcommand{\calG}{\mathcal{G}}
+% \newcommand{\calT}{\mathcal{T}}
+% \newcommand{\real}{\mathbb{R}}
+% \newcommand{\ve}{\mathbf{e}}
+% \newcommand{\vs}{\mathbf{s}}
+% \newcommand{\vc}{\mathbf{c}}
+% \newcommand{\vd}{\mathbf{d}}
+% \newcommand{\vp}{\mathbf{p}}
+% \newcommand{\vx}{\mathbf{x}}
+% \newcommand{\vy}{\mathbf{y}}
+% \newcommand{\vv}{\mathbf{v}}
+% \newcommand{\vz}{\mathbf{z}}
+% \newcommand{\vh}{\mathbf{h}}
+% \newcommand{\vm}{\mathbf{m}}
+% \newcommand{\vw}{\mathbf{w}}
+% \DeclareMathOperator*{\score}{score}
+% \DeclareMathOperator*{\biaff}{biaff}
+% \DeclareMathOperator*{\MLP}{MLP}
+% \DeclareMathOperator*{\LSTM}{LSTM}
+% \DeclareMathOperator*{\mean}{mean}
+% \DeclareMathOperator*{\softmax}{softmax}
+% \DeclareMathOperator*{\argmax}{argmax}
+% \DeclareMathOperator*{\argmin}{argmin}
+% \DeclareMathOperator*{\ARI}{ARI}
+
+\newcommand{\setsize}[1]{|{#1}|}
+
+\newcommand{\literalcolour}{Brown}
+\newcommand{\relatedcolour}{Bittersweet}
+\newcommand{\metaphoricalcolour}{Purple}
+\newcommand{\conduitcolour}{Gray}
+
+\newcommand{\literallabel}{Prototype}
+\newcommand{\relatedlabel}{Associated}
+\newcommand{\metaphoricallabel}{Metaphorical}
+\newcommand{\relatededgelabel}{Metonymy}
+\newcommand{\relatededgelabelshort}{Meton.}
+\newcommand{\metaphoricaledgelabel}{Metaphor}
+\newcommand{\conduitlabel}{{ }+{ }Conduit}
+\newcommand{\conduitmetlabel}{\hphantom{\metaphoricallabel}\conduitlabel}
+\newcommand{\conduitasslabel}{\hphantom{\relatedlabel}\conduitlabel}
+
+\newcommand{\tabspace}{\addlinespace[0.6em]}
+\newcommand{\slipspace}{\addlinespace[0.1em]}
+\newcommand{\tighteq}{\,{=}\,}
+
+\usepackage{adjustbox}
+\usepackage{array}
+
+\newcolumntype{R}[2]{%
+    >{\adjustbox{angle=#1,lap=\width-(#2)}\bgroup}%
+    l%
+    <{\egroup}%
+}
+\newcommand*\rot{\multicolumn{1}{R{30}{1.5em}}}
+
+\newcommand{\literal}{\makecell{\textcolor{\literalcolour}{\literallabel}}}
+\newcommand{\related}[2]{\makecell{\textcolor{\relatedcolour}{\relatedlabel} \\ \textcolor{\relatedcolour}{(from \sense{#1}{#2})}}}
+\newcommand{\onlymetaphorical}{\makecell{\textcolor{\metaphoricalcolour}{\metaphoricallabel}}}
+\newcommand{\metaphorical}[2]{\makecell{\textcolor{\metaphoricalcolour}{\metaphoricallabel} \\ \textcolor{\metaphoricalcolour}{(from \sense{#1}{#2})}}}
+\newcommand{\feature}[1]{\scalebox{.8}[1.0]{\texttt{#1}}}
+\newcommand{\yesfeature}[1]{\textcolor{Green}{\feature{#1}}}
+\usepackage[normalem]{ulem}
+\newcommand{\nofeature}[1]{\textcolor{Red}{\sout{\feature{#1}}}}
+\newcommand{\maybefeature}[2]{\textcolor{Green}{\feature{#1}} \textcolor{Orange}{\feature{#2}}}
+\newcommand{\allmaybefeature}[1]{\textcolor{Orange}{\feature{#1}}}
+\newcommand{\defaultdepth}{0pt}
+\tikzset{definition/.style={align=left, shape=rectangle,draw=black, font={\footnotesize}, fill=black!0!white}}
+\tikzset{invis/.style={align=left, shape=rectangle,draw=none, font={\footnotesize}, fill=none,text opacity=0}}
+\tikzset{lit_definition/.style={anchor=center, align=left, shape=rectangle,draw=\literalcolour, font={\footnotesize}, label={[label distance=-.05cm]:{\footnotesize{\textcolor{\literalcolour}{\literallabel}}}}, fill=black!0!white}}
+
+\tikzset{met_definition/.style={align=left, shape=rectangle,draw=\metaphoricalcolour, font={\footnotesize}, fill=black!0!white}}
+\tikzset{ass_definition/.style={align=left, shape=rectangle,draw=\relatedcolour, font={\footnotesize}, fill=black!0!white}}
+\tikzset{ghost/.style={ass_definition, dashed}}
+\tikzset{ghost_core/.style={lit_definition, dashed}}
+
+% , on layer=bg
+\tikzset{split/.style={-, dashed, line width=.3mm, Gray}}
+\tikzset{start/.style={->, line width=.3mm, \literalcolour}}
+\tikzset{analogy/.style={->, line width=.3mm, \metaphoricalcolour}}
+\tikzset{related/.style={->, line width=.3mm, \relatedcolour}}
+\tikzset{unknown/.style={->, line width=.3mm}}
+
+\tikzset{derivation/.style={node distance = .7cm and %1.9cm}}
+1cm}}
+\tikzset{tight/.style={node distance = .55cm and .5cm}}
+\tikzset{close/.style={node distance = .6cm and %1.9cm}}
+.3cm}}
+
+\newenvironment{tightcenter}{%
+  \setlength\topsep{0pt}
+  \setlength\parskip{0pt}
+  \begin{center}
+}{%
+  \end{center}
+}
+
+\newcommand{\featuregoesto}{\textcolor{\metaphoricalcolour}{$\rightarrow$}}
+% space hacks
+\setlength{\belowcaptionskip}{-5pt}
+\everypar{\looseness=-1}

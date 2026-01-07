@@ -1,0 +1,674 @@
+% llm_embeddings_lexsem.tex
+% Compile: pdflatex llm_embeddings_lexsem.tex  (or lualatex/xelatex)
+% If you want bibliography: run biber (see notes near the end)
+
+\documentclass{beamer}
+\input{shared.tex}
+
+\usepackage{booktabs}
+
+
+% --- Optional: biblatex (uncomment if you want refs printed) ---
+% \usepackage[backend=biber,style=authoryear]{biblatex}
+% \addbibresource{llm_embeddings_lexsem.bib}
+
+\title[Lexical meaning in the LLM era]{Word Meaning, Embeddings, and LLMs\\(with BERT/ELMo and Multilingual Embeddings)}
+\author{Francis Bond}
+\institute{Methods in Lexical Semantics (LOT / RM / PhD)}
+\date{}
+
+\begin{document}
+
+% 1
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% 2
+\begin{frame}{What this lecture is about}
+\begin{itemize}
+  \item How do modern systems represent word meaning?
+  \item From symbolic lexical resources to vectors to contextual LLM representations
+  \item What you can \emph{measure} (and what you should \emph{distrust})
+\end{itemize}
+\end{frame}
+
+% 3
+\begin{frame}{Learning outcomes}
+By the end, you should be able to:
+\begin{itemize}
+  \item explain the difference between \textbf{static} and \textbf{contextual} embeddings
+  \item connect embedding behavior to classic lexical semantic phenomena (polysemy, similarity, relations)
+  \item outline how multilingual embeddings enable cross-lingual comparison
+  \item design a small evaluation or probing task using embeddings
+\end{itemize}
+\end{frame}
+
+% 4
+\begin{frame}{Plan (high level)}
+\begin{enumerate}
+  \item Lexical meaning: what we want to capture
+  \item Static embeddings: distributional semantics
+  \item Contextual embeddings: ELMo $\rightarrow$ BERT $\rightarrow$ LLMs
+  \item Multilingual embeddings: alignment + cross-lingual transfer
+  \item WordNets vs embeddings: complements, hybrids, and pitfalls
+\end{enumerate}
+\end{frame}
+
+% 5
+\begin{frame}{Lexical semantics refresher: the targets}
+\begin{itemize}
+  \item \textbf{Sense} vs \textbf{use}: lexeme, lemma, token
+  \item \textbf{Polysemy}: systematic vs accidental
+  \item \textbf{Lexical relations}: synonymy, hypernymy, meronymy, antonymy
+  \item \textbf{Context effects}: meaning modulation, coercion, selectional preferences
+\end{itemize}
+\end{frame}
+
+% 6
+\begin{frame}{Why representations matter}
+\begin{itemize}
+  \item We use representations to:
+  \begin{itemize}
+    \item test hypotheses (e.g., semantic neighborhoods, category structure)
+    \item generalize (e.g., inference, similarity, analogy)
+    \item build systems (WSD, IR, MT, QA, IE)
+  \end{itemize}
+  \item Different representations make different assumptions visible/invisible
+\end{itemize}
+\end{frame}
+
+% 7
+\begin{frame}{Symbolic vs distributional: a mental contrast}
+\begin{itemize}
+  \item \textbf{Symbolic} (WordNet): explicit senses and relations, interpretable edges
+  \item \textbf{Distributional} (embeddings): similarity from usage patterns, implicit structure
+  \item \textbf{Contextual} (BERT/LLMs): meaning as a function of context, dynamic vectors
+\end{itemize}
+\end{frame}
+
+% 8
+\begin{frame}{The distributional hypothesis (intuition)}
+\begin{itemize}
+  \item ``You shall know a word by the company it keeps''
+  \item Words with similar contexts tend to have related meanings
+  \item Build meaning from co-occurrence statistics
+\end{itemize}
+\end{frame}
+
+% 9
+\begin{frame}{From counts to vectors (very schematic)}
+\begin{itemize}
+  \item Choose a vocabulary of \textbf{targets} and \textbf{contexts}
+  \item Fill a co-occurrence matrix (counts or weighted)
+  \item Reduce dimensionality / learn parameters
+  \item Use cosine similarity to compare vectors
+\end{itemize}
+\end{frame}
+
+% 10
+\begin{frame}{Static embeddings: what they are}
+\begin{itemize}
+  \item One vector per word type (e.g., \texttt{bank} has one vector)
+  \item Learned to predict contexts (or from matrix factorization)
+  \item Captures graded similarity and topical association
+  \item Struggles with polysemy and compositional nuance
+\end{itemize}
+\end{frame}
+
+% 11
+\begin{frame}{Word2vec: CBOW and Skip-gram (idea)}
+\begin{itemize}
+  \item CBOW: predict target from surrounding words
+  \item Skip-gram: predict surrounding words from target
+  \item Training yields embeddings that capture distributional regularities
+\end{itemize}
+\end{frame}
+
+% 12
+\begin{frame}{What ``similarity'' in embeddings often reflects}
+\begin{itemize}
+  \item taxonomic similarity (dog $\sim$ cat)
+  \item topical association (dog $\sim$ leash)
+  \item register/domain clustering
+  \item frequency effects (high-frequency words become hubs)
+\end{itemize}
+\end{frame}
+
+% 13
+\begin{frame}{Mini-exercise (discussion)}
+Pick a word: \texttt{paper}, \texttt{mouse}, \texttt{bank}.
+\begin{itemize}
+  \item What different senses/usages do you expect?
+  \item In a static embedding, which neighbors would you expect?
+  \item Would they group by sense, topic, or frequency?
+\end{itemize}
+\end{frame}
+
+% 14
+\begin{frame}{Evaluating static embeddings (classic)}
+\begin{itemize}
+  \item word similarity datasets (human judgments)
+  \item analogy tasks (limited diagnostic value)
+  \item downstream tasks (task-specific, can hide problems)
+\end{itemize}
+\end{frame}
+
+% 15
+\begin{frame}{Why lexical semantics cares about failure cases}
+\begin{itemize}
+  \item Polysemy: one vector conflates senses
+  \item Antonymy: distributionally similar but semantically opposed
+  \item Rare senses: dominated by majority usage
+  \item Multiword expressions: meanings not reducible to parts
+\end{itemize}
+\end{frame}
+
+% 16
+\begin{frame}{From static to contextual: the key shift}
+\begin{itemize}
+  \item Static: vector(word)
+  \item Contextual: vector(word, context)
+  \item Same surface word gets different embeddings in different sentences
+\end{itemize}
+\end{frame}
+
+% 17
+\begin{frame}{ELMo (high-level)}
+\begin{itemize}
+  \item Deep contextualized word representations from a language model
+  \item BiLSTM: left and right contexts
+  \item Representations are layer-wise; different layers encode different info
+\end{itemize}
+\end{frame}
+
+% 18
+\begin{frame}{ELMo: why it mattered}
+\begin{itemize}
+  \item Demonstrated strong gains on many NLP tasks
+  \item Provided an operational way to represent polysemy via context
+  \item Encouraged probing analyses: ``what is encoded where?''
+\end{itemize}
+\end{frame}
+
+% 19
+\begin{frame}{Transformers: the next leap}
+\begin{itemize}
+  \item Self-attention replaces recurrent sequence processing
+  \item Better long-range dependencies
+  \item Efficient parallel training at scale
+\end{itemize}
+\end{frame}
+
+% 20
+\begin{frame}{BERT (high-level)}
+\begin{itemize}
+  \item Bidirectional Transformer encoder
+  \item Pretraining objectives:
+  \begin{itemize}
+    \item masked language modeling (MLM)
+    \item (originally) next sentence prediction (NSP)
+  \end{itemize}
+  \item Produces contextual token embeddings
+\end{itemize}
+\end{frame}
+
+% 21
+\begin{frame}{Tokenization matters (WordPiece/BPE)}
+\begin{itemize}
+  \item Many models operate on subword units
+  \item ``word meaning'' becomes distributed over tokens
+  \item Morphology interacts with representation (good and bad)
+\end{itemize}
+\end{frame}
+
+% 22
+\begin{frame}{Contextual embeddings and word senses}
+\begin{itemize}
+  \item Clustering token embeddings of the same word often yields sense-like groupings
+  \item But clusters depend on:
+  \begin{itemize}
+    \item corpus domain and genre
+    \item model architecture and layer
+    \item tokenization and frequency
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+% 23
+\begin{frame}{Which layer should I use?}
+\begin{itemize}
+  \item Lower layers: morphology, local syntax, surface patterns
+  \item Middle layers: syntax/semantics interface signals
+  \item Higher layers: task-like abstractions, discourse-ish effects
+  \item Rule of thumb: try several layers and report sensitivity
+\end{itemize}
+\end{frame}
+
+% 24
+\begin{frame}{Probing lexical semantic information in BERT-like models}
+\begin{itemize}
+  \item similarity neighborhoods for contextual tokens
+  \item relation classification (hypernymy/meronymy probing)
+  \item selectional preference tests (verb-object plausibility)
+  \item sense discrimination via clustering / contrastive contexts
+\end{itemize}
+\end{frame}
+
+% 25
+\begin{frame}{LLMs: where do embeddings fit?}
+\begin{itemize}
+  \item LLMs still begin with an \textbf{embedding layer} for tokens
+  \item Hidden states evolve through many layers (contextual representations)
+  \item Output layer maps back to vocabulary logits (or tied embeddings)
+\end{itemize}
+\end{frame}
+
+% 26
+\begin{frame}{Word meaning from the LLM viewpoint}
+\begin{itemize}
+  \item Meaning as \textbf{predictive utility}: what helps next-token prediction?
+  \item Representations are:
+  \begin{itemize}
+    \item highly contextual
+    \item multi-purpose (syntax, semantics, world knowledge signals)
+    \item shaped by training data distributions and objectives
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+% 27
+\begin{frame}{Lexical semantics in an LLM pipeline}
+\begin{itemize}
+  \item Retrieval + embeddings (semantic search)
+  \item Prompting + in-context learning
+  \item Fine-tuning / adapters
+  \item Evaluation: semantic consistency across paraphrases and languages
+\end{itemize}
+\end{frame}
+
+% 28
+\begin{frame}{Static vs contextual: a quick comparison table}
+\begin{tabular}{@{}lll@{}}
+\toprule
+ & Static embeddings & Contextual embeddings \\
+\midrule
+Representation & word type & token-in-context \\
+Polysemy & conflated & partially separated \\
+Interpretability & low & low (but probeable) \\
+Compute & cheap & expensive \\
+Cross-lingual & alignable & depends on model \\
+\bottomrule
+\end{tabular}
+\end{frame}
+
+% 29
+\begin{frame}{Multilingual embeddings: why linguists care}
+\begin{itemize}
+  \item compare lexicalization patterns across languages
+  \item transfer models/data (low-resource settings)
+  \item measure semantic shift and contact effects cross-lingually
+  \item support multilingual resources (WordNets, dictionaries)
+\end{itemize}
+\end{frame}
+
+% 30
+\begin{frame}{Two main routes to multilingual embeddings}
+\begin{enumerate}
+  \item \textbf{Align monolingual spaces} (post-hoc mapping)
+  \item \textbf{Train multilingual models} (shared parameters/data)
+\end{enumerate}
+\end{frame}
+
+% 31
+\begin{frame}{Aligned monolingual embeddings (sketch)}
+\begin{itemize}
+  \item Train embeddings separately per language
+  \item Learn a mapping using:
+  \begin{itemize}
+    \item bilingual lexicon / seed dictionary
+    \item identical strings / numerals
+    \item unsupervised alignment assumptions
+  \end{itemize}
+  \item Result: shared vector space for cross-lingual similarity
+\end{itemize}
+\end{frame}
+
+% 32
+\begin{frame}{FastText: a practical ingredient}
+\begin{itemize}
+  \item Subword-based embeddings help morphology and rare words
+  \item Commonly used as a baseline for multilingual alignment
+  \item Easy to get for many languages
+\end{itemize}
+\end{frame}
+
+% 33
+\begin{frame}{MUSE-style alignment (intuition)}
+\begin{itemize}
+  \item Find a linear map between spaces
+  \item Iteratively refine with nearest-neighbor lexicons
+  \item Evaluate with bilingual lexicon induction
+\end{itemize}
+\end{frame}
+
+% 34
+\begin{frame}{Multilingual contextual models}
+\begin{itemize}
+  \item mBERT: multilingual BERT trained on many Wikipedias
+  \item XLM-R: robust multilingual pretraining on large web data
+  \item LaBSE / LASER: sentence-level multilingual representations
+\end{itemize}
+\end{frame}
+
+% 35
+\begin{frame}{What ``shared space'' means in mBERT/XLM-R}
+\begin{itemize}
+  \item One model, shared subword vocabulary (partly)
+  \item Languages can align implicitly through shared parameters
+  \item Degree of alignment varies by:
+  \begin{itemize}
+    \item script overlap, data size, typological distance, domain
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+% 36
+\begin{frame}{Cross-lingual lexical semantics with multilingual models}
+\begin{itemize}
+  \item nearest-neighbor translation (token or sentence embeddings)
+  \item sense discrimination across languages (clustering)
+  \item lexical gap detection (no close counterpart)
+  \item semantic domain comparison (field-level analysis)
+\end{itemize}
+\end{frame}
+
+% 37
+\begin{frame}{Mini-exercise idea (multilingual embeddings)}
+\begin{itemize}
+  \item Pick 10 synsets from OMW (e.g., emotions, motion verbs)
+  \item For each language, collect lemmas
+  \item Compare:
+  \begin{itemize}
+    \item WordNet graph distance vs embedding cosine similarity
+    \item Nearest neighbors in each language space
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+% 38
+\begin{frame}{Where multilingual embeddings go wrong (often)}
+\begin{itemize}
+  \item language-specific polysemy patterns misalign
+  \item named entities and cultural terms cluster oddly
+  \item domain mismatch (Wikipedia vs conversational text)
+  \item scripts and tokenization (segmentation differences)
+\end{itemize}
+\end{frame}
+
+% 39
+\begin{frame}{WordNet: why lexical graphs still matter}
+\begin{itemize}
+  \item explicit relations: hypernymy, meronymy, antonymy, etc.
+  \item interpretable structure: paths, subgraphs, constraints
+  \item supports controlled generalization and explainability
+  \item useful for evaluation and error analysis of embeddings/LLMs
+\end{itemize}
+\end{frame}
+
+% 40
+\begin{frame}{WordNet vs embeddings: complementary strengths}
+\begin{itemize}
+  \item WordNet excels at \textbf{typed relations} and \textbf{sense inventories}
+  \item Embeddings excel at \textbf{graded similarity} and \textbf{coverage} (if data exists)
+  \item Together:
+  \begin{itemize}
+    \item sense clustering + labeling
+    \item relation discovery + verification
+    \item cross-lingual mapping sanity checks
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+% 41
+\begin{frame}{A simple hybrid picture}
+\begin{itemize}
+  \item Use embeddings to propose candidates:
+  \begin{itemize}
+    \item synonyms / hypernyms / translations
+  \end{itemize}
+  \item Use WordNet/OMW to:
+  \begin{itemize}
+    \item validate relation type
+    \item control sense granularity
+    \item provide glosses and structure for interpretation
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+% 42
+\begin{frame}{Embedding similarity vs WordNet distance}
+\begin{itemize}
+  \item WordNet distance: graph shortest path / information content
+  \item Embedding distance: cosine similarity in vector space
+  \item They correlate sometimes, but diverge:
+  \begin{itemize}
+    \item topical association vs taxonomic similarity
+    \item antonymy and co-hyponymy
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+% 43
+\begin{frame}{Polysemy: a worked example (template)}
+\begin{itemize}
+  \item Word: \texttt{bank}
+  \item WordNet senses:
+  \begin{itemize}
+    \item financial institution
+    \item river bank
+  \end{itemize}
+  \item Compare:
+  \begin{itemize}
+    \item static neighbors
+    \item BERT token neighbors in two contexts
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+% 44
+\begin{frame}{Contextual neighbors: how to do it (conceptually)}
+\begin{itemize}
+  \item Choose two sentences with different senses
+  \item Extract token embedding from a chosen layer
+  \item Retrieve nearest neighbors (in a reference bank of token embeddings)
+  \item Interpret: does it separate sense or topic?
+\end{itemize}
+\end{frame}
+
+% 45
+\begin{frame}{Multilingual sense comparison (template)}
+\begin{itemize}
+  \item Pick a synset in OMW (concept anchor)
+  \item List lemmas across languages
+  \item Ask:
+  \begin{itemize}
+    \item Are lemmas equally polysemous?
+    \item Are there lexical gaps?
+    \item Does embedding similarity preserve the mapping?
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+% 46
+\begin{frame}{LLMs and lexical relations: promise and risk}
+\begin{itemize}
+  \item LLMs can generate plausible relations (hypernyms, synonyms)
+  \item But:
+  \begin{itemize}
+    \item relation \emph{type} can drift
+    \item sense boundaries can blur
+    \item hallucinations are confident and well-formed
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+% 47
+\begin{frame}{A practical workflow for students}
+\begin{enumerate}
+  \item Use OMW as the semantic backbone (concepts + relations)
+  \item Use embeddings to explore neighborhoods and candidate links
+  \item Validate by:
+  \begin{itemize}
+    \item gloss inspection and examples
+    \item relation constraints (POS, domain, hierarchy)
+    \item cross-lingual consistency checks
+  \end{itemize}
+\end{enumerate}
+\end{frame}
+
+% 48
+\begin{frame}{Multilingual embeddings: evaluation ideas}
+\begin{itemize}
+  \item bilingual lexicon induction accuracy
+  \item cross-lingual semantic similarity judgment
+  \item zero-shot transfer on a semantic task
+  \item alignment stability across domains (news vs wiki vs social)
+\end{itemize}
+\end{frame}
+
+% 49
+\begin{frame}{What to report in a small study}
+\begin{itemize}
+  \item data source and preprocessing (tokenization matters!)
+  \item model choice (static vs contextual; which multilingual model)
+  \item layer choice and sensitivity analysis
+  \item qualitative error analysis (with examples)
+\end{itemize}
+\end{frame}
+
+% 50
+\begin{frame}{Common pitfalls (lexical semantics edition)}
+\begin{itemize}
+  \item confusing topical association with synonymy
+  \item treating embedding clusters as ``true senses''
+  \item ignoring frequency and domain imbalance
+  \item evaluating only on English-like phenomena
+\end{itemize}
+\end{frame}
+
+% 51
+\begin{frame}{Ethics and bias (brief)}
+\begin{itemize}
+  \item embeddings inherit biases in training data
+  \item multilingual models can amplify majority-language norms
+  \item lexical resources also encode editorial choices and cultural perspectives
+\end{itemize}
+\end{frame}
+
+% 52
+\begin{frame}{Where WordNet helps with bias analysis}
+\begin{itemize}
+  \item explicit semantic categories for auditing
+  \item controlled contrasts across relation types
+  \item sense-level framing can reduce some confounds (sometimes)
+\end{itemize}
+\end{frame}
+
+% 53
+\begin{frame}{Where embeddings help WordNet work}
+\begin{itemize}
+  \item suggest missing lemmas and candidate senses
+  \item detect inconsistent placements (outliers in semantic fields)
+  \item support semi-automatic linking across languages
+\end{itemize}
+\end{frame}
+
+% 54
+\begin{frame}{One slide on ``LLM-era'' takeaways}
+\begin{itemize}
+  \item Word meaning is now routinely modeled as \textbf{contextual representation}
+  \item Lexical semantics remains essential for:
+  \begin{itemize}
+    \item evaluation, interpretability, and controlled inference
+    \item cross-lingual conceptual comparison
+    \item building and maintaining lexical resources
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+% 55
+\begin{frame}{Suggested practical demo (in class)}
+\begin{itemize}
+  \item Choose 1 ambiguous word (EN + NL)
+  \item Two contexts per sense
+  \item Compare:
+  \begin{itemize}
+    \item OMW synsets + relations
+    \item static neighbors (fastText)
+    \item contextual neighbors (mBERT/XLM-R token embeddings)
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+% 56
+\begin{frame}{Suggested mini-project prompt (1 page)}
+\begin{itemize}
+  \item Build a 10–15 concept mini-field via OMW
+  \item Provide:
+  \begin{itemize}
+    \item a small graph visualization
+    \item 2–3 cross-lingual ``interesting cases''
+    \item embedding-based comparison + error analysis
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+% 57
+\begin{frame}{If you only remember 5 points}
+\begin{enumerate}
+  \item Static embeddings conflate senses
+  \item Contextual embeddings partially separate senses
+  \item Tokenization and layer choice matter
+  \item Multilingual spaces are imperfect and uneven
+  \item WordNets provide interpretable structure for testing hypotheses
+\end{enumerate}
+\end{frame}
+
+% 58
+\begin{frame}{Further reading (core)}
+\begin{itemize}
+  \item ELMo (contextualized embeddings)
+  \item BERT (transformer contextual representations)
+  \item Multilingual models: mBERT, XLM-R, LASER/LaBSE
+  \item WordNet/OMW docs for symbolic grounding
+\end{itemize}
+\end{frame}
+
+% 59
+\begin{frame}{References (optional slide)}
+\begin{itemize}
+  \item Add your preferred references here (or enable biblatex at top)
+  \item I included a ready-to-use .bib below this file (copy/paste)
+\end{itemize}
+\end{frame}
+
+% 60
+\begin{frame}{Questions}
+\centering
+\Large Questions / discussion
+\end{frame}
+
+% --- If using biblatex, uncomment:
+% \begin{frame}[allowframebreaks]{References}
+%   \printbibliography
+% \end{frame}
+
+\end{document}
+
+%%% Local Variables: 
+%%% coding: utf-8
+%%% mode: latex
+%%% TeX-PDF-mode: t
+%%% TeX-engine: lualatex
+%%% End: 
