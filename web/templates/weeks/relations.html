@@ -1,6 +1,115 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>{{ info.title }}</h2>
-<p>This is the content for <i>{{ info.title }}</i>, scheduled for {{ info.date }}.</p>
+<h2>{{ info.title }} ({{ info.date }})</h2>
+
+<ul>
+  <li>Introduction to word meaning (<a href="{{ url_for('static', filename='pdf/lec-01-word-meaning.pdf')}}">slides</a>)
+    <p> We will start by introducing (or I expect for most of you revising) the basics of word meaning, both from a general linguistic point of view and then a little on computational representations such as wordnets.</p>
+  <li>Exploring word meaning with wordnets (and python)
+    <ul>
+      <li> Introduction to the <a href='https://github.com/goodmami/wn'>wn module<a/>
+      <li> Wn Module <a href='https://wn.readthedocs.io/en/latest/'>documentation</a>
+      <li> <a href='https://colab.research.google.com/drive/12fHOljna59xe2wDAQu-sIhYV8ertTCVF?usp=sharing'>Wordnet tutorial</a> on google colab
+    </ul>
+</ul>
+
+<h3>Using wordnet</h3>
+<ol>
+  <li>Use the <code>wn</code> module to load <code>omw-en:1.4</code> (Princeton Wordnet 3.0 formatted for WN) 
+<pre><code class="language-python">import wn
+wn.download('omw-en:1.4')
+ewn=wn.Wordnet('omw-en:1.4')
+</code></pre>
+  <li>  Look at the different synsets for <i>bird</i>
+    <ul>
+      <li> How many are there?
+      <li> What are their definitions?
+      <li> How deep in the hierarchy are they?
+      <li> For each synset, print out each sense and its frequency
+	(hint freqency of a lemma is given by <code>sense.counts</code>)
+      <li>Give the total frequency for each synset
+    </ul>
+    <li>Look at some adjectives:
+      Compare <i>big</i>, <i>large</i>, <i>great</i>. What are their <code>antonyms</code>?
+  <li>Multiword Expressions (Collocations):
+    A multiword expression (MWE) like <i>big sister</i> has its own WordNet entry.
+    <ul>
+      <li>
+	Which combinations of <i>big/large/great sister/uncle/toe</i> 
+	    are listed in WordNet?
+    </ul>
+  <li> Find all hyponyms (including hyponyms of hyponyms, ...) for the colour red!
+    <ul>
+      <li>Use <code>closure</code> (shown in the <a href='https://colab.research.google.com/drive/12fHOljna59xe2wDAQu-sIhYV8ertTCVF?usp=sharing'>tutorial</a>)
+    </ul>
+  <li> Tabulate the average polysemy per word length for all words
+    in one language in wordnet, and then seperately for each part of speech.
+    <ul>
+      <li> polysemy is number of synsets/word
+      <li> you can get all words by <code>[w for w  in ewn.words()]</code>
+      <li> for just nouns you can do:  <code>[w for w  in ewn.synsets(pos='n')]</code>
+      <li> if you use just <code>wn</code> then you get all words for all languages, this can be a lot!
+    </ul>
+
+</ol>
+
+
+
+<h3>Further work -- at home</h3>
+
+<ol>
+  <li>Find all nouns in English that are both animals and people
+    <ul>
+      <li> Use the <i>topic</i> (aka <i> lexfile, supersense </i> (<code>synset.lexfile()</code>) 
+    </ul>
+    e.g. <i>dog, lamb</i>
+    <li> Do you notice any patterns?
+  <!-- <li>Try in another language -->
+  <!--   <ul> -->
+  <!--     <li> Not all wordnets have supersenses, so you may have to -->
+  <!--     translate the synset to English, and look at the English -->
+  <!-- 	supersense -->
+  <!--   </ul> -->
+  <!--   e.g. 鶏, 兎 -->
+</ol>
+
+</ul>
+
+<h3>Readings/Preparation</h3>
+
+<ul>
+  <li> Read Kroeger (2022) Part II <i>Word Meanings</i>.
+  <li> Install <code>python (>= 3.10)</code> and the <code>wn (>=0.14) module</code>
+    <br> If you have an older python on you system, I suggest you
+    use <code>uv</code> or something similar to make a virtual
+    environment.  If that is beyond you, we can go through it after
+    class, an older version is fine for the first day.
+</ul>
+
+
+
+<h3>References</h3>
+
+<ul>
+  <li>Christiane Fellbaum, ed. (1998) <i>Wordnet: An Electronic
+      Lexical Database</i>. MIT Press
+  <li>Kroeger, Paul (2022) <i><a href='https://langsci-press.org/catalog/book/359'>Analyzing meaning: An introduction to semantics and
+	pragmatics. 3rd. edn.</a></i> (Textbooks in Language Sciences 5). Berlin: Language
+Science Press.
+  <li>Sidney I. Landau (1989) <i>Dictionaries: The Art and Craft of Lexicography</i>. Cambridge University Press,
+    Cambridge, UK.
+  <li> Lyons, John (1977) <i>Semantics</i>.  Cambridge University
+    Press  
+  <li> Saeed, John (2009). <i><a href='http://as.wiley.com/WileyCDA/WileyTitle/productCd-EHEP002308.html'>Semantics</a></i>. 4th Edition. Wiley-Blackwell.
+<li>WordNet
+  <ul>
+    <li>Browse the Open English WordNet: <a href="https://en-word.net/" class="uri">https://en-word.net/</a></li>
+    <li>The Open Multilingual Wordnet (1.0): <a href="https://compling.upol.cz/ntumc/cgi-bin/wn-gridx.cgi?gridmode=ntumcgrid">https://compling.upol.cz/ntumc/cgi-bin/wn-gridx.cgi?gridmode=ntumcgrid</a></li>
+    <li>The Open Multilingual Wordnet (2.0): <a href="http://compling.upol.cz/omw/" class="uri">http://compling.upol.cz/omw/</a></li>
+    <li>OMW Documentation: <a href="https://omwn.org/docs.html">https://omwn.org/docs.html</a> (POS, relations, topics, adjective positions)
+</ul></li></ul>
+
+
+
 {% endblock %}

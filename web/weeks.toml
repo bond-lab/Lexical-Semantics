@@ -2,7 +2,7 @@
 
 [weeks.relations]
 key = "relations"
-title = "From Lexical Relations to Lexical Resources"
+title = "Word Meanings and Wordnets"
 date = "01-12"
 
 [weeks.wordnets]
@@ -11,22 +11,21 @@ title = "Multilingual WordNets and Lexical Structure"
 date = "01-13"
 
 
-[weeks.distributions]
-key = "distributions"
-title = "Corpus and Distributional Evidence for Senses"
-date = "01-14"
-
-
 [weeks.multilingual]
 key = "multilingual"
 title = "Metaphor and Meaning"
-date = "01-15"
+date = "01-14"
 
+
+[weeks.distributions]
+key = "distributions"
+title = "Distributional Representations"
+date = "01-15"
 
 
 [weeks.applications]
 key = "applications"
-title = "Evaluation, Applications, and Language Maintenance"
+title = "Language Maintenance and Low Resource Languages"
 date = "01-16"
 
 

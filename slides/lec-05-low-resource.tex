@@ -1,209 +1,161 @@
-\PassOptionsToPackage{xetex,dvipsnames}{xcolor}
-\PassOptionsToPackage{xetex}{graphicx}
 \documentclass[xetex]{beamer}  % ue6aue6a
-\title[Wordnets for everyone]{Building wordnets for languages with few resources}
-%\\[2ex] \bl{Picking Brains, Crossing Ideas}}
-\author[Bond and many more]{Francis \textbf{Bond} 
-  \\ and many, many more}
+\input{shared.tex}
+
+\title[Lexical Relations]{Methods in Lexical Semantics \\
+Evaluation, Applications, and Language Maintenance}
+\author{Francis \textbf{Bond}}
 \institute[Palacký]{Department of Asian Studies,
 \\  Palacký University, Olomouc, Czechia
 \\[1.5ex] \url{<bond@ieee.org>}}
-%\date{\href{http://2016.fossasia.org/}{QTLEAP} 2016-09-10} %%% FIXME
-%\date{CLUNL 2017-12-18} %%% FIXME
-\date[2024-10-21]{Teanga Seminar Series} %%% FIXME
-\newcommand{\ili}[1]{\href{http://www.globalwordnet.org/ili/#1}{\url{#1}}}
 
+
+
+\date{LOT Winter School 2026}
 %%% make it smaller
  % gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/printer -dNOPAUSE -dQUIET -dBATCH -sOutputFile=omw-teanga-small.pdf omw-teanga.pdf 
 
+% \usepackage{array}
+% \newcolumntype{H}{>{\setbox0=\hbox\bgroup}c<{\egroup}@{}}
 
 
-%\usepackage[hidelinks]{hyperref}
-\hypersetup{ 
-     colorlinks, 
-     linkcolor={blue!50!black},
-     citecolor={red!50!black},
-     urlcolor={blue!80!black}
-}
+% \newcommand{\zhong}{\ensuremath{[\Big|]}}
+% % NUS Meeting Room 1 (MR 1) 	COM1-03-19
+% \newcommand{\bl}[1]{\textcolor{blue}{#1}}
+% %\newcommand{\sh}[1]{\textcolor{blue}{#1}}
+% \newcommand{\txx}[1]{\textbf{\textcolor{blue}{#1}}}
+% \usepackage{url}
+
+% %\newcommand{\wn}{\url}
+% \usepackage[e,f,j]{mtg2e}
+% \newcommand{\cmn}{\mtciteform}
+% \newcommand{\kor}{\mtciteform}
+% \renewcommand{\mtcitestyle}[1]{\textcolor{teal}{\textit{#1}}}
+% \usepackage{xcolor}
+%  \newcommand{\bs}{\textbackslash}   % backslash
+%  \newcommand{\cmd}[1]{{\bf \color{red}#1}}   % highlights command
+%  \newcommand{\wemp}[1]{\ul{#1}}   % highlight
+%  \newcommand{\emp}[1]{\textbf{\color{blue}{#1}}}   % highlight
+%  \newcommand{\rel}[1]{\textsc{\color{blue}{#1}}}
+%  \newcommand{\lnk}[1]{\rel{#1}}
+
+%  \newcommand{\lex}[1]{\textbf{\color{teal}{\textit{#1}}}}
+%  \newcommand{\lng}[1]{\textcolor{teal}{\textit{#1}}}
+% \newcommand{\wn}[3]{\lex{#1}\ensuremath{_{#2:#3}}}
+% \usepackage{relsize}
+% \newcommand{\wnida}[1]{\asort{\wnid{#1}}}
+% \newcommand{\wnid}[1]{\textsf{\smaller #1}}
+
+% \usepackage{mygb4e,url}
+% \usepackage[normalem]{ulem}
+% \newcommand{\ul}{\uline}
+% \newcommand{\ull}{\uuline}
+% \newcommand{\udl}{\dashuline}
+% \newcommand{\uwl}{\uwave}
 
 
-\usepackage{array}
-\newcolumntype{H}{>{\setbox0=\hbox\bgroup}c<{\egroup}@{}}
+% \newcommand{\swn}{SentiWordNet\xspace}
+% \newcommand{\plwn}{plWordNet\xspace}
+% \newcommand{\plemo}{plWordNet~emo\xspace}
+% \newcommand{\pwn}{Princeton WordNet\xspace} 
+% \newcommand{\mlsc}{ML-SentiCon\xspace}
+% \newcommand{\wnop}{\textsc{Micro-WNOp}\xspace}
+% \newcommand{\ntumc}{NTU-MC\xspace}
 
-\usepackage[round]{natbib}
-\usepackage{fontenc}
-\usepackage{polyglossia}
-\setmainlanguage{english}
-\usepackage{xeCJK}
-%\setCJKmainfont{WenQuanYi Micro Hei}
-% \setmainfont[Numbers=OldStyle]{TeX Gyre Pagella}
-%\setCJKmainfont{Droid Sans Fallback}
-\setCJKmainfont{Noto Sans CJK SC}
-\usefonttheme{professionalfonts}
-\setsansfont{Linux Libertine O}
-\logo{NTU}
-\logo{\includegraphics[width=15mm]{pics/UP_logo_FF_horizont_en.png}}
-
- \usepackage{qtree,avm,expex}
-\definelingstyle{cmn}{everygla=,
-everyglb=\itshape,everyglc=\footnotesize}
-
-\usepackage{relsize,xspace}
+% % typesetting: metaphors
+% \newcommand{\defn}[1]{{\textbf{#1}}}
+% \newcommand{\metaphor}[1]{\textsc{#1}}
+% \newcommand{\word}[1]{\textit{#1}}
+% \newcommand{\concept}[1]{\textsc{#1}}
+% \newcommand{\letter}[1]{\texttt{#1}}
+% \newcommand{\sense}[2]{\word{#1}\textsubscript{$#2$}}
+% \newcommand{\synonym}[1]{\textit{#1}}
 
 
-\usetheme{Boadilla}
-\usecolortheme{seahorse}
-\setbeamertemplate{navigation symbols}{}
+% \newcommand{\tabspace}{\addlinespace[0.6em]}
+% \newcommand{\slipspace}{\addlinespace[0.1em]}
+% \newcommand{\tighteq}{\,{=}\,}
 
-\newcommand{\zhong}{\ensuremath{[\Big|]}}
-% NUS Meeting Room 1 (MR 1) 	COM1-03-19
-\newcommand{\bl}[1]{\textcolor{blue}{#1}}
-%\newcommand{\sh}[1]{\textcolor{blue}{#1}}
-\newcommand{\txx}[1]{\textbf{\textcolor{blue}{#1}}}
-\usepackage{url}
+% \usepackage{adjustbox}
+% \usepackage{array}
+% \usepackage{tikz}
 
-%\newcommand{\wn}{\url}
-\usepackage[e,f,j]{mtg2e}
-\newcommand{\cmn}{\mtciteform}
-\newcommand{\kor}{\mtciteform}
-\renewcommand{\mtcitestyle}[1]{\textcolor{teal}{\textit{#1}}}
-\usepackage{xcolor}
- \newcommand{\bs}{\textbackslash}   % backslash
- \newcommand{\cmd}[1]{{\bf \color{red}#1}}   % highlights command
- \newcommand{\wemp}[1]{\ul{#1}}   % highlight
- \newcommand{\emp}[1]{\textbf{\color{blue}{#1}}}   % highlight
- \newcommand{\rel}[1]{\textsc{\color{blue}{#1}}}
- \newcommand{\lnk}[1]{\rel{#1}}
+% \newcommand{\literalcolour}{Brown}
+% \newcommand{\relatedcolour}{Bittersweet}
+% \newcommand{\metaphoricalcolour}{Purple}
+% \newcommand{\conduitcolour}{Gray}
 
- \newcommand{\lex}[1]{\textbf{\color{teal}{\textit{#1}}}}
- \newcommand{\lng}[1]{\textcolor{teal}{\textit{#1}}}
-\newcommand{\wn}[3]{\lex{#1}\ensuremath{_{#2:#3}}}
-\usepackage{relsize}
-\newcommand{\wnida}[1]{\asort{\wnid{#1}}}
-\newcommand{\wnid}[1]{\textsf{\smaller #1}}
+% \newcommand{\literallabel}{Prototype}
+% \newcommand{\relatedlabel}{Associated}
+% \newcommand{\metaphoricallabel}{Metaphorical}
+% \newcommand{\relatededgelabel}{Metonymy}
+% \newcommand{\relatededgelabelshort}{Meton.}
+% \newcommand{\metaphoricaledgelabel}{Metaphor}
+% \newcommand{\conduitlabel}{{ }+{ }Conduit}
+% \newcommand{\conduitmetlabel}{\hphantom{\metaphoricallabel}\conduitlabel}
+% \newcommand{\conduitasslabel}{\hphantom{\relatedlabel}\conduitlabel}
 
-\usepackage{mygb4e,url}
-\usepackage[normalem]{ulem}
-\newcommand{\ul}{\uline}
-\newcommand{\ull}{\uuline}
-\newcommand{\udl}{\dashuline}
-\newcommand{\uwl}{\uwave}
+% \newcolumntype{R}[2]{%
+%     >{\adjustbox{angle=#1,lap=\width-(#2)}\bgroup}%
+%     l%
+%     <{\egroup}%
+% }
+% \newcommand*\rot{\multicolumn{1}{R{30}{1.5em}}}
 
-\newcommand{\MyLogo}[1]{(#1)}
+% \newcommand{\literal}{\makecell{\textcolor{\literalcolour}{\literallabel}}}
+% \newcommand{\related}[2]{\makecell{\textcolor{\relatedcolour}{\relatedlabel} \\ \textcolor{\relatedcolour}{(from \sense{#1}{#2})}}}
+% \newcommand{\onlymetaphorical}{\makecell{\textcolor{\metaphoricalcolour}{\metaphoricallabel}}}
+% \newcommand{\metaphorical}[2]{\makecell{\textcolor{\metaphoricalcolour}{\metaphoricallabel} \\ \textcolor{\metaphoricalcolour}{(from \sense{#1}{#2})}}}
+% \newcommand{\feature}[1]{\scalebox{.8}[1.0]{\texttt{#1}}}
+% \newcommand{\yesfeature}[1]{\textcolor{Green}{\feature{#1}}}
+% \usepackage[normalem]{ulem}
+% \newcommand{\nofeature}[1]{\textcolor{Red}{\sout{\feature{#1}}}}
+% \newcommand{\maybefeature}[2]{\textcolor{Green}{\feature{#1}} \textcolor{Orange}{\feature{#2}}}
+% \newcommand{\allmaybefeature}[1]{\textcolor{Orange}{\feature{#1}}}
+% \newcommand{\defaultdepth}{0pt}
+% \tikzset{definition/.style={align=left, shape=rectangle,draw=black, font={\footnotesize}, fill=black!0!white}}
+% \tikzset{invis/.style={align=left, shape=rectangle,draw=none, font={\footnotesize}, fill=none,text opacity=0}}
+% \tikzset{lit_definition/.style={anchor=center, align=left, shape=rectangle,draw=\literalcolour, font={\footnotesize}, label={[label distance=-.05cm]:{\footnotesize{\textcolor{\literalcolour}{\literallabel}}}}, fill=black!0!white}}
+% \tikzset{met_definition/.style={align=left, shape=rectangle,draw=\metaphoricalcolour, font={\footnotesize}, fill=black!0!white}}
+% \tikzset{ass_definition/.style={align=left, shape=rectangle,draw=\relatedcolour, font={\footnotesize}, fill=black!0!white}}
+% \tikzset{ghost/.style={ass_definition, dashed}}
+% \tikzset{ghost_core/.style={lit_definition, dashed}}
 
-\newcommand{\sh}[1]{https://fcbond.github.io/sh-canon/#1.html}
-\newcommand{\SCAN}{\href{\sh{scan}}{\textit{A Scandal in Bohemia}}\xspace}
-\newcommand{\REDH}{\href{\sh{redh}}{\textit{The Redheaded League}}\xspace}
-\newcommand{\HOUN}{\href{\sh{houn}}{\textit{The Hound of the
-      Baskervilles}}\xspace}
-\newcommand{\SPEC}{\href{\sh{spec}}{\textit{The Adventure of the Speckled Band}}\xspace}
-\newcommand{\DANC}{\href{\sh{danc}}{\textit{The Adventure of the Dancing Men}}\xspace}
-\newcommand{\FINA}{\href{\sh{fina}}{\textit{The Adventure of the Final Problem}}\xspace}
-\newcommand{\NAVA}{\href{\sh{nava}}{\textit{The Adventure of the Naval Treaty}}\xspace}
+% % , on layer=bg
+% \tikzset{split/.style={-, dashed, line width=.3mm, Gray}}
+% \tikzset{start/.style={->, line width=.3mm, \literalcolour}}
+% \tikzset{analogy/.style={->, line width=.3mm, \metaphoricalcolour}}
+% \tikzset{related/.style={->, line width=.3mm, \relatedcolour}}
+% \tikzset{unknown/.style={->, line width=.3mm}}
 
-\newcommand{\swn}{SentiWordNet\xspace}
-\newcommand{\plwn}{plWordNet\xspace}
-\newcommand{\plemo}{plWordNet~emo\xspace}
-\newcommand{\pwn}{Princeton WordNet\xspace} 
-\newcommand{\mlsc}{ML-SentiCon\xspace}
-\newcommand{\wnop}{\textsc{Micro-WNOp}\xspace}
-\newcommand{\ntumc}{NTU-MC\xspace}
+% \tikzset{derivation/.style={node distance = .7cm and %1.9cm}}
+% 1cm}}
+% \tikzset{tight/.style={node distance = .55cm and .5cm}}
+% \tikzset{close/.style={node distance = .6cm and %1.9cm}}
+% .3cm}}
 
-% typesetting: metaphors
-\newcommand{\defn}[1]{{\textbf{#1}}}
-\newcommand{\metaphor}[1]{\textsc{#1}}
-\newcommand{\word}[1]{\textit{#1}}
-\newcommand{\concept}[1]{\textsc{#1}}
-\newcommand{\letter}[1]{\texttt{#1}}
-\newcommand{\sense}[2]{\word{#1}\textsubscript{$#2$}}
-\newcommand{\synonym}[1]{\textit{#1}}
+% \newenvironment{tightcenter}{%
+%   \setlength\topsep{0pt}
+%   \setlength\parskip{0pt}
+%   \begin{center}
+% }{%
+%   \end{center}
+% }
 
+% \newcommand{\featuregoesto}{\textcolor{\metaphoricalcolour}{$\rightarrow$}}
+% % space hacks
+% \setlength{\belowcaptionskip}{-5pt}
+% \everypar{\looseness=-1}
 
-\newcommand{\tabspace}{\addlinespace[0.6em]}
-\newcommand{\slipspace}{\addlinespace[0.1em]}
-\newcommand{\tighteq}{\,{=}\,}
+% \usepackage{tikz}
+% \usepackage{tikz-dependency}
+% \newcommand{\horn}[1]{\ensuremath{\langle}\lex{#1}\ensuremath{\rangle}}
 
-\usepackage{adjustbox}
-\usepackage{array}
-\usepackage{tikz}
-
-\newcommand{\literalcolour}{Brown}
-\newcommand{\relatedcolour}{Bittersweet}
-\newcommand{\metaphoricalcolour}{Purple}
-\newcommand{\conduitcolour}{Gray}
-
-\newcommand{\literallabel}{Prototype}
-\newcommand{\relatedlabel}{Associated}
-\newcommand{\metaphoricallabel}{Metaphorical}
-\newcommand{\relatededgelabel}{Metonymy}
-\newcommand{\relatededgelabelshort}{Meton.}
-\newcommand{\metaphoricaledgelabel}{Metaphor}
-\newcommand{\conduitlabel}{{ }+{ }Conduit}
-\newcommand{\conduitmetlabel}{\hphantom{\metaphoricallabel}\conduitlabel}
-\newcommand{\conduitasslabel}{\hphantom{\relatedlabel}\conduitlabel}
-
-\newcolumntype{R}[2]{%
-    >{\adjustbox{angle=#1,lap=\width-(#2)}\bgroup}%
-    l%
-    <{\egroup}%
-}
-\newcommand*\rot{\multicolumn{1}{R{30}{1.5em}}}
-
-\newcommand{\literal}{\makecell{\textcolor{\literalcolour}{\literallabel}}}
-\newcommand{\related}[2]{\makecell{\textcolor{\relatedcolour}{\relatedlabel} \\ \textcolor{\relatedcolour}{(from \sense{#1}{#2})}}}
-\newcommand{\onlymetaphorical}{\makecell{\textcolor{\metaphoricalcolour}{\metaphoricallabel}}}
-\newcommand{\metaphorical}[2]{\makecell{\textcolor{\metaphoricalcolour}{\metaphoricallabel} \\ \textcolor{\metaphoricalcolour}{(from \sense{#1}{#2})}}}
-\newcommand{\feature}[1]{\scalebox{.8}[1.0]{\texttt{#1}}}
-\newcommand{\yesfeature}[1]{\textcolor{Green}{\feature{#1}}}
-\usepackage[normalem]{ulem}
-\newcommand{\nofeature}[1]{\textcolor{Red}{\sout{\feature{#1}}}}
-\newcommand{\maybefeature}[2]{\textcolor{Green}{\feature{#1}} \textcolor{Orange}{\feature{#2}}}
-\newcommand{\allmaybefeature}[1]{\textcolor{Orange}{\feature{#1}}}
-\newcommand{\defaultdepth}{0pt}
-\tikzset{definition/.style={align=left, shape=rectangle,draw=black, font={\footnotesize}, fill=black!0!white}}
-\tikzset{invis/.style={align=left, shape=rectangle,draw=none, font={\footnotesize}, fill=none,text opacity=0}}
-\tikzset{lit_definition/.style={anchor=center, align=left, shape=rectangle,draw=\literalcolour, font={\footnotesize}, label={[label distance=-.05cm]:{\footnotesize{\textcolor{\literalcolour}{\literallabel}}}}, fill=black!0!white}}
-\tikzset{met_definition/.style={align=left, shape=rectangle,draw=\metaphoricalcolour, font={\footnotesize}, fill=black!0!white}}
-\tikzset{ass_definition/.style={align=left, shape=rectangle,draw=\relatedcolour, font={\footnotesize}, fill=black!0!white}}
-\tikzset{ghost/.style={ass_definition, dashed}}
-\tikzset{ghost_core/.style={lit_definition, dashed}}
-
-% , on layer=bg
-\tikzset{split/.style={-, dashed, line width=.3mm, Gray}}
-\tikzset{start/.style={->, line width=.3mm, \literalcolour}}
-\tikzset{analogy/.style={->, line width=.3mm, \metaphoricalcolour}}
-\tikzset{related/.style={->, line width=.3mm, \relatedcolour}}
-\tikzset{unknown/.style={->, line width=.3mm}}
-
-\tikzset{derivation/.style={node distance = .7cm and %1.9cm}}
-1cm}}
-\tikzset{tight/.style={node distance = .55cm and .5cm}}
-\tikzset{close/.style={node distance = .6cm and %1.9cm}}
-.3cm}}
-
-\newenvironment{tightcenter}{%
-  \setlength\topsep{0pt}
-  \setlength\parskip{0pt}
-  \begin{center}
-}{%
-  \end{center}
-}
-
-\newcommand{\featuregoesto}{\textcolor{\metaphoricalcolour}{$\rightarrow$}}
-% space hacks
-\setlength{\belowcaptionskip}{-5pt}
-\everypar{\looseness=-1}
-
-\usepackage{tikz}
-\usepackage{tikz-dependency}
-\newcommand{\horn}[1]{\ensuremath{\langle}\lex{#1}\ensuremath{\rangle}}
-
-\usepackage{tikz-qtree}
+% \usepackage{tikz-qtree}
 
 
 \begin{document}
 \maketitle
-\lingset{lingstyle=cmn}
+
 \begin{frame}{Outline}
    \tableofcontents
  \end{frame}
@@ -2106,7 +2058,7 @@ everyglb=\itshape,everyglc=\footnotesize}
 
 
 \begin{frame}{The synset for  \eng[tiger]{虎}}
- \includegraphics[width=0.9\textwidth]{pics/wn-jpn-tiger.pdf}
+ \includegraphics[width=0.9\textwidth]{img/wn-jpn-tiger.pdf}
 \end{frame}
 
 \begin{frame}
@@ -2202,14 +2154,14 @@ everyglb=\itshape,everyglc=\footnotesize}
 
 \begin{frame}{Wordnets in the world 2008}
 \begin{center}
-   \noindent\includegraphics[width=1.0\textwidth]{pics/wns-2008}
+   \noindent\includegraphics[width=1.0\textwidth]{img/wns-2008}
 \end{center}
 Green is free; Blue is research only; Brown costs money
 \end{frame}
 
 \begin{frame}{Wordnets in the world 2023}
 \begin{center}
-   \noindent\includegraphics[width=1.0\textwidth]{pics/wns-2023}
+   \noindent\includegraphics[width=1.0\textwidth]{img/wns-2023}
 \end{center}
 Green is free; Blue is research only; Brown costs money
 \end{frame}
@@ -2421,14 +2373,14 @@ of Takalelang at the northern coast.
 
 \begin{frame}{Alor}
 \begin{center}
-   \noindent\includegraphics[width=1.0\textwidth]{pics/alor-s.png}
+   \noindent\includegraphics[width=1.0\textwidth]{img/alor-s.jpg}
 \end{center}
 \end{frame}
 
 \begin{frame}
 \frametitle{Toolbox to wordnet}
  \begin{tabular}{cc}
-  \includegraphics[width=0.4\textwidth]{pics/ToolboxDictFormat-s.png}
+  \includegraphics[width=0.4\textwidth]{img/ToolboxDictFormat-s.jpg}
    &
  \begin{minipage}{0.5\linewidth}
    \begin{itemize}
@@ -2464,14 +2416,14 @@ of Takalelang at the northern coast.
 \end{frame}
 
 \begin{frame}{It was a blast}
-  \includegraphics[width=1.0\textwidth]{pics/WorkshopSmall-s.jpg}
+  \includegraphics[width=1.0\textwidth]{img/WorkshopSmall-s.jpg}
 \end{frame}
 
 \begin{frame}{SIL semantic domain for water (1.3)}
   \begin{tabular}{cc}
-    \includegraphics[width=0.4\textwidth]{pics/sil-semdom-water.png}
+    \includegraphics[width=0.4\textwidth]{img/sil-semdom-water.png}
     &
-    \includegraphics[width=0.6\textwidth]{pics/fieldwords-water.png}
+    \includegraphics[width=0.6\textwidth]{img/fieldwords-water.png}
       
   \end{tabular}
 \end{frame}
@@ -2547,7 +2499,7 @@ and Singapore.
 \end{itemize}
 \end{frame}
 \begin{frame}{Portuguese Creoles in Asia}
-  \includegraphics[width=1.0\textwidth]{pics/portuguese-creoles-in-asia.png}
+  \includegraphics[width=1.0\textwidth]{img/portuguese-creoles-in-asia.png}
 \end{frame}
 
 \begin{frame}
@@ -2567,7 +2519,7 @@ and Singapore.
 \end{frame}
 
 \begin{frame}{Kodrah Kristang Class}
-  \includegraphics[width=1.0\textwidth]{pics/kodrah-kristang.png}
+  \includegraphics[width=1.0\textwidth]{img/kodrah-kristang.png}
 \end{frame}
 
 \begin{frame}
@@ -2627,7 +2579,7 @@ and Singapore.
 \end{itemize}
 \end{frame}
 \begin{frame}{Where is Cantonese (and other Chineses) spoken?}
-  \includegraphics[height=0.8\textheight]{pics/cantonese-other-chinese-map.png}
+  \includegraphics[height=0.8\textheight]{img/cantonese-other-chinese-map-s.jpg}
 
   From \citet{Zhenxing:2012}.
 \end{frame}
@@ -2663,7 +2615,7 @@ and Singapore.
 
 
 \begin{frame}{The OMW interface showing audio}
-    \includegraphics[width=1.0\textwidth]{pics/nei5.png}
+    \includegraphics[width=1.0\textwidth]{img/nei5.png}
 
     \begin{itemize}
     \item This shows a word with two pronunciations
