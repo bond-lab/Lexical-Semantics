@@ -1,0 +1,482 @@
+\documentclass[aspectratio=169]{beamer}
+\input{shared}
+% \usepackage[T1]{fontenc}
+% \usepackage{lmodern}
+% \usepackage{microtype}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,calc}
+
+\tikzset{%
+  % classes
+  avm/.style={draw, rounded corners, align=left, inner sep=4pt},
+%  avm/.style={draw, rounded corners, align=center, inner sep=4pt},
+  word/.style={avm, fill=green!7},
+  sense/.style={avm, fill=blue!7},
+  synset/.style={avm, fill=gray!10},
+  ili/.style={avm, fill=orange!10},
+  % edge styles
+  rel/.style={-Latex, thick},
+  birel/.style={Latex-Latex, thick},
+  weak/.style={-Latex, thick, opacity=0.65},
+  biweak/.style={Latex-Latex, thick, opacity=0.65},
+  group/.style={draw, rounded corners, inner sep=6pt, dashed},
+  box/.style={draw, rounded corners, align=center, inner sep=4pt},
+  small/.style={font=\small},
+  tiny/.style={font=\tiny},
+}%
+\newcommand{\avmtype}{\scriptsize\itshape\color{black!70}\raggedright}
+%\newcommand{\avmtype}{\scriptsize\itshape\color{black!70}}
+\newcommand{\avmcontent}{\small}
+\newcommand{\avmnode}[4][]{%
+  % #1 = extra TikZ options
+  % #2 = class (word | sense | synset | ili ...)
+  % #3 = node name
+  % #4 = content
+  \node[#2, #1] (#3) {%
+    {\avmtype #2}\\
+    {\avmcontent \shortstack{#4}}%
+  };
+}
+
+\title{WordNet Structure: Words, Senses, Synsets, and Relations}
+\author{(Course slides)}
+\date{\today}
+% ============================
+
+
+
+
+\begin{document}
+
+% ------------------------------------------------------------
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% ------------------------------------------------------------
+\begin{frame}{Big idea: a lexicon organized by concepts}
+\begin{itemize}
+  \item A \textbf{word form} can express \textbf{multiple meanings} (polysemy).
+  \item A \textbf{meaning} can be expressed by \textbf{multiple word forms} (synonymy).
+  \item WordNets model meaning with:
+    \begin{itemize}
+      \item \textbf{Words} (forms)
+      \item \textbf{Senses} (a word-in-a-particular-meaning)
+      \item \textbf{Synsets} (concepts; sets of near-synonymous senses)
+      \item \textbf{Relations} between synsets/senses
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------
+\begin{frame}{Words $\rightarrow$ Senses $\rightarrow$ Synsets}
+\centering
+\begin{tikzpicture}[node distance=10mm]
+  % Words
+  \avmnode{word}{wbank}{\lex{bank}};
+  \avmnode[below=7mm of wbank]{word}{wtaxi}{\lex{taxi}};
+  \avmnode[below=7mm of wtaxi]{word}{wcab}{\lex{cab}};
+
+  % Senses
+  \avmnode[right=22mm of wbank, yshift=8mm]{sense}{sbank1}{bank\textsubscript{1}\\  financial institution};
+  \avmnode[right=22mm of wbank, yshift=-8mm]{sense}{sbank2}{bank\textsubscript{2}\\ sloping land};
+  \avmnode[right=22mm of wtaxi, yshift=-4mm]{sense}{staxi1}{taxi\textsubscript{1}};
+  \avmnode[right=22mm of wcab]{sense}{scab1}{cab\textsubscript{1}};
+
+  % Synsets
+  \avmnode[right=15mm of sbank1]{synset}{synfin}{\iz{FINANCIAL\_INSTITUTION}};
+  \avmnode[below=10mm of synfin]{synset}{synriver}{\iz{RIVER\_BANK}};
+  \avmnode[below=10mm of synriver]{synset}{syntaxi}{\iz{TAXI\_CAB}};
+
+  % Links
+  \draw[rel] (wbank) -- (sbank1);
+  \draw[rel] (wbank) -- (sbank2);
+  \draw[rel] (wtaxi) -- (staxi1);
+  \draw[rel] (wcab) -- (scab1);
+
+  \draw[rel] (sbank1) -- (synfin);
+  \draw[rel] (sbank2) -- (synriver);
+  \draw[rel] (staxi1) -- (syntaxi);
+  \draw[rel] (scab1) -- (syntaxi);
+
+  % Labels
+  % \node[tiny, above=1mm of synfin] {concept node};
+  % \node[tiny, above=1mm of sbank1] {disambiguation unit};
+\end{tikzpicture}
+
+\vspace{2mm}
+\small
+Key:  \textbf{senses} link \textbf{words} to \textbf{synsets} (concepts).
+\end{frame}
+
+% ============================================================
+% NEW SLIDE 1: Word-only properties
+% ============================================================
+\begin{frame}{What  \textbf{Words} have}
+\begin{itemize}
+  \item \textbf{Canonical Form (Lemma)}: the written form(s) used in the lexicon
+  \item \textbf{Part of speech}
+  \item \textbf{Variant forms}
+    \begin{itemize}
+    \item spelling variants (\eng{colour/color}), scripts (\jpn{犬 / いぬ}), casing/diacritics policy,
+      irregular forms  (\eng{child/children} [pl]), 
+    \end{itemize}
+  \item \textbf{Form metadata} (when present in a resource)
+    \begin{itemize}
+      \item pronunciations, transliterations, orthographic variants type (US/UK)
+      \item morphological class (plural, past), if the resource encodes them at word-level
+    \end{itemize}
+  \item \textbf{Derivations:} links to words related by derivation 
+  \item \textbf{Sense(s)}:
+    \begin{itemize}
+      \item one \texttt{Word} can have multiple \texttt{Sense}s (polysemy)
+      \item all those senses share the same \emph{string forms} but differ in meaning
+    \end{itemize}
+\end{itemize}
+
+% \smallskip
+% \centering
+% \begin{tikzpicture}[node distance=10mm]
+%   \node[word] (w) {Word\\\textbf{bank}};
+%   \node[box, right=18mm of w] (forms) {word-level\\properties\\\tiny lemma, forms,\\tiny variants, pron.};
+%   \draw[rel] (w) -- (forms);
+% \end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile]{Form metadata example}
+\begin{verbatim}
+<LexicalEntry id="ex-gato-n">
+    <Lemma writtenForm="gato" partOfSpeech="n">
+      <Tag category="gender">masculine</Tag>
+    </Lemma>
+    <Form writtenForm="gatos">
+        <Tag category="number">plural</Tag>
+    </Form>
+</LexicalEntry>
+\end{verbatim}
+  \begin{itemize}
+  \item Grammatical properties such as gender, number, case, and tense can be represented with the \elem{Tag} element.
+  \item The \elem{Tag} element has a category attribute which indicates the type of grammatical property, and the value is the text of the tag
+  \item  A universal tagging scheme is not prescribed --- wordnet project owners are free to choose a scheme 
+
+\end{itemize}
+  
+\end{frame}
+
+%%% FIXME add pronunciation example
+%%% FIXME add wn code
+
+% ============================================================
+% NEW SLIDE 2: Sense-only properties
+% ============================================================
+\begin{frame}{What \textbf{Senses} have}
+\begin{itemize}
+  \item A \textbf{sense} is the pairing: \textbf{Word} $\times$ \textbf{Synset}
+  \item Sense-level properties often include:
+    \begin{itemize}
+      \item \textbf{Sense IDs / keys} (resource-specific identifiers)
+      \item \textbf{Frequency / counts} (e.g., corpus-based tagging counts)
+      \item \textbf{Derivations} (constrained by meaning)
+      \item \textbf{Usage examples} (example sentences tied to this meaning)
+      \item \textbf{Syntactic/verb frames} (common in some WordNet-style resources)
+      \item \textbf{Sense-level relations} such as antonymy
+    \end{itemize}
+  \item Why sense-level? Because \textbf{frequency and examples depend on the meaning}, not just the string or the concept.
+\end{itemize}
+
+% \smallskip
+% \centering
+% \begin{tikzpicture}[node distance=10mm, scale=0.88, transform shape]
+%   \node[word] (w) {Word\\\textbf{bank}};
+%   \node[synset, right=48mm of w] (syn) {Synset\\\textbf{FINANCIAL\_INSTITUTION}};
+%   \node[sense, above=0mm of $(w)!0.5!(syn)$] (s) {Sense\\bank\textsubscript{1}};
+%   \draw[rel] (w) -- (s);
+%   \draw[rel] (s) -- (syn);
+
+%   \node[box, below=8mm of s, font=\scriptsize] (props)
+%     {sense-only\\properties\\\tiny frequency, examples,\\\tiny sense key, frames};
+%   \draw[rel] (s) -- (props);
+% \end{tikzpicture}
+
+% \begin{tikzpicture}[node distance=10mm]
+%   \node[word] (w) {Word\\\textbf{bank}};
+%   \node[synset, right=44mm of w] (syn) {Synset\\\textbf{FINANCIAL\_INSTITUTION}};
+%   \node[sense, above=0mm of $(w)!0.5!(syn)$] (s) {Sense\\bank\textsubscript{1}};
+%   \draw[rel] (w) -- (s);
+%   \draw[rel] (s) -- (syn);
+
+%   \node[box, below=12mm of s] (props) {sense-only\\properties\\\tiny frequency, examples,\\tiny sense key, frames};
+%   \draw[rel] (s) -- (props);
+% \end{tikzpicture}
+\end{frame}
+
+% ============================================================
+% NEW SLIDE 3: Synset-only properties (ILI, lexicographer files)
+% ============================================================
+\begin{frame}{What \textbf{Synsets} have}
+\begin{itemize}
+  \item A \textbf{synset} represents a \textbf{concept} (language-internal, but linkable).
+  \item Typical synset-level properties:
+    \begin{itemize}
+    \item \textbf{Definition / gloss} (concept description)
+    \item \textbf{Usage examples} (example sentences)
+      
+    \item \textbf{Part of speech} (noun/verb/adj/adv in many resources)
+    \item \textbf{Semantic fields / domains} (e.g., \emph{lexicographer files})
+    \item \textbf{Concept relations}: hypernym, meronym, cause, etc.
+    \item \textbf{ILI links} (interlingual index), when available
+    \end{itemize}
+  \item Why synset-level? Because these describe the \textbf{concept itself}, independent of which word expresses it.
+\end{itemize}
+
+% \smallskip
+% \centering
+% \begin{tikzpicture}[node distance=9mm]
+%   \node[synset] (syn) {Synset\\\textbf{DOG}};
+%   \node[ili, right=18mm of syn] (ili) {ILI\\\textbf{i123456}};
+%   \node[box, above=10mm of syn] (gloss) {synset-level\\properties\\\tiny gloss, domain,\\tiny lexfile, POS};
+%   \node[synset, below=12mm of syn] (hyper) {Synset\\\textbf{CANINE}};
+
+%   \draw[rel] (syn) -- node[above, tiny] {ili} (ili);
+%   \draw[rel] (syn) -- node[left, tiny] {hypernym} (hyper);
+%   \draw[rel] (syn) -- (gloss);
+% \end{tikzpicture}
+\end{frame}
+
+
+% ============================================================
+% ADD THIS SLIDE: POS-specific synsets with multiple member senses
+% ============================================================
+\begin{frame}{POS-specific variants: concepts live in POS-specific synsets}
+\small
+\begin{itemize}
+  \item A synset is typically \textbf{POS-specific} (noun synset vs adjective synset, etc.).
+  \item The “same general idea” across POS is modeled via \textbf{relations between synsets},
+        not by mixing POS inside one synset.
+\end{itemize}
+
+\centering
+\begin{tikzpicture}[node distance=8mm, scale=0.72, transform shape]
+  % Noun side
+  \node[synset] (syn_n) {Synset (N)\\\textbf{LIGHT\_N}\\\tiny “illumination”};
+  \node[sense, left=12mm of syn_n, yshift=7mm] (s_n1) {Sense\\light\textsuperscript{n1}\\\tiny “illumination”};
+  \node[sense, left=12mm of syn_n, yshift=-7mm] (s_n2) {Sense\\illumination\textsuperscript{n1}};
+  \node[word, left=18mm of s_n1] (w_light_n) {Word\\\textbf{light}};
+  \node[word, left=8mm of s_n2] (w_illum) {Word\\\textbf{illumination}};
+
+  % Adjective side
+  \node[synset, right=24mm of syn_n] (syn_a) {Synset (ADJ)\\\textbf{LIGHT\_A}\\\tiny “not heavy / bright”};
+  \node[sense, right=12mm of syn_a, yshift=7mm] (s_a1) {Sense\\light\textsuperscript{a1}};
+  \node[sense, right=12mm of syn_a, yshift=-7mm] (s_a2) {Sense\\bright\textsuperscript{a1}};
+  \node[word, right=18mm of s_a1] (w_light_a) {Word\\\textbf{light}};
+  \node[word, right=18mm of s_a2] (w_bright) {Word\\\textbf{bright}};
+
+  % Membership
+  \draw[rel] (w_light_n) -- (s_n1);
+  \draw[rel] (w_illum) -- (s_n2);
+  \draw[rel] (s_n1) -- (syn_n);
+  \draw[rel] (s_n2) -- (syn_n);
+
+  \draw[rel] (w_light_a) -- (s_a1);
+  \draw[rel] (w_bright) -- (s_a2);
+  \draw[rel] (s_a1) -- (syn_a);
+  \draw[rel] (s_a2) -- (syn_a);
+
+  % Cross-POS relation
+  \draw[birel] (syn_n) -- node[font=\small, above] {derivation} (syn_a);
+
+  % Grouping
+  \node[group, fit=(w_illum)(s_n2)(syn_n)(s_n1), label={[font=\tiny]above:POS = N}] {};
+  \node[group, fit=(syn_a)(w_bright)(s_a2)(s_a1), label={[font=\tiny]above:POS = ADJ}] {};
+\end{tikzpicture}
+
+
+\end{frame}
+
+
+% ============================================================
+% NEW SLIDE 4: Cheat-sheet diagram (where does info live?)
+% ============================================================
+\begin{frame}{Cheat sheet: where does each kind of information live?}
+\centering
+\begin{tikzpicture}[node distance=9mm, scale=0.90, transform shape]
+  \node[word] (w) {Word\\\textbf{form(s)}};
+  \node[sense, right=28mm of w] (s) {Sense\\\textbf{word}\,$\times$\,\textbf{synset}};
+  \node[synset, right=28mm of s] (y) {Synset\\\textbf{concept}};
+
+  \draw[rel] (w) -- node[font=\tiny, above] {has} (s);
+  \draw[rel] (s) -- node[font=\tiny, above] {in} (y);
+
+  \node[box, below=10mm of w, align=left, font=\scriptsize] (wprops)
+    {\textbf{Word}\\\tiny lemma / forms\\\tiny orth variants\\\tiny pronunciation (if present)};
+  \node[box, below=10mm of s, align=left, font=\scriptsize] (sprops)
+    {\textbf{Sense}\\\tiny frequency / counts\\\tiny examples\\\tiny sense key / ID\\\tiny frames (if present)};
+  \node[box, below=10mm of y, align=left, font=\scriptsize] (yprops)
+    {\textbf{Synset}\\\tiny gloss / definition\\\tiny POS\\\tiny domains / lexfile\\\tiny relations\\\tiny ILI links};
+
+  \draw[rel] (w) -- (wprops);
+  \draw[rel] (s) -- (sprops);
+  \draw[rel] (y) -- (yprops);
+\end{tikzpicture}
+
+\vspace{2mm}
+\scriptsize
+Rule of thumb: \emph{form} $\rightarrow$ Word;\quad \emph{usage of a meaning} $\rightarrow$ Sense;\quad \emph{concept + relations} $\rightarrow$ Synset.
+\end{frame}
+
+% ------------------------------------------------------------
+\begin{frame}{Relations: building a graph over concepts}
+\centering
+\begin{tikzpicture}[node distance=10mm, scale=0.80, transform shape]
+  \node[synset] (dog) {synset\\\textbf{DOG}};
+  \node[synset, above=12mm of dog] (canine) {synset\\\textbf{CANINE}};
+  \node[synset, above=12mm of canine] (animal) {synset\\\textbf{ANIMAL}};
+
+  \node[synset, right=28mm of dog] (cat) {synset\\\textbf{CAT}};
+  \node[synset, above=12mm of cat] (feline) {synset\\\textbf{FELINE}};
+
+
+  \node[synset, below=10mm of dog] (bark) {synset\\\textbf{BARK\_N}};
+  \node[synset, left=10mm of bark] (flag) {synset\\\textbf{FLAG\_N}};
+  \node[synset, right=20mm of bark] (barkv) {synset\\\textbf{BARK\_V}};
+
+  \draw[rel] (dog) -- node[font=\small, right] {hypernym} (canine);
+  \draw[rel] (canine) -- node[font=\small, right] {hypernym} (animal);
+  \draw[rel] (cat) -- node[font=\small, right] {hypernym} (feline);
+  \draw[rel] (feline) -- node[font=\small, right] {hypernym} (animal);
+
+%  \draw[weak] (dog) -- node[font=\small, above] {related} (cat);
+  \draw[rel] (dog) -- node[font=\small, left] {meronym} (flag);
+  \draw[biweak] (dog) -- node[font=\small, right] {(definition)} (bark);
+  \draw[biweak] (dog) -- node[font=\small, right] {(example)} (barkv);
+  \draw[birel] (barkv) -- node[font=\small, above] {derivation} (bark);
+
+
+\end{tikzpicture}
+
+\smallskip
+\small
+WordNets are \textbf{graphs}: taxonomy-like relations (e.g.\ hypernymy) plus many non-taxonomic links (meronymy, cause, related, used in example/definition etc.).
+\end{frame}
+
+% ------------------------------------------------------------
+\begin{frame}{The taxonomy: a (mostly) rooted hierarchy for nouns}
+\centering
+\begin{tikzpicture}[node distance=8mm, scale=0.75, transform shape, xshift=-6mm]
+  \node[synset] (entity) {synset\\\textbf{ENTITY}};
+  \node[synset, below left=5mm and 14mm of entity] (physical) {synset\\\textbf{PHYSICAL\_ENTITY}};
+  \node[synset, below right=5mm and 14mm of entity] (abstract) {synset\\\textbf{ABSTRACT\_ENTITY}};
+
+  \node[synset, below=5mm of physical] (organism) {synset\\\textbf{ORGANISM}};
+  \node[synset, below left=5mm and 12mm of organism] (animal) {synset\\\textbf{ANIMAL}};
+  \node[synset, below right=5mm and 12mm of organism] (plant) {synset\\\textbf{PLANT}};
+
+  \node[synset, below=5mm of animal] (canine) {synset\\\textbf{CANINE}};
+  \node[synset, below=5mm of canine] (dog) {synset\\\textbf{DOG}};
+
+  \draw[rel] (physical) -- (entity);
+  \draw[rel] (abstract) -- (entity);
+  \draw[rel] (organism) -- (physical);
+  \draw[rel] (animal) -- (organism);
+  \draw[rel] (plant) -- (organism);
+  \draw[rel] (canine) -- (animal);
+  \draw[rel] (dog) -- (canine);
+
+
+
+  \node[font=\scriptsize, align=left, right=20mm of plant]
+    {Not all nodes shown, \ldots};
+  
+\end{tikzpicture}
+
+Multiple inheritance is possible, loops are not, for OEWN 2025, verbs are also rooted.
+\end{frame}
+
+% ------------------------------------------------------------
+\begin{frame}{Lexicons, IDs, and versions (in \texttt{wn})}
+\begin{itemize}
+  \item A \textbf{WordNet resource} is packaged as a \textbf{lexicon} (often: 1 lexicon per resource).
+  \item \texttt{wn} supports multiple lexicons (and multiple versions) in one database.
+  \item Lexicon specifiers (examples):
+    \begin{itemize}
+      \item \texttt{ewn:2020} = a specific lexicon \& version
+      \item \texttt{ewn:*} = all versions of \texttt{ewn}
+      \item \texttt{*} = all lexicons
+    \end{itemize}
+\end{itemize}
+
+\vspace{2mm}
+\small
+Most of the time it is better to use a single lexicon (e.g. \texttt{ewn=wn.Wordnet('oewn:2024')})
+\end{frame}
+
+% ------------------------------------------------------------
+\begin{frame}{Interlingual Index (ILI): linking concepts across languages}
+\centering
+\begin{tikzpicture}[node distance=10mm]
+  % Language synsets
+  \node[synset] (en_dog) {EN synset\\\textbf{DOG}};
+  \node[synset, below=10mm of en_dog] (de_hund) {DE synset\\\textbf{HUND}};
+  \node[synset, below=10mm of de_hund] (ja_inu) {JA synset\\\textbf{犬} (inu)};
+
+  % ILI
+  \node[ili, right=30mm of de_hund] (ili_dog) {ILI\\\textbf{i46360}};
+
+  % Links
+  \draw[rel] (en_dog) -- node[above, tiny] {ili} (ili_dog);
+  \draw[rel] (de_hund) -- node[above, tiny] {ili} (ili_dog);
+  \draw[rel] (ja_inu) -- node[below, tiny] {ili} (ili_dog);
+
+  % Explanation box
+  \node[group, fit=(en_dog)(ja_inu), label={[tiny]above:language-specific synsets}] {};
+  \node[group, fit=(ili_dog), label={[tiny]above:interlingual pivot}] {};
+
+\end{tikzpicture}
+
+\smallskip
+\small
+ILI enables “same concept, different languages” queries when lexicons provide ILI links.
+\end{frame}
+
+% ------------------------------------------------------------
+% \begin{frame}{How this maps to the \texttt{wn} Python model}
+% \centering
+% \begin{tikzpicture}[node distance=10mm]
+%   \node[box] (Word) {\texttt{Word}};
+%   \node[box, right=18mm of Word] (Sense) {\texttt{Sense}};
+%   \node[box, right=18mm of Sense] (Synset) {\texttt{Synset}};
+%   \node[box, above=12mm of Synset] (Lexicon) {\texttt{Lexicon}};
+
+%   \draw[rel] (Word) -- node[above, tiny] {\texttt{.senses()}} (Sense);
+%   \draw[rel] (Sense) -- node[above, tiny] {\texttt{.synset()}} (Synset);
+%   \draw[rel] (Synset) -- node[right, tiny] {belongs to} (Lexicon);
+
+%   \node[box, below=14mm of Synset] (Rel) {\texttt{SynsetRelation}};
+%   \draw[rel] (Synset) -- node[left, tiny] {\texttt{.relations()}} (Rel);
+%   \draw[rel] (Rel) -| node[below, tiny] {targets} (Synset);
+
+%   \node[small, align=left, below=18mm of Word] {
+%   Typical workflow: \texttt{wn.words()} $\rightarrow$ \texttt{Word.senses()} $\rightarrow$ \texttt{Sense.synset()}\\
+%   then traverse: \texttt{Synset.relations()} (or taxonomy helpers).
+%   };
+
+% \end{tikzpicture}
+% \end{frame}
+
+% ------------------------------------------------------------
+\begin{frame}{Summary: what to remember}
+\begin{enumerate}
+  \item \textbf{Synset $\approx$ concept node}; a set of synonyms, that makes up a concept. Can be non-lexicalized!
+  \item \textbf{Relations} turn synsets and senses into a richly typed graph.
+  \item \textbf{Taxonomy} (hypernymy) gives a hierarchy (esp.\ nouns).
+  \item \textbf{Lexicons} + versions allow reproducibility.
+  \item \textbf{ILI} enables cross-lingual alignment when available.
+  \item \textbf{Properties live at different layers}: form (Word), usage (Sense), concept (Synset).
+  \end{enumerate}
+  
+Different Wordnet Projects contain different information, OMW tries to harmonize when possible
+
+\end{frame}
+
+\end{document}
