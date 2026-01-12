@@ -1,4 +1,4 @@
-% ---- Minimal setup (LuaLaTeX) ----
+% ---- Minimal setup (XeLaTeX) ----
 \usepackage{fontspec}
 \defaultfontfeatures{Ligatures=TeX}
 %\usepackage{luatexja}
@@ -7,7 +7,7 @@
 \setmainfont{TeX Gyre Pagella}
 \setsansfont{TeX Gyre Heros}
 % Auto-switch by Unicode block
-\usepackage[CJK,Emoticons]{ucharclasses}
+\usepackage[CJK,Emoticons,IPAExtensions,SpacingModifierLetters,PhoneticExtensions]{ucharclasses}
 \newfontfamily\devanagarifont{Noto Sans Devanagari}
 \setTransitionsFor{Devanagari}{\devanagarifont}{\normalfont}
 \newfontfamily\jafont{Noto Sans CJK JP}
@@ -21,6 +21,12 @@
   \def\devanagarifont{}%
 }
  \newcommand{\jpf}[1]{{\jafont #1}}
+
+\newfontfamily\ipafont{Charis SIL}  % or DejaVu Sans, Charis SIL, Doulos SIL
+
+\setTransitionsFor{IPAExtensions}{\ipafont}{\normalfont}
+\setTransitionsFor{SpacingModifierLetters}{\ipafont}{\normalfont}
+\setTransitionsFor{PhoneticExtensions}{\ipafont}{\normalfont}
 
 %\newfontfamily\emojifont{Symbola}
 %\setTransitionsFor{Emoticons}{\emojifont}{\normalfont}

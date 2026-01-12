@@ -110,6 +110,7 @@
 Key:  \textbf{senses} link \textbf{words} to \textbf{synsets} (concepts).
 \end{frame}
 
+
 % ============================================================
 % NEW SLIDE 1: Word-only properties
 % ============================================================
@@ -164,8 +165,45 @@ Key:  \textbf{senses} link \textbf{words} to \textbf{synsets} (concepts).
   
 \end{frame}
 
-%%% FIXME add pronunciation example
-%%% FIXME add wn code
+\begin{frame}[fragile]{Finding Words in WN}
+\begin{verbatim}
+>>> wn.words('pencil')
+[Word('ewn-pencil-n'), Word('ewn-pencil-v')]
+>>> wn.words('pencil', pos='v')
+[Word('ewn-pencil-v')]
+len(wn.words())
+311711
+>>> len(wn.words(pos='v'))
+29419
+>>> len(wn.words(pos='v', lexicon='ewn'))
+11595
+>>> wn.word('ewn-pencil-n', lexicon='ewn')
+Word('ewn-pencil-n')
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Exploring Words in WN}
+\begin{verbatim}
+>>> w = wn.words('goose')[0]
+>>> w.pos  # part of speech
+'n'
+>>> w.forms()  # other word forms (e.g., irregular inflections)
+['goose', 'geese']
+>>> w.lemma()  # canonical form
+'goose'
+>>> w.derived_words()
+[Word('ewn-gosling-n'), Word('ewn-goosy-s'), Word('ewn-goosey-s')]
+>>> w.senses()
+[Sense('ewn-goose-n-01858313-01'), Sense('ewn-goose-n-10177319-06'), Sense('ewn-goose-n-07662430-01')]
+>>> w.synsets()
+[Synset('ewn-01858313-n'), Synset('ewn-10177319-n'), Synset('ewn-07662430-n')]
+>>> w.forms()[0].pronunciations()[0].value  # in oewn 
+"ˈgu:s"
+\end{verbatim}
+%"ˈɡuːs"
+\end{frame}
+
+
 
 % ============================================================
 % NEW SLIDE 2: Sense-only properties
@@ -211,6 +249,40 @@ Key:  \textbf{senses} link \textbf{words} to \textbf{synsets} (concepts).
 % \end{tikzpicture}
 \end{frame}
 
+
+\begin{frame}[fragile]{Finding Senses in WN}
+\begin{verbatim}
+>>> ewn.senses('plow', pos='n')
+[Sense('ewn-plow-n-03973894-01')]
+>>> ewn.sense('ewn-plow-v-01745745-01')
+Sense('ewn-plow-v-01745745-01')
+>>> len(ewn.senses(pos='n'))
+146347
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Exploring Senses in WN}
+\begin{verbatim}
+>>> s = ewn.senses('dark', pos='n')[0]
+>>> s.word()    # each sense links to a single word
+Word('ewn-dark-n')
+>>> s.synset()  # each sense links to a single synset
+Synset('ewn-14007000-n')
+>>> s.get_related('antonym')
+[Sense('ewn-light-n-14006789-01')]
+>>> s.get_related('derivation')
+[Sense('ewn-dark-a-00273948-01')]
+>>> s.metadata()  # omw-en:1.4
+{'identifier': 'dark%1:26:00::'}
+>>> s.counts()
+[2]
+>>> ewn.senses('darken', pos='v')[0].frames()
+['Something ----s']
+\end{verbatim}
+% >>> ewn.senses('darken', pos='v')[1].frames()
+% ['Something ----s something']
+\end{frame}
+
 % ============================================================
 % NEW SLIDE 3: Synset-only properties (ILI, lexicographer files)
 % ============================================================
@@ -243,6 +315,53 @@ Key:  \textbf{senses} link \textbf{words} to \textbf{synsets} (concepts).
 %   \draw[rel] (syn) -- (gloss);
 % \end{tikzpicture}
 \end{frame}
+
+
+\begin{frame}[fragile]{Finding Synsets in WN}
+\begin{verbatim}
+>>> wn.synsets('scepter')
+[Synset('ewn-14467142-n'), Synset('ewn-07282278-n')]
+>>> wn.synset('ewn-07282278-n').ili
+'i74874'
+>>> wn.synsets(ili='i74874')
+[Synset('ewn-07282278-n'), Synset('wnja-07267573-n'), Synset('frawn-07267573-n')]
+
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile, allowframebreaks]{Exploring Synsets in WN}
+\begin{verbatim}
+>>> ss = wn.synsets('hound', pos='n')[0]
+>>> ss.senses()
+[Sense('ewn-hound-n-02090203-01'), Sense('ewn-hound_dog-n-02090203-02')]
+>>> ss.words()
+[Word('ewn-hound-n'), Word('ewn-hound_dog-n')]
+>>> ss.lemmas()
+['hound', 'hound dog']
+>>> ss.definition()
+'any of several breeds of dog used for hunting typically having large drooping ears'
+\end{verbatim}
+\framebreak
+\begin{verbatim}
+>>> ss.hypernyms()
+[Synset('ewn-02089774-n')]
+>>> ss.hypernyms()[0].lemmas()
+['hunting dog']
+>>> len(ss.hyponyms())
+20
+>>> ss.hyponyms()[0].lemmas()
+['Afghan', 'Afghan hound']
+>>> ss.max_depth()
+15
+>>> ss.shortest_path(wn.synsets('dog', pos='n')[0])
+[Synset('ewn-02090203-n'), Synset('ewn-02089774-n'), Synset('ewn-02086723-n')]
+\end{verbatim}
+\end{frame}
+
+
+
+
+
 
 
 % ============================================================
