@@ -25,6 +25,9 @@
 \usepackage{array}
 \newcolumntype{H}{>{\setbox0=\hbox\bgroup}c<{\egroup}@{}}
 
+\usepackage{forest}
+\newcommand{\wnbox}[1]{\parbox[t]{24em}{#1}}
+
 % \usepackage[round]{natbib}
 % \usepackage{fontenc}
 % \usepackage{polyglossia}
@@ -206,11 +209,12 @@
 %\MyLogo{\citet{Miller:1998:foreword,_Fellbaum:1998}}
 
 \begin{itemize}
-\item WordNet is an open-source electronic lexical database of English,
+\item \lex{WordNet} is an open-source electronic lexical database of English,
   originally developed at Princeton University
   \\   \url{http://wordnet.princeton.edu/}
 \item Made up of four separate (but interlinked) semantic nets, 
   for nouns, verbs, adjectives and adverbs
+\item A \lex{wordnet} is a lexicon built with a similar structure to English
 \end{itemize}
 \end{frame}
 
@@ -715,21 +719,22 @@ Mostly done by me on weekends, some help from Lars Nygaard, John McCrae and of c
 
 
 \begin{frame}{Orthographic Variants}
+
   {\jafont
   \begin{itemize}
   \item synsetID=14728724-n (Eng: protein)
-    \\ プロテイン, 蛋白質, タンパク, たんぱく質, 蛋白, タンパク質
+    \\ プロテイン, 蛋白質, タンパク, たんぱく質, 蛋白, タンパク\,質
     \\ \hspace{15em} ↓
-    \\ \textbf{蛋白質} (タンパクシツ, たんぱく質, タンパク質, たんぱくしつ)
+    \\ \textbf{蛋白質} (\,タンパクシツ, たんぱ\,質, タンパク\,質, たんぱくしつ)
     \\ \textbf{蛋白} (タンパク, たんぱく)
     \\ \textbf{プロティン} (プロテイン, ぷろてぃん)
   \item synsetID=02765464-v (Eng: absorb, take in)
-    \\ 呑みこむ, 呑込む, 吸引, 吸い込む, 吸収
+    \\ 呑みこむ, 呑\,込む, 吸引, 吸い\,込む, 吸収
     \\\hspace{20em} ↓
-    \\ \textbf{吸い込む} (スイコム, 吸込む, 吸いこむ, すいこむ)
+    \\ \textbf{吸い込む}  (\,スイコム, 吸\,込む, 吸いこむ, すいこむ)
     \\ \textbf{吸収} (キュウシュウ, きゅうしゅう)
     \\ \textbf{吸引} キュウイン, きゅういん)
-    \\ (\textbf{飲み込む} (ノミコム, 飲込む, 呑み込む, 呑込む, 呑みこむ, のみ込む, のみこむ)
+    \\ \textbf{飲み\,込む} (ノミコム, 飲\,込む, 呑み\,込む, 呑\,込む, 呑みこむ, のみ\,込む, のみこむ
   \end{itemize}}
 \end{frame}
 
@@ -745,7 +750,7 @@ Mostly done by me on weekends, some help from Lars Nygaard, John McCrae and of c
     \\ \lex{対策}$_3$, \lex{策}$_3$, \lex{措置}$_2$,\lex{方略, 方策, 術, 打つ手}
     ``step, measure''
    \item Added exclamatives
-    \\ \lex{王手, ヨイショ, お早うございます}
+    \\ \lex{王手, ヨイショ, お\,早うございます}
   \end{itemize}
 \end{frame}
 
@@ -767,6 +772,47 @@ Mostly done by me on weekends, some help from Lars Nygaard, John McCrae and of c
   water: \lex{水} vs \lex{湯}
 \item We are doing our best to add native Japanese concepts, even if not lexicalized in English
 \end{itemize}
+
+It raised an interesting question about interlingal equivalence ---
+should \lex{water} link to \lex{水} or do we need a non lexicalized entry \lex{水}-or-\lex{湯}?  
+
+\end{frame}
+
+\begin{frame}{Hierarchy}
+  \begin{center}
+  \begin{forest}
+ [ temperature 
+   [ cold, name=cold
+      [ 寒い, name=cold1 ]
+      [ 冷たい, name=cold2 ]
+      ]
+    [ cool, name=cool
+      [ 涼しい, name=cool1 ]
+    ]
+      [ warm, name=warm
+      [ 暖かい, name=warm1 ]
+      [  温かい, name=warm2 ]
+     ]
+   [hot, name=hot
+    [ 暑い, name=hot1 ]
+    [ 熱い, name=hot2 ]
+   ]
+   ]
+   \draw [dashed,to-to](cold.east) to[out=-15,in=-165]  (hot.west);
+   \draw [dashed,to-to](cool.east) to[out=-15,in=-165]  (warm.west);
+   \draw [dashed,to-to](cold1.south) to[out=-30,in=-150]  (hot1.south);
+   \draw [dashed,to-to](cold2.south) to[out=-30,in=-150]  (hot2.south);
+    \draw [dashed,to-to](cool1.south) to[out=-15,in=-165]  (warm1.south);
+  \end{forest}
+\end{center}
+
+\begin{itemize}
+\item Some nodes are not lexicalized in Japanese, but still useful for the structure
+\item \txx{temperature} is linked by \lnk{attribute} (属性); tree is \lnk{hyponym} 
+  \\ dashed arrows are \lnk{antonym}
+  
+\end{itemize}
+
 \end{frame}
 
 \begin{frame}{Ontological Differences: Kin}
@@ -811,32 +857,96 @@ Mostly done by me on weekends, some help from Lars Nygaard, John McCrae and of c
 
   
 \end{frame}
+\begin{frame}[allowframebreaks]{Other Examples --- ロングテール ``long tail'')}
+  \begin{exe}
+  \ex \label{wn:soba}
+\begin{avm} \small
+\[ \wnida{\wnid{80001626-n} (soba\_noodle)}
+lemmas:jpn &\wnbox{蕎麦} \\
+lemmas:eng &\wnbox{soba} \\ 
+def:jpn &\wnbox{そば\,粉で\,作られた\,細い\,麺} \\ 
+def:eng &\wnbox{narrow noodle made from buckwheat}\\
+hypernym &  (noodle) \\ 
+\]
+\end{avm}
+\ex \label{wn:hajjah}
+\begin{avm} \small
+\[ \wnida{\wnid{80002377-n} (castle construction)}
+  lemmas:jpn &\wnbox{築城 \jpn{chikujou}}  \\
+def:jpn &\wnbox{城の\,建設} \\ 
+def:eng &\wnbox{the construction of castles}\\
+hypernym &  (construction) \\ 
+\]
+\end{avm}
+\newpage
 
-\subsection{Korean Wordnets}
-\begin{frame}{Korean Wordnets}
 
-  \begin{itemize}
-  \item There is a good wordnet built at Pusan National University
-    \citep{Yoon:Hwang:Lee:Kwon:2009}, but unfortunately it is not open
-  \item There is a small wordnet built from the Tokyo University of
-    Foreign Studies Basic Vocabulary list
-    \begin{itemize}
-    \item It is free (CC By 4.0)
-    \item 527 concepts; 1,011 words; 1,698 example sentences
-      \begin{avm}
-        \[ \wnida{10694258-n}
-          en-lemmas & \cmn{teacher} \\
-          ko-lemmas & \textcolor{teal}{선생님} \cmn{seonsaengnim} \\ 
-          \parbox[t]{0.2\textwidth}{definition} & \parbox[t]{0.6\textwidth}{a person whose occupation is teaching} \\
-          ko-example & \ul{선생님}, 이 보고서 말인데요, 마감이 내일까지죠?
-          \]
-        \end{avm} 
-      \item Not really big enough to do much with
-      \item and biased to teaching --- should the entry be just 선생?
-    \end{itemize}
-    
-  \end{itemize}
+\ex \label{wn:student}
+\begin{avm} \small
+\[ \wnida{\wnid{90000315-n} (hajjah)}
+  lemmas:jpn &\wnbox{ハジャ} \\
+lemmas:eng &\wnbox{hajjah} \\
+  def:jpn &\wnbox{メッカへの\,巡礼を\,行った\,女性} \\ 
+def:eng &\wnbox{a woman who has made the pilgrimage to Mecca}\\
+hypernym &  (haji) \\
+category & (muslim)
+\]
+\end{avm}
+
+\ex
+\begin{avm} \small
+\[ \wnida{\wnid{80001731-n} (exchange student)}
+  lemmas:jpn &\wnbox{留学生} \\
+lemmas:eng &\wnbox{exchange student} \\
+  def:jpn &\wnbox{海外で\,勉強する\,学生} \\ 
+def:eng &\wnbox{a student who studies abroad}\\
+hypernym &  (student) \\
+\]
+\end{avm}
+
+\ex \label{wn:shunto}
+\begin{avm} \small
+\[ \wnida{\wnid{80000338-n} (Shunto)}
+  lemmas:jpn &\wnbox{春闘} \\
+  lemmas:eng &\wnbox{spring wage negotiation, spring wage offensive, Shunto} \\
+  def:jpn &\wnbox{毎年労働組合が、賃金引き\,上げなどの} \\
+   &\wnbox{\ \ \ \  要求を\,掲げて\,行う\,全国的な\,闘争} \\ 
+def:eng &\wnbox{annual event by Japanese workers unions when wages are renegotiated}\\
+hypernym &  (protest) \\ 
+\]
+\end{avm}
+ 
+
+\end{exe}
+
 \end{frame}
+
+
+% \subsection{Korean Wordnets}
+% \begin{frame}{Korean Wordnets}
+
+%   \begin{itemize}
+%   \item There is a good wordnet built at Pusan National University
+%     \citep{Yoon:Hwang:Lee:Kwon:2009}, but unfortunately it is not open
+%   \item There is a small wordnet built from the Tokyo University of
+%     Foreign Studies Basic Vocabulary list
+%     \begin{itemize}
+%     \item It is free (CC By 4.0)
+%     \item 527 concepts; 1,011 words; 1,698 example sentences
+%       \begin{avm}
+%         \[ \wnida{10694258-n}
+%           en-lemmas & \cmn{teacher} \\
+%           ko-lemmas & \textcolor{teal}{선생님} \cmn{seonsaengnim} \\ 
+%           \parbox[t]{0.2\textwidth}{definition} & \parbox[t]{0.6\textwidth}{a person whose occupation is teaching} \\
+%           ko-example & \ul{선생님}, 이 보고서 말인데요, 마감이 내일까지죠?
+%           \]
+%         \end{avm} 
+%       \item Not really big enough to do much with
+%       \item and biased to teaching --- should the entry be just 선생?
+%     \end{itemize}
+    
+%   \end{itemize}
+% \end{frame}
 
 \subsection{The Open English Wordnet}
   \begin{frame}{The Open English Wordnet}
@@ -1096,28 +1206,28 @@ Mostly done by me on weekends, some help from Lars Nygaard, John McCrae and of c
 \end{tabular}
 \end{frame}
 
-\begin{frame}{Components: Place (with Korean)}
-  \tiny
-\begin{tabular}{llllll}
-   Head & Type/Proximity & English & Japanese & Chinese & Korean \\
-   \hline
- Place & Interrogative & \eng{where} &  \jpn[doko]{何処, どこ} &
-                                                                                \cmn[nǎlǐ]{哪里}  & \kor[eodi]{어디} \\
-            & Proximal      & \eng{here} & \jpn[koko]{此処, ここ} & \cmn[zhèlǐ]{这里}  & \kor[yeogi]{여기} \\
-            & Distal        & \eng{there}  &  & \cmn[nàli]{那里} &  \\
-            & ~~Medial        &   & \jpn[soko]{其処, そこ} &   & \kor[geogi]{거기} \\
-            & ~~Remote        &  & \jpn[asoko]{彼処, あそこ} & & \kor[jeogi]{저기} \\
-            & Universal     & \eng{everywhere} & 
-                             \jpn[doko mo]{どこ も} & \cmn[dàochù]{到处} & \kor[eodideunji]{어디든지} \\
-            & Existential & & \jpn[doko ka]{どこ か}
- &  \cmn[mǒuchù]{某处} & \kor[eodiinga]{어딘가} \\
-            & ~~~Assertive     & \eng{somewhere} & & & \kor[eodijeongdo]{어디정도} \\
-            & ~~~Elective     & \eng{anywhere} & & & \kor[eodideunji]{어디든지} \\
-            & Other         & \eng{elsewhere} & \jpn[yoso]{よそ}
-  & \cmn[biéchù]{别处} & \kor[dareun gos]{다른 곳} \\[2ex]
-\multicolumn{5}{l}{Not checked :-)}
-\end{tabular}
-\end{frame}
+% \begin{frame}{Components: Place (with Korean)}
+%   \tiny
+% \begin{tabular}{llllll}
+%    Head & Type/Proximity & English & Japanese & Chinese & Korean \\
+%    \hline
+%  Place & Interrogative & \eng{where} &  \jpn[doko]{何処, どこ} &
+%                                                                                 \cmn[nǎlǐ]{哪里}  & \kor[eodi]{어디} \\
+%             & Proximal      & \eng{here} & \jpn[koko]{此処, ここ} & \cmn[zhèlǐ]{这里}  & \kor[yeogi]{여기} \\
+%             & Distal        & \eng{there}  &  & \cmn[nàli]{那里} &  \\
+%             & ~~Medial        &   & \jpn[soko]{其処, そこ} &   & \kor[geogi]{거기} \\
+%             & ~~Remote        &  & \jpn[asoko]{彼処, あそこ} & & \kor[jeogi]{저기} \\
+%             & Universal     & \eng{everywhere} & 
+%                              \jpn[doko mo]{どこ も} & \cmn[dàochù]{到处} & \kor[eodideunji]{어디든지} \\
+%             & Existential & & \jpn[doko ka]{どこ か}
+%  &  \cmn[mǒuchù]{某处} & \kor[eodiinga]{어딘가} \\
+%             & ~~~Assertive     & \eng{somewhere} & & & \kor[eodijeongdo]{어디정도} \\
+%             & ~~~Elective     & \eng{anywhere} & & & \kor[eodideunji]{어디든지} \\
+%             & Other         & \eng{elsewhere} & \jpn[yoso]{よそ}
+%   & \cmn[biéchù]{别处} & \kor[dareun gos]{다른 곳} \\[2ex]
+% \multicolumn{5}{l}{Not checked :-)}
+% \end{tabular}
+% \end{frame}
 
 
 
@@ -1218,10 +1328,10 @@ Mostly done by me on weekends, some help from Lars Nygaard, John McCrae and of c
   \ex\label{s:dif}  \wemp{It} is a swamp adder!
   \begin{xlist}
     %\CJKfamily{gbsn}
-    \ex \gll \wemp{这}     是   一 条      沼地        蝰蛇 ！ \\
+    \ex \gll \wemp{这}     是   一条      沼地        蝰蛇 ！ \\
     Zhe4 shi4 yi1tiao2 zhao3di4 kui2she2 ! \\
     %\CJKfamily{min}
-    \trans `\wemp{This} is a swamp adder!'
+    \trans `\wemp{This} is a swamp adder !'
     \ex \gll  沼蛇 だ ！ \\
     numahebi da ! \\
     \trans `\wemp{$\phi$} is a swamp snake'
@@ -1758,8 +1868,8 @@ Basic idea well known (Fellbaum and Vossen, 2008).
 \item\label{defs} Each new ILI concept should have a definition in English, as
  this is the only way we can coordinate across languages.
 \\
-  The definition should be unique (which is not currently true) and 
-  preferably also parse and sense tag information should be included.
+The definition should be unique (which is not currently true).
+% and  preferably also parse and sense tag information should be included.
   Definition changes will be moderated.
 \end{enumerate}
 \end{frame}
@@ -1888,7 +1998,7 @@ Basic idea well known (Fellbaum and Vossen, 2008).
   \item Sense tagged corpora and live examples
   \item More sense groupings  (iliXXX $\approx$ iliYYY) 
   \item Decompositional semantics: \lex{un-clasp}, \lex{today} ``this day'' 
-  \item External DBS: \texttt{species, geo-wordnet, images, National
+  \item External DBS: \texttt{wikidata, species, geo-wordnet, images, National
       Cancer Institute Thesaurus, \ldots}
   \item Integration with vector-space representations
     \begin{itemize}

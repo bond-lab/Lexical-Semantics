@@ -69,6 +69,8 @@
 \end{itemize}
 \end{frame}
 
+
+
 % ------------------------------------------------------------
 \begin{frame}{Words $\rightarrow$ Senses $\rightarrow$ Synsets}
 \centering
@@ -108,6 +110,60 @@
 \vspace{2mm}
 \small
 Key:  \textbf{senses} link \textbf{words} to \textbf{synsets} (concepts).
+\end{frame}
+
+
+
+\begin{frame}{What \textbf{lexicons} have}
+
+\begin{itemize}
+\item A lexicon is a collection of synsets, senses, words and relations for a given language
+\item It will normally have some metadata associated with it
+  \begin{itemize}
+  \item Label
+  \item License
+  \item Language
+  \end{itemize}
+\item The \texttt{wn} module has a collection of wordnets you can download easily
+\item If you have a wordnet in the LMF format, you can load it locally
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Loading and describing a lexicon in WN}
+\begin{verbatim}
+>>> import wn
+>>> wn.download('omw-en:1.4')
+>>> ewn = wn.Wordnet('omw-en:1.4')
+>>> print(ewn.describe())
+Primary lexicons:
+  omw-en:1.4
+    Label  : OMW English Wordnet based on WordNet 3.0
+    URL    : None
+    License: https://wordnet.princeton.edu/license-and-commercial-use
+    Words  : 156584 (a: 21538, n: 119034, r: 4481, v: 11531)
+    Senses : 206978
+    Synsets: 117659 (a: 7463, n: 82115, r: 3621, s: 10693, v: 13767)
+    ILIs   : 117659
+>>> wn.projects() # gives a list of downloadable wordnets
+... 
+\end{verbatim}
+\end{frame}
+
+
+\begin{frame}[fragile]{Adding, removing and listing lexicons with WN}
+\begin{verbatim}
+>>> wn.add('path/to/omw-nb:1.4.xz')
+>>> wn.remove('omw-nb:1.4')
+>>> for lex in wn.lexicons():
+...     print(f'{lex.id}:{lex.version}\t{lex.label}')
+...
+omw-en:1.4      OMW English Wordnet based on WordNet 3.0
+omw-nb:1.4      Norwegian Wordnet (Bokmål)
+odenet:1.3      Offenes Deutsches WordNet
+ewn:2020        English WordNet
+...
+\end{verbatim}
 \end{frame}
 
 
@@ -325,7 +381,6 @@ Synset('ewn-14007000-n')
 'i74874'
 >>> wn.synsets(ili='i74874')
 [Synset('ewn-07282278-n'), Synset('wnja-07267573-n'), Synset('frawn-07267573-n')]
-
 \end{verbatim}
 \end{frame}
 
@@ -378,18 +433,18 @@ Synset('ewn-14007000-n')
 \centering
 \begin{tikzpicture}[node distance=8mm, scale=0.72, transform shape]
   % Noun side
-  \node[synset] (syn_n) {Synset (N)\\\textbf{LIGHT\_N}\\\tiny “illumination”};
-  \node[sense, left=12mm of syn_n, yshift=7mm] (s_n1) {Sense\\light\textsuperscript{n1}\\\tiny “illumination”};
-  \node[sense, left=12mm of syn_n, yshift=-7mm] (s_n2) {Sense\\illumination\textsuperscript{n1}};
-  \node[word, left=18mm of s_n1] (w_light_n) {Word\\\textbf{light}};
-  \node[word, left=8mm of s_n2] (w_illum) {Word\\\textbf{illumination}};
+  \avmnode{synset}{syn_n}{\iz{LIGHT\_N}\\\tiny “illumination”};
+  \avmnode[left=12mm of syn_n, yshift=7mm]{sense}{s_n1}{light\textsubscript{n1}\\\tiny “illumination”};
+  \avmnode[left=12mm of syn_n, yshift=-7mm]{sense}{s_n2}{illumination\textsubscript{n1}};
+  \avmnode[left=18mm of s_n1]{word}{w_light_n}{\lex{light}};
+  \avmnode[left=8mm of s_n2]{word}{w_illum}{\lex{illumination}};
 
   % Adjective side
-  \node[synset, right=24mm of syn_n] (syn_a) {Synset (ADJ)\\\textbf{LIGHT\_A}\\\tiny “not heavy / bright”};
-  \node[sense, right=12mm of syn_a, yshift=7mm] (s_a1) {Sense\\light\textsuperscript{a1}};
-  \node[sense, right=12mm of syn_a, yshift=-7mm] (s_a2) {Sense\\bright\textsuperscript{a1}};
-  \node[word, right=18mm of s_a1] (w_light_a) {Word\\\textbf{light}};
-  \node[word, right=18mm of s_a2] (w_bright) {Word\\\textbf{bright}};
+  \avmnode[right=24mm of syn_n]{synset}{syn_a}{\iz{LIGHT\_A}\\\tiny “not heavy / bright”};
+  \avmnode[right=12mm of syn_a, yshift=7mm]{sense}{s_a1}{light\textsubscript{a1}};
+  \avmnode[right=12mm of syn_a, yshift=-7mm]{sense}{s_a2}{bright\textsubscript{a1}};
+  \avmnode[right=18mm of s_a1]{word}{w_light_a}{\lex{light}};
+  \avmnode[right=18mm of s_a2]{word}{w_bright}{\lex{bright}};
 
   % Membership
   \draw[rel] (w_light_n) -- (s_n1);
@@ -448,22 +503,22 @@ Rule of thumb: \emph{form} $\rightarrow$ Word;\quad \emph{usage of a meaning} $\
 \begin{frame}{Relations: building a graph over concepts}
 \centering
 \begin{tikzpicture}[node distance=10mm, scale=0.80, transform shape]
-  \node[synset] (dog) {synset\\\textbf{DOG}};
-  \node[synset, above=12mm of dog] (canine) {synset\\\textbf{CANINE}};
-  \node[synset, above=12mm of canine] (animal) {synset\\\textbf{ANIMAL}};
+  \avmnode{synset}{dog}{\iz{DOG}};
+  \avmnode[above=12mm of dog]{synset}{canine}{\iz{CANINE}};
+  \avmnode[above=12mm of canine]{synset}{animal}{\iz{ANIMAL}};
 
-  \node[synset, right=28mm of dog] (cat) {synset\\\textbf{CAT}};
-  \node[synset, above=12mm of cat] (feline) {synset\\\textbf{FELINE}};
+  \avmnode[right=28mm of dog]{synset}{cat}{\iz{CAT}};
+  \avmnode[above=12mm of cat]{synset}{feline}{\iz{FELINE}};
 
 
-  \node[synset, below=10mm of dog] (bark) {synset\\\textbf{BARK\_N}};
-  \node[synset, left=10mm of bark] (flag) {synset\\\textbf{FLAG\_N}};
-  \node[synset, right=20mm of bark] (barkv) {synset\\\textbf{BARK\_V}};
+  \avmnode[below=10mm of dog]{synset}{bark}{\iz{BARK\_N}};
+  \avmnode[left=10mm of bark]{synset}{flag}{\iz{FLAG\_N}};
+  \avmnode[right=20mm of bark]{synset}{barkv}{\iz{BARK\_V}};
 
-  \draw[rel] (dog) -- node[font=\small, right] {hypernym} (canine);
-  \draw[rel] (canine) -- node[font=\small, right] {hypernym} (animal);
-  \draw[rel] (cat) -- node[font=\small, right] {hypernym} (feline);
-  \draw[rel] (feline) -- node[font=\small, right] {hypernym} (animal);
+  \draw[rel] (dog) -- node[font=\small, right]{hypernym} (canine);
+  \draw[rel] (canine) -- node[font=\small, right]{hypernym} (animal);
+  \draw[rel] (cat) -- node[font=\small, right]{hypernym} (feline);
+  \draw[rel] (feline) -- node[font=\small, right]{hypernym} (animal);
 
 %  \draw[weak] (dog) -- node[font=\small, above] {related} (cat);
   \draw[rel] (dog) -- node[font=\small, left] {meronym} (flag);
@@ -483,16 +538,16 @@ WordNets are \textbf{graphs}: taxonomy-like relations (e.g.\ hypernymy) plus man
 \begin{frame}{The taxonomy: a (mostly) rooted hierarchy for nouns}
 \centering
 \begin{tikzpicture}[node distance=8mm, scale=0.75, transform shape, xshift=-6mm]
-  \node[synset] (entity) {synset\\\textbf{ENTITY}};
-  \node[synset, below left=5mm and 14mm of entity] (physical) {synset\\\textbf{PHYSICAL\_ENTITY}};
-  \node[synset, below right=5mm and 14mm of entity] (abstract) {synset\\\textbf{ABSTRACT\_ENTITY}};
-
-  \node[synset, below=5mm of physical] (organism) {synset\\\textbf{ORGANISM}};
-  \node[synset, below left=5mm and 12mm of organism] (animal) {synset\\\textbf{ANIMAL}};
-  \node[synset, below right=5mm and 12mm of organism] (plant) {synset\\\textbf{PLANT}};
-
-  \node[synset, below=5mm of animal] (canine) {synset\\\textbf{CANINE}};
-  \node[synset, below=5mm of canine] (dog) {synset\\\textbf{DOG}};
+  \avmnode{synset}{entity}{\iz{ENTITY}};
+  \avmnode[below left=5mm and 14mm of entity]{synset}{physical}{\iz{PHYSICAL\_ENTITY}};
+  \avmnode[below right=5mm and 14mm of entity]{synset}{abstract}{\iz{ABSTRACT\_ENTITY}};
+          [
+  \avmnode[below=5mm of physical]{synset}{organism}{\iz{ORGANISM}};
+  \avmnode[below left=5mm and 12mm of organism]{synset}{animal}{\iz{ANIMAL}};
+  \avmnode[below right=5mm and 12mm of organism]{synset}{plant}{\iz{PLANT}};
+          [
+  \avmnode[below=5mm of animal]{synset}{canine}{\iz{CANINE}};
+  \avmnode[below=5mm of canine]{synset}{dog}{\iz{DOG}};
 
   \draw[rel] (physical) -- (entity);
   \draw[rel] (abstract) -- (entity);
@@ -535,12 +590,12 @@ Most of the time it is better to use a single lexicon (e.g. \texttt{ewn=wn.Wordn
 \centering
 \begin{tikzpicture}[node distance=10mm]
   % Language synsets
-  \node[synset] (en_dog) {EN synset\\\textbf{DOG}};
-  \node[synset, below=10mm of en_dog] (de_hund) {DE synset\\\textbf{HUND}};
-  \node[synset, below=10mm of de_hund] (ja_inu) {JA synset\\\textbf{犬} (inu)};
+  \avmnode{synset}{en_dog}{EN \iz{DOG}};
+  \avmnode[below=10mm of en_dog]{synset}{de_hund}{DE \iz{HUND}};
+  \avmnode[below=10mm of de_hund]{synset}{ja_inu}{JA \iz{犬} (inu)};
 
   % ILI
-  \node[ili, right=30mm of de_hund] (ili_dog) {ILI\\\textbf{i46360}};
+  \avmnode[right=30mm of de_hund]{ili}{ili_dog}{\iz{i46360}};
 
   % Links
   \draw[rel] (en_dog) -- node[above, tiny] {ili} (ili_dog);
@@ -556,6 +611,50 @@ Most of the time it is better to use a single lexicon (e.g. \texttt{ewn=wn.Wordn
 \smallskip
 \small
 ILI enables “same concept, different languages” queries when lexicons provide ILI links.
+\end{frame}
+
+
+\begin{frame}{Using the ILI} 
+
+  \begin{itemize}
+  \item Wordnets linked to the ILI can be connected
+  \item Concepts with the same ILI should be the same across all languages
+  \item So we would expect them to be translation equivalents
+  \item If one language has a synset with an ILI and another doesn't then this should indicate a lexical gap.
+    \begin{itemize}
+    \item Although sometimes it just means that the concept has not been added yet
+    \end{itemize}
+  \item A synset can be marked as \texttt{Lexicalized=False}  (default \texttt{True})
+    \begin{itemize}
+    \item This means that it has no native word
+    \item If it has senses, then they are compositional phrases (like 雌虎 \jpn[female tiger]{mesu.tora} for \eng{tigress})
+    \item Very few wordnets have this implemented (they were introduced by the Multiwordnet project)
+    \end{itemize}
+  \end{itemize}
+  
+\end{frame}
+
+\begin{frame}[fragile]{Translating using the ILI}
+
+\begin{verbatim}
+# translating  a word gives a list of senses
+>>> for sense, ja_words in w.translate(lang='ja').items():  
+...     print(sense, ja_words)
+...
+Sense('ewn-goose-n-01858313-01') [Word('wnja-n-1254'), Word('wnja-n-33090'), Word('wnja-n-38995')]
+Sense('ewn-goose-n-10177319-06') []
+Sense('ewn-goose-n-07662430-01') [Word('wnja-n-1254')]
+# Translating a sense gives a more focused list of senses
+>>> s.translate(lang='fr') 
+[Sense('frawn-lex52992--13983515-n')]
+>>> s.translate(lang='fr')[0].word().lemma()
+'obscurité'
+# Translating a synset gives a list of synsets (but normally just one)
+>>> ss.translate(lang='fr')  # translation returns a list of synsets
+[Synset('frawn-02087551-n')]
+\end{verbatim}
+% >>> ss.translate(lang='fr')[0].lemmas()
+% ['chien', 'chien de chasse']
 \end{frame}
 
 % ------------------------------------------------------------
@@ -597,5 +696,7 @@ ILI enables “same concept, different languages” queries when lexicons provid
 Different Wordnet Projects contain different information, OMW tries to harmonize when possible
 
 \end{frame}
+
+
 
 \end{document}
