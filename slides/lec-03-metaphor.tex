@@ -4,22 +4,21 @@
 %\usepackage{orcidlink}
 %\usepackage{authblk}
 \usepackage{fontawesome}
-
-\title[Multilingual Metonymy \& Metaphor]{Metonymy is more multilingual than metaphor: \\ Analysing tropes using ChainNet and the Open Multilingual Wordnet}
-
+\title[Metaphor]{Methods in Lexical Semantics: 
+  \\ Metaphor and Meaning}
 
 
 \newcommand{\email}[1]{\href{mailto:#1}{#1}}
-\author[Bond \& Maudslay]{Francis \ul{Bond}$^\spadesuit$ and Rowan Hall \ul{Maudslay}$^\diamondsuit$ } 
+\author[Francis Bond]{Francis \ul{Bond}$^\spadesuit$
+  (and Rowan Hall \ul{Maudslay}$^\diamondsuit$) } 
 
-\institute[UPOL \& Cambridge]{$^\spadesuit$Department of Asian Studies and Sinofon Project\\
+\institute[UPOL \& Cambridge]{$^\spadesuit$Departments of Asian Studies and Linguistics and  Sinofon Project\\
   Palacký University Olomouc \\[1ex]
- $^\diamondsuit$   Dept.\ of Computer Science \& Technology \\
-  University of Cambridge \\[1ex]
-  \email{bond@ieee.org rh635@cam.ac.uk}  
+  $^\diamondsuit$    CultureLab \\
+  Université PSL \\[1ex]
+  \email{bond@ieee.org}  
 }
-\date[2025-01-30 (GWC 2025)]{2025-01-30 \\
-13th Global Wordnet Conference, Pavia}
+\date{LOT Winter School 2026} %%% FIXME
 
 % \usetheme{Boadilla}
 % \usecolortheme{seahorse}%spruce}
@@ -36,20 +35,20 @@
 
 \usepackage{expex}
 \usepackage{makecell}
-\newfontfamily{\ipafont}{Gentium}
-\newcommand{\ipa}[1]{{\ipafont\selectfont #1}}
+%\newfontfamily{\ipafont}{Gentium}
+%\newcommand{\ipa}[1]{{\ipafont\selectfont #1}}
 \usepackage{tabularx}
 
-\
-\usepackage{xcolor}
- \newcommand{\bs}{\textbackslash}   % backslash
- \newcommand{\cmd}[1]{{\bf \color{red}#1}}   % highlights command
- \newcommand{\wemp}[1]{\ul{#1}}   % highlight
- \newcommand{\emp}[1]{\textbf{\color{blue}{#1}}}   % highlight
- \newcommand{\rel}[1]{\textsc{\color{blue}{#1}}}
- \newcommand{\lnk}[1]{\rel{#1}}
- \newcommand{\dff}[1]{\texttt{\color{blue}{#1}}}
-  \newcommand{\ghost}[1]{\color{gray}{#1}} 
+
+% \usepackage{xcolor}
+%  \newcommand{\bs}{\textbackslash}   % backslash
+%  \newcommand{\cmd}[1]{{\bf \color{red}#1}}   % highlights command
+%  \newcommand{\wemp}[1]{\ul{#1}}   % highlight
+%  \newcommand{\emp}[1]{\textbf{\color{blue}{#1}}}   % highlight
+%  \newcommand{\rel}[1]{\textsc{\color{blue}{#1}}}
+%  \newcommand{\lnk}[1]{\rel{#1}}
+  \newcommand{\dff}[1]{\texttt{\color{blue}{#1}}}
+   \newcommand{\ghost}[1]{\color{gray}{#1}} 
 %\newcommand{\txx}[1]{\textbf{\textcolor{blue}{#1}}}
 
 \usepackage{chainnet}
@@ -109,8 +108,9 @@
     \end{itemize}
   \item Originally grew out of work in determining homonyms --- which senses of a word are related
   \end{itemize}
-  \item There was some early work on metaphor$^{**}$  \citep{alonge-2006-italian} and more recent work on metonymy \citep{khishigsuren_bella_brochhagen_marav_giunchiglia_batsuren_2022} which we discuss briefly  in the paper.
+  % \item There was some early work on metaphor$^{**}$  \citep{alonge-2006-italian} and more recent work on metonymy \citep{khishigsuren_bella_brochhagen_marav_giunchiglia_batsuren_2022} which we discuss briefly  in .
 
+ 
 \end{itemize}
 
 \begin{small}
@@ -175,8 +175,8 @@ $^{**}$ if anyone knows where the Italian Metaphor Database is, please let us kn
     \item[\ldots] or this may indicate issues with automatic construction of wordnets
     \end{itemize}
   \item For example \eng{head} ``body part'' is metaphorically
-    extended to ``person in charge'' in English and this is also true in Japanese,
-    (頭) Italian (\eng{capo}) and many other languages
+    extended to ``person in charge'' in English and this is also true in Japanese
+    ({}頭), Italian (\eng{capo}) and many other languages
   \item But not all metaphors are shared:  \eng{head} ``main part of a grammatical constituent'' is not 頭 in Japanese
     \bigskip
   \item ChainNet is made for English, but we can expect many of the
@@ -435,7 +435,7 @@ Mean & 0.78 & 1.39 & 1.96 &  3,774\makebox[0mm]{~~~.3}
   \end{itemize}
 
   \begin{center}
-    \includegraphics[width=0.5\textwidth]{spaghetti-tree.png} \\
+    \includegraphics[width=0.5\textwidth]{img/spaghetti-tree.png} \\
     \href{https://en.wikipedia.org/wiki/Spaghetti-tree_hoax}{BBC Spaghetti Tree hoax (1957)}
   \end{center}
 \end{frame}
@@ -560,7 +560,7 @@ and Basque, Catalan, Galician and Spanish \citep{Gonzalez-Agirre:Laparra:Rigau:2
 
 \begin{frame}[allowframebreaks]{References}
   \bibliographystyle{aclnat}
-  \bibliography{mtg.bib,local.bib}
+  \bibliography{abb,mtg,nlp,ling,local}
 \end{frame}
 
 \end{document}

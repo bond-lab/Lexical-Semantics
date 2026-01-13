@@ -6,6 +6,7 @@
 %\ltjsetparameter{jacharrange={-9}}
 \setmainfont{TeX Gyre Pagella}
 \setsansfont{TeX Gyre Heros}
+\setmonofont{Inconsolata} % TeX Gyre Cursor} %  Fira Mono}
 % Auto-switch by Unicode block
 \usepackage[CJK,Emoticons,IPAExtensions,SpacingModifierLetters,PhoneticExtensions]{ucharclasses}
 \newfontfamily\devanagarifont{Noto Sans Devanagari}
@@ -20,9 +21,10 @@
   \def\jafont{}%
   \def\devanagarifont{}%
 }
- \newcommand{\jpf}[1]{{\jafont #1}}
+\newcommand{\jpf}[1]{{\jafont #1}}
+\newcommand{\ipa}[1]{{\ipafont\selectfont #1}}
 
-\newfontfamily\ipafont{Charis SIL}  % or DejaVu Sans, Charis SIL, Doulos SIL
+\newfontfamily\ipafont{Gentium}  % or DejaVu Sans, Charis SIL, Doulos SIL
 
 \setTransitionsFor{IPAExtensions}{\ipafont}{\normalfont}
 \setTransitionsFor{SpacingModifierLetters}{\ipafont}{\normalfont}

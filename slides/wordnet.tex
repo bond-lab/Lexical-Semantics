@@ -4,6 +4,10 @@
 % \usepackage{lmodern}
 % \usepackage{microtype}
 
+\usepackage{minted}
+\usemintedstyle{emacs}
+\setminted{bgcolor=gray!10}
+
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,positioning,fit,calc}
 
@@ -39,8 +43,9 @@
   };
 }
 
-\title{WordNet Structure: Words, Senses, Synsets, and Relations}
-\author{(Course slides)}
+\title{WordNet Structure: Words, Senses, Synsets, and Relations
+\\ Manipulating wordnets with \texttt{wn}}
+\author{Francis Bond}
 \date{\today}
 % ============================
 
@@ -131,7 +136,7 @@ Key:  \textbf{senses} link \textbf{words} to \textbf{synsets} (concepts).
 
 
 \begin{frame}[fragile]{Loading and describing a lexicon in WN}
-\begin{verbatim}
+\begin{minted}{python}
 >>> import wn
 >>> wn.download('omw-en:1.4')
 >>> ewn = wn.Wordnet('omw-en:1.4')
@@ -147,12 +152,12 @@ Primary lexicons:
     ILIs   : 117659
 >>> wn.projects() # gives a list of downloadable wordnets
 ... 
-\end{verbatim}
+\end{minted}
 \end{frame}
 
 
 \begin{frame}[fragile]{Adding, removing and listing lexicons with WN}
-\begin{verbatim}
+\begin{minted}{python}
 >>> wn.add('path/to/omw-nb:1.4.xz')
 >>> wn.remove('omw-nb:1.4')
 >>> for lex in wn.lexicons():
@@ -163,7 +168,7 @@ omw-nb:1.4      Norwegian Wordnet (Bokmål)
 odenet:1.3      Offenes Deutsches WordNet
 ewn:2020        English WordNet
 ...
-\end{verbatim}
+\end{minted}
 \end{frame}
 
 
@@ -202,7 +207,7 @@ ewn:2020        English WordNet
 \end{frame}
 
 \begin{frame}[fragile]{Form metadata example}
-\begin{verbatim}
+\begin{minted}{python}
 <LexicalEntry id="ex-gato-n">
     <Lemma writtenForm="gato" partOfSpeech="n">
       <Tag category="gender">masculine</Tag>
@@ -211,7 +216,7 @@ ewn:2020        English WordNet
         <Tag category="number">plural</Tag>
     </Form>
 </LexicalEntry>
-\end{verbatim}
+\end{minted}
   \begin{itemize}
   \item Grammatical properties such as gender, number, case, and tense can be represented with the \elem{Tag} element.
   \item The \elem{Tag} element has a category attribute which indicates the type of grammatical property, and the value is the text of the tag
@@ -222,7 +227,7 @@ ewn:2020        English WordNet
 \end{frame}
 
 \begin{frame}[fragile]{Finding Words in WN}
-\begin{verbatim}
+\begin{minted}{python}
 >>> wn.words('pencil')
 [Word('ewn-pencil-n'), Word('ewn-pencil-v')]
 >>> wn.words('pencil', pos='v')
@@ -235,11 +240,11 @@ len(wn.words())
 11595
 >>> wn.word('ewn-pencil-n', lexicon='ewn')
 Word('ewn-pencil-n')
-\end{verbatim}
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Exploring Words in WN}
-\begin{verbatim}
+\begin{minted}{python}
 >>> w = wn.words('goose')[0]
 >>> w.pos  # part of speech
 'n'
@@ -254,8 +259,8 @@ Word('ewn-pencil-n')
 >>> w.synsets()
 [Synset('ewn-01858313-n'), Synset('ewn-10177319-n'), Synset('ewn-07662430-n')]
 >>> w.forms()[0].pronunciations()[0].value  # in oewn 
-"ˈgu:s"
-\end{verbatim}
+"'gu:s"
+\end{minted}
 %"ˈɡuːs"
 \end{frame}
 
@@ -307,18 +312,18 @@ Word('ewn-pencil-n')
 
 
 \begin{frame}[fragile]{Finding Senses in WN}
-\begin{verbatim}
+\begin{minted}{python}
 >>> ewn.senses('plow', pos='n')
 [Sense('ewn-plow-n-03973894-01')]
 >>> ewn.sense('ewn-plow-v-01745745-01')
 Sense('ewn-plow-v-01745745-01')
 >>> len(ewn.senses(pos='n'))
 146347
-\end{verbatim}
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Exploring Senses in WN}
-\begin{verbatim}
+\begin{minted}{python}
 >>> s = ewn.senses('dark', pos='n')[0]
 >>> s.word()    # each sense links to a single word
 Word('ewn-dark-n')
@@ -334,7 +339,7 @@ Synset('ewn-14007000-n')
 [2]
 >>> ewn.senses('darken', pos='v')[0].frames()
 ['Something ----s']
-\end{verbatim}
+\end{minted}
 % >>> ewn.senses('darken', pos='v')[1].frames()
 % ['Something ----s something']
 \end{frame}
@@ -374,18 +379,18 @@ Synset('ewn-14007000-n')
 
 
 \begin{frame}[fragile]{Finding Synsets in WN}
-\begin{verbatim}
+\begin{minted}{python}
 >>> wn.synsets('scepter')
 [Synset('ewn-14467142-n'), Synset('ewn-07282278-n')]
 >>> wn.synset('ewn-07282278-n').ili
 'i74874'
 >>> wn.synsets(ili='i74874')
 [Synset('ewn-07282278-n'), Synset('wnja-07267573-n'), Synset('frawn-07267573-n')]
-\end{verbatim}
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile, allowframebreaks]{Exploring Synsets in WN}
-\begin{verbatim}
+\begin{minted}{python}
 >>> ss = wn.synsets('hound', pos='n')[0]
 >>> ss.senses()
 [Sense('ewn-hound-n-02090203-01'), Sense('ewn-hound_dog-n-02090203-02')]
@@ -395,9 +400,9 @@ Synset('ewn-14007000-n')
 ['hound', 'hound dog']
 >>> ss.definition()
 'any of several breeds of dog used for hunting typically having large drooping ears'
-\end{verbatim}
+\end{minted}
 \framebreak
-\begin{verbatim}
+\begin{minted}{python}
 >>> ss.hypernyms()
 [Synset('ewn-02089774-n')]
 >>> ss.hypernyms()[0].lemmas()
@@ -410,7 +415,7 @@ Synset('ewn-14007000-n')
 15
 >>> ss.shortest_path(wn.synsets('dog', pos='n')[0])
 [Synset('ewn-02090203-n'), Synset('ewn-02089774-n'), Synset('ewn-02086723-n')]
-\end{verbatim}
+\end{minted}
 \end{frame}
 
 
@@ -636,7 +641,7 @@ ILI enables “same concept, different languages” queries when lexicons provid
 
 \begin{frame}[fragile]{Translating using the ILI}
 
-\begin{verbatim}
+\begin{minted}{python}
 # translating  a word gives a list of senses
 >>> for sense, ja_words in w.translate(lang='ja').items():  
 ...     print(sense, ja_words)
@@ -652,7 +657,7 @@ Sense('ewn-goose-n-07662430-01') [Word('wnja-n-1254')]
 # Translating a synset gives a list of synsets (but normally just one)
 >>> ss.translate(lang='fr')  # translation returns a list of synsets
 [Synset('frawn-02087551-n')]
-\end{verbatim}
+\end{minted}
 % >>> ss.translate(lang='fr')[0].lemmas()
 % ['chien', 'chien de chasse']
 \end{frame}
@@ -682,6 +687,27 @@ Sense('ewn-goose-n-07662430-01') [Word('wnja-n-1254')]
 % \end{tikzpicture}
 % \end{frame}
 
+
+\begin{frame}[fragile]{Some other useful functionality}
+
+  \begin{itemize}
+  \item You can set the directory where \texttt{wn}'s data is stored.
+\begin{minted}{python}
+>>> wn.config.data_directory = ".cache/wn"
+\end{minted}
+    This is useful to keep the db small and focused
+  \item You can use \texttt{wn} to validate a wordnet
+\begin{minted}{bash}
+$ python -m wn validate english-wordnet-2021.xml --output-file errors.json
+\end{minted} %$
+  \item There is a whole \href{https://wn.readthedocs.io/en/latest/cli.html}{command line interface}
+where you can list projects (downloadable), lexicons (downloaded), load lexicons
+ and more
+  \end{itemize}
+  
+\end{frame}
+
+
 % ------------------------------------------------------------
 \begin{frame}{Summary: what to remember}
 \begin{enumerate}
@@ -700,3 +726,10 @@ Different Wordnet Projects contain different information, OMW tries to harmonize
 
 
 \end{document}
+%%% Local Variables: 
+%%% coding: utf-8
+%%% mode: latex
+%%% TeX-PDF-mode: t
+%%% TeX-engine: xetex
+%%% TeX-command-extra-options: "--shell-escape"
+%%% End: 
