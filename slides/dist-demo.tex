@@ -1,0 +1,279 @@
+\documentclass[aspectratio=169]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+\usepackage{minted}
+\usemintedstyle{emacs}
+\setminted{bgcolor=gray!10}
+\usepackage{xcolor}
+
+\title{Lightweight Word Embeddings (Word2Vec) and CPU BERT Demos}
+\author{Francis Bond}
+\date{}
+
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% ----------------------------
+\begin{frame}{What is Word2Vec?}
+\begin{itemize}
+  \item \textbf{Goal:} learn \textbf{word embeddings} (dense vectors) from raw text.
+  \item \textbf{Distributional idea:} words that occur in similar contexts have similar vectors.
+  \item Two classic training objectives:
+    \begin{itemize}
+      \item \textbf{CBOW:} predict the target word from surrounding context words.
+      \item \textbf{Skip-gram:} predict surrounding context words from the target word.
+    \end{itemize}
+  \item Result: geometry in vector space supports similarity, clustering, and some analogies.
+\end{itemize}
+\end{frame}
+
+% ----------------------------
+\begin{frame}{How Word2Vec is trained (intuition)}
+\begin{itemize}
+  \item Slide a window over a corpus; generate (context, target) pairs.
+  \item Train a small neural model to make good predictions of words from contexts (or vice versa).
+  \item Use tricks for efficiency:
+    \begin{itemize}
+      \item \textbf{Negative sampling} (common): discriminate true pairs from random “noise” pairs.
+      \item \textbf{Subsampling} frequent words to reduce dominance of \textit{the, of, and, \dots}
+    \end{itemize}
+  \item The trained weights become word vectors; similarity is often cosine similarity.
+\end{itemize}
+
+\vspace{0.5em}
+\small
+\textit{Practical note:} for classroom laptops, \textbf{loading a small pre-trained model} is usually easier than training on a large corpus.
+\end{frame}
+
+% ----------------------------
+\begin{frame}[fragile]{Gensim: CPU-friendly embeddings}
+\begin{itemize}
+  \item \textbf{Gensim} provides efficient implementations of Word2Vec and tools for using
+        pre-trained vectors (KeyedVectors).
+  \item Typical workflow:
+    \begin{enumerate}
+      \item install (\texttt{pip install gensim})
+      \item load a small pre-trained model (or train a tiny one for a demo)
+      \item query similarity / nearest neighbors / analogies
+    \end{enumerate}
+  \item Keep it lightweight: use a \textbf{small model} (tens of MB) and CPU.
+\end{itemize}
+
+\begin{minted}{bash}
+pip install gensim
+\end{minted}
+\end{frame}
+
+% ----------------------------
+\begin{frame}[fragile]{Gensim: loading vectors + similarity}
+\begin{itemize}
+  \item You can load vectors saved in Gensim format, or in word2vec format.
+  \item Once loaded, you can ask for nearest neighbors and cosine similarity.
+\end{itemize}
+
+\begin{minted}{python}
+from gensim.models import KeyedVectors
+
+# Example (Gensim native format)
+# kv = KeyedVectors.load("vectors.kv", mmap="r")
+
+# Example (word2vec text format)
+# kv = KeyedVectors.load_word2vec_format("vectors.txt", binary=False)
+
+# Then:
+# kv.most_similar("university", topn=10)
+# kv.similarity("cat", "dog")
+\end{minted}
+
+\small
+\textit{Tip:} For large vectors, \texttt{mmap="r"} keeps RAM usage down.
+\end{frame}
+
+% ----------------------------
+\begin{frame}[fragile]{Compositional / analogy arithmetic (classic demo)}
+\begin{itemize}
+  \item The famous analogy style query:
+  \[
+    \vec{king} - \vec{man} + \vec{woman} \approx \vec{queen}
+  \]
+  \item In Gensim, use \texttt{most\_similar} with positive/negative sets.
+\end{itemize}
+
+\begin{minted}{python}
+# "king" - "man" + "woman"  -> "queen" (often)
+kv.most_similar(positive=["king", "woman"],
+                negative=["man"],
+                topn=5)
+\end{minted}
+
+\small
+You’ll often get \texttt{queen} near the top (depending on model + vocabulary).
+\end{frame}
+
+% ----------------------------
+\begin{frame}[fragile]{Hyponymy / “is-a” vector trick (works... sometimes)}
+\begin{itemize}
+  \item People sometimes try a relation vector like:
+  \[
+    \vec{is\_a} \approx \vec{animal} - \vec{dog}
+  \]
+  then apply it to a new hyponym: \(\vec{queen} + \vec{is\_a}\).
+  \item This is \textbf{not a principled guarantee}: hierarchies are not consistently linear in Word2Vec space.
+\end{itemize}
+
+\begin{minted}{python}
+# Build a crude "is-a" direction from one example pair
+is_a = kv["animal"] - kv["dog"]
+
+# Apply it to another specific term
+kv.most_similar(positive=["queen", is_a], topn=10)
+\end{minted}
+
+\small
+Sometimes you’ll see broader categories (\texttt{monarch}, \texttt{royalty}, \texttt{person}...), sometimes you won’t.
+That’s the teaching point.
+\end{frame}
+
+% ----------------------------
+\begin{frame}{Why antonyms are hard for Word2Vec (and friends)}
+\begin{itemize}
+  \item Word2Vec learns from \textbf{shared contexts}.
+  \item Antonyms often occur in \textbf{very similar contexts}:
+    \begin{itemize}
+      \item \textit{hot coffee} / \textit{cold coffee}
+      \item \textit{high temperature} / \textit{low temperature}
+    \end{itemize}
+  \item So embeddings can place antonyms \textbf{close together} even though meanings oppose.
+  \item Consequence: “nearest neighbors” is \textbf{not} the same as “synonyms”.
+\end{itemize}
+
+\vspace{0.5em}
+\small
+Useful classroom exercise: compare nearest neighbors for a word and ask students to label each neighbor as synonym / related / antonym / topical.
+\end{frame}
+
+% ----------------------------
+\begin{frame}{From static embeddings to contextual models}
+\begin{itemize}
+  \item Word2Vec gives \textbf{one vector per word type}.
+  \item But many words are polysemous:
+    \begin{itemize}
+      \item \textit{bank} (river vs.\ finance)
+      \item \textit{chestnut} (tree/nut vs.\ “old chestnut” = stale joke/idea)
+    \end{itemize}
+  \item Contextual models (BERT-family) produce \textbf{token embeddings}:
+    the vector for \textit{bank} depends on the sentence.
+\end{itemize}
+\end{frame}
+
+% ----------------------------
+\begin{frame}[fragile]{CPU BERT in class: small models + simple pipelines}
+\begin{itemize}
+  \item Hugging Face \texttt{transformers} runs fine on CPU for small demos.
+  \item Use \textbf{distilled} models to keep it manageable:
+    \begin{itemize}
+      \item \texttt{distilbert-base-uncased} (English)
+      \item multilingual options exist too, but are often heavier
+    \end{itemize}
+\end{itemize}
+
+\begin{minted}{bash}
+pip install transformers torch --index-url https://download.pytorch.org/whl/cpu
+\end{minted}
+
+\begin{minted}{python}
+from transformers import pipeline
+fill = pipeline("fill-mask", model="distilbert-base-uncased")
+\end{minted}
+
+\small
+On CPU it’s slower than GPU, but fine for short sentences.
+
+The first time we run it, it downloads the model
+\begin{verbatim}
+~/.cache/huggingface/
+└── hub/
+    └── models--distilbert-base-uncased/
+\end{verbatim}
+
+\end{frame}
+
+% ----------------------------
+\begin{frame}[fragile]{BERT “wow” moment: context sensitivity}
+\begin{itemize}
+  \item Same word, different context $\Rightarrow$ different predictions.
+\end{itemize}
+
+\begin{minted}{python}
+# Same surface form, different sense-cues in context
+s1 = "I sat on the bank of the river and watched the water."
+s2 = "I went to the bank to open a new account."
+
+# Fill-mask expects a [MASK] token; we mask a nearby word to probe context.
+print(fill("I sat on the bank of the river and watched the [MASK].")[:3])
+print(fill("I went to the bank to open a new [MASK].")[:3])
+\end{minted}
+
+\small
+Students see that the \textbf{same surrounding topic} drives very different completions.
+\end{frame}
+
+% ----------------------------
+\begin{frame}[fragile]{Negation: a simple demo (and a warning)}
+\begin{itemize}
+  \item Negation is famously tricky.
+  \item A quick classroom probe: compare predictions with vs.\ without \textit{not}.
+\end{itemize}
+
+\begin{minted}{python}
+print(fill("A robin is a [MASK].")[:5])
+print(fill("A robin is not a [MASK].")[:5])
+\end{minted}
+
+\small
+\textbf{Warning:} masked-LM objectives do not “reason” logically.
+Sometimes the negated sentence still suggests plausible categories (or even repeats the positive behavior).
+That unpredictability is itself a useful discussion point.
+\end{frame}
+
+% ----------------------------
+\begin{frame}[fragile]{Metaphor / idiom strength: “double-edged \ldots”}
+\begin{itemize}
+  \item BERT often completes conventional metaphors / idioms well because it has seen them in varied contexts.
+\end{itemize}
+
+\begin{minted}{python}
+print(fill("His words were a double-edged [MASK].")[:5])
+\end{minted}
+
+\small
+Often \texttt{sword} appears near the top. This contrasts with Word2Vec arithmetic:
+Word2Vec can do some analogies, but it does not represent compositional phrase meaning the same way.
+\end{frame}
+
+% ----------------------------
+\begin{frame}[fragile]{Bert demo code is in one file}
+\begin{itemize}
+  \item Put everything in a single script, e.g. \texttt{bert\_demo.py}
+\end{itemize}
+
+\begin{minted}{bash}
+$ python bert_demo.py
+\end{minted}
+\end{frame}
+
+\end{document}
+%%% Local Variables: 
+%%% coding: utf-8
+%%% mode: latex
+%%% TeX-PDF-mode: t
+%%% TeX-engine: xetex
+%%% TeX-command-extra-options: "--shell-escape"
+%%% End: 

@@ -2,5 +2,65 @@
 
 {% block content %}
 <h2>{{ info.title }}</h2>
-<p>This is the content for <i>{{ info.title }}</i>, scheduled for {{ info.date }}.</p>
-{% endblock %}
+<p>In this lecture we will look at modelling meaning through word vectors (<a href="{{ url_for('static', filename='pdf/lec-04-distributional.pdf')}}">slides</a>)
+
+<p>Here are some examples of how to run it --- they involve loading large models so take time to set up.
+  (<a href="{{ url_for('static', filename='pdf/dist-demo.pdf')}}">slides</a>)
+
+  <h3>Sample code</h4>
+
+<p>Download model from here: <a href='https://figshare.com/articles/dataset/GoogleNews-vectors-negative300/23601195?file=41403483'>https://figshare.com/articles/dataset/GoogleNews-vectors-negative300/23601195?file=41403483</a>
+
+<p><code>embeddings.py</code>
+<pre><code class="language-python">
+from gensim.models import Word2Vec
+from gensim.models.keyedvectors import KeyedVectors
+
+# Load a pre-trained Word2Vec model (you might need to download this separately if you haven't already)
+# For example, download 'GoogleNews-vectors-negative300.bin' and place it in the same directory
+model = KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)
+
+# Word analogy example: "king" - "man" + "woman" ≈ "queen"
+analogy_result = model.most_similar(positive=['king', 'woman'], negative=['man'])
+print('Analogy (king - man + woman):', analogy_result[0])
+
+# Hypernymy-like example: "queen" + ("person" - "woman") ≈ "monarch" (or a broader category)
+is_a_vector = model['person'] - model['woman']
+hypernymy_result = model.most_similar(positive=['queen', is_a_vector])
+print('Hypernymy (queen + is_a):', hypernymy_result[0])
+
+# Train a small custom Word2Vec model for demonstration purposes
+sentences = [["this", "is", "a", "sentence"], ["another", "example", "sentence"]]
+w2v_model = Word2Vec(sentences, vector_size=100, window=5, min_count=1)
+
+# Example: Get the vector for a word from the custom model
+vector = w2v_model.wv['example']
+print('Vector for "example":', vector)
+      
+</code></pre>
+
+<p><code>bert_demo.py</code>
+<pre><code class="language-python">
+from transformers import pipeline
+
+# Load a fill-mask pipeline with a distilled BERT model
+fill = pipeline('fill-mask', model='distilbert-base-uncased')
+
+# Example usage: predicting a masked word
+result = fill("The capital of France is [MASK].")
+print(result)
+
+print(fill("I sat on the bank of the river and watched the [MASK].")[:3])
+print(fill("I went to the bank to open a new [MASK].")[:3])
+
+
+print(fill("A robin is a [MASK].")[:5])
+print(fill("A robin is not a [MASK].")[:5])
+
+print(fill("His words were a double-edged [MASK].")[:5])
+      
+</code></pre>
+
+
+  
+  {% endblock %}
