@@ -456,14 +456,117 @@ Mean & 0.78 & 1.39 & 1.96 &  3,774\makebox[0mm]{~~~.3}
     this
   \item There are also interesting questions of how much metaphor
     interpretation in multilingual models is effected by other languages
-    \\ The DanNet group have found metaphors in Danish not ofund in English are less likely to be recognized
+    \\ The DanNet group have found metaphors in Danish not found in English are less likely to be recognized
   \item So we feel it is important to
     keep working on producing reliable
     manually annotated data
   \end{itemize}%     
 
-  
  \end{frame}
+
+% --------------------------------------------------------
+ \begin{frame}{Evaluating LLM-Generated Explanations of Metaphors
+     \citep{Pedersen:Soerensen:Nimb:Hansen:Olsen:Al-Laith:2025} }
+
+\begin{itemize}
+  \item Metaphors have culturally distinct imagery and semantics (e.g., agricultural or national norms).
+  \item Standard benchmarks (often English-centric) may hide biases against medium-resource languages.
+  \item  LLMs may transfer English knowledge inappropriately to other languages.
+\end{itemize}
+
+\smallskip
+\textbf{Models evaluated:}
+\begin{itemize}
+  \item \textbf{ChatGPT-4o mini} via web/API (multilingual, but English-heavy training)
+  \item \textbf{Llama 3.1 405B}, large open model (multilingual but likewise English-biased).
+\end{itemize}
+
+\smallskip
+Tested on a  culturally sensitive evaluation dataset of Danish metaphors \& model explanations.
+\end{frame}
+
+% --------------------------------------------------------
+\begin{frame}{Dataset and Experimental Design}
+
+  \textbf{Metaphor dataset:} 150 Danish expressions
+  \begin{itemize}
+  \item 75 single-word metaphors + 75 multiword idioms 
+  \item Divided into:
+    \begin{itemize}
+    \item \textbf{Culture-specific} Danish metaphors (e.g., farming/nautical, social norms)
+    \item \textbf{Cross-cultural} ones shared with English
+    \end{itemize}
+  \item Validated by native speakers and bilingual informants
+  \end{itemize}
+
+\medskip
+\textbf{Prompting setup:}
+\begin{itemize}
+\item Four prompt variants:
+  \begin{itemize}
+  \item Isolation vs. context
+  \item Danish vs. English prompt language
+  \end{itemize}
+\item Each model generated 600 explanations (all combinations)
+\end{itemize}
+
+\medskip
+\textbf{Evaluation:}
+\begin{itemize}
+  \item Human expert judges explanations on a 4-point qualitative scale
+\end{itemize}
+
+\end{frame}
+
+% --------------------------------------------------------
+\begin{frame}{Key Findings and Discussion}
+
+\textbf{Main results:}
+\begin{itemize}
+  \item Both models explain \textbf{cross-cultural metaphors} far better than culture-specific ones
+  \item Models show a strong \textbf{English bias} — higher quality explanations are produced when metaphors overlap with English
+  \item Culture-specific sentiment and nuance are often lost in translation
+\end{itemize}
+
+\medskip
+\textbf{Implications:}
+\begin{itemize}
+  \item Bias arises not only from data distribution but also from \emph{erroneous transfer} of English metaphorical knowledge. 
+  \item Culturally grounded metaphor understanding remains a challenge for current multilingual LLMs
+  \item Highlights risks for linguistic diversity and under-resourced languages in AI
+\end{itemize}
+
+\end{frame}
+
+% --------------------------------------------------------
+\begin{frame}{LLMs and metaphor: a success and a failure}
+  \begin{exe}
+    \ex \eng{Han skød hendes argumenter ned.} \hfill Danish
+    \trans He shot down her arguments.
+  \end{exe}
+  \begin{itemize}
+  \item Correctly identifies metaphorical usage
+  \item Maps \textbf{physical attack} $\rightarrow$ \textbf{argumentation}
+  \item Produces fluent, accurate explanation
+  \end{itemize}
+
+  \begin{exe}
+    \ex \eng{Han har rent mel i posen.} \hfill Danish
+    \trans He has nothing to hide (Lit: He has clean flour in the bag.)
+  \end{exe}
+  \begin{itemize}
+  \item Plausible but wrong English-based metaphor
+    \\ “This metaphor refers to being prepared or well-supplied.”
+  \item Over-literal explanation
+    \\ “Clean flour symbolizes purity of intentions”
+    but without connecting it to social trust / transparency
+  \item Misses social–cultural grounding
+  \end{itemize}
+
+% LLMs handle metaphor well when it aligns with English conventions,  
+% but struggle with \emph{lexicalized, culturally grounded metaphors}.
+
+\end{frame}
 
 
 \begin{frame}{Future Work}
@@ -492,6 +595,8 @@ Mean & 0.78 & 1.39 & 1.96 &  3,774\makebox[0mm]{~~~.3}
   \item We would like to investigate similarities and differences in images, \ldots
   \end{itemize}
 \end{frame}
+
+
 
 
 \begin{frame}{Summary}

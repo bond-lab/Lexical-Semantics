@@ -8,4 +8,4 @@ fi
 uv pip install -r requirements.txt 
 
 uv run python wsgi.py
-exec python
+
