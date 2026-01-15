@@ -11,7 +11,7 @@
 
 <p>Download model from here: <a href='https://figshare.com/articles/dataset/GoogleNews-vectors-negative300/23601195?file=41403483'>https://figshare.com/articles/dataset/GoogleNews-vectors-negative300/23601195?file=41403483</a>
 
-<p><code>embeddings.py</code>
+<h4><code>embeddings.py</code></h4>
 <pre><code class="language-python">
 from gensim.models import Word2Vec
 from gensim.models.keyedvectors import KeyedVectors
@@ -39,7 +39,15 @@ print('Vector for "example":', vector)
       
 </code></pre>
 
-<p><code>bert_demo.py</code>
+<h5>Output</h5>
+<pre>
+Analogy (king - man + woman): ('queen', 0.7118193507194519)
+Hypernymy (queen + is_a): ('person', 0.417946994304657)
+Vector for "example": [-8.6196875e-03  3.6657380e-03  5.1898835e-03  5.7419385e-03  7.4669183e-03 -6.1676754e-03  1.1056137e-03  6.0472824e-03 ...
+</pre>
+
+
+<h4><code>bert_demo.py</code></h4>
 <pre><code class="language-python">
 from transformers import pipeline
 
@@ -61,6 +69,26 @@ print(fill("His words were a double-edged [MASK].")[:5])
       
 </code></pre>
 
+<h5>Output (annotated)</h5>
+<pre><code class="language-python">
+# "The capital of France is [MASK]."
+[{'score': 0.14268779754638672, 'token': 16766, 'token_str': 'marseille', 'sequence': 'the capital of france is marseille.'}, {'score': 0.09020455181598663, 'token': 25387, 'token_str': 'nantes', 'sequence': 'the capital of france is nantes.'}, {'score': 0.08808296173810959, 'token': 17209, 'token_str': 'toulouse', 'sequence': 'the capital of france is toulouse.'}, {'score': 0.08617949485778809, 'token': 3000, 'token_str': 'paris', 'sequence': 'the capital of france is paris.'}, {'score': 0.07720661163330078, 'token': 10241, 'token_str': 'lyon', 'sequence': 'the capital of france is lyon.'}]
 
+# "I sat on the bank of the river and watched the [MASK]."
+[{'score': 0.13528865575790405, 'token': 13932, 'token_str': 'sunrise', 'sequence': 'i sat on the bank of the river and watched the sunrise.'}, {'score': 0.09485986083745956, 'token': 10434, 'token_str': 'sunset', 'sequence': 'i sat on the bank of the river and watched the sunset.'}, {'score': 0.09321897476911545, 'token': 3712, 'token_str': 'sky', 'sequence': 'i sat on the bank of the river and watched the sky.'}]
+
+# "I went to the bank to open a new [MASK]."
+[{'score': 0.44000211358070374, 'token': 4070, 'token_str': 'account', 'sequence': 'i went to the bank to open a new account.'}, {'score': 0.08017902821302414, 'token': 3573, 'token_str': 'store', 'sequence': 'i went to the bank to open a new store.'}, {'score': 0.039855509996414185, 'token': 4497, 'token_str': 'shop', 'sequence': 'i went to the bank to open a new shop.'}]
+
+# "A robin is a [MASK]."
+[{'score': 0.16036133468151093, 'token': 4743, 'token_str': 'bird', 'sequence': 'a robin is a bird.'}, {'score': 0.060086484998464584, 'token': 5863, 'token_str': 'robin', 'sequence': 'a robin is a robin.'}, {'score': 0.019769610837101936, 'token': 3899, 'token_str': 'dog', 'sequence': 'a robin is a dog.'}, {'score': 0.017600174993276596, 'token': 27681, 'token_str': 'rooster', 'sequence': 'a robin is a rooster.'}, {'score': 0.016570353880524635, 'token': 15550, 'token_str': 'feather', 'sequence': 'a robin is a feather.'}]
+
+# "A robin is not a [MASK]."
+[{'score': 0.07377798855304718, 'token': 5863, 'token_str': 'robin', 'sequence': 'a robin is not a robin.'}, {'score': 0.0508652962744236, 'token': 4743, 'token_str': 'bird', 'sequence': 'a robin is not a bird.'}, {'score': 0.018106110394001007, 'token': 5000, 'token_str': 'knight', 'sequence': 'a robin is not a knight.'}, {'score': 0.014246177859604359, 'token': 7488, 'token_str': 'snake', 'sequence': 'a robin is not a snake.'}, {'score': 0.013239269144833088, 'token': 6071, 'token_str': 'monster', 'sequence': 'a robin is not a monster.'}]
+
+# "His words were a double-edged [MASK]."
+[{'score': 0.11439874023199081, 'token': 19238, 'token_str': 'accusation', 'sequence': 'his words were a double - edged accusation.'}, {'score': 0.06290098279714584, 'token': 15082, 'token_str': 'razor', 'sequence': 'his words were a double - edged razor.'}, {'score': 0.0560358501970768, 'token': 5081, 'token_str': 'threat', 'sequence': 'his words were a double - edged threat.'}, {'score': 0.053756002336740494, 'token': 3606, 'token_str': 'truth', 'sequence': 'his words were a double - edged truth.'}, {'score': 0.03524823114275932, 'token': 7204, 'token_str': 'whisper', 'sequence': 'his words were a double - edged whisper.'}]
+
+</code></pre>  
   
   {% endblock %}
