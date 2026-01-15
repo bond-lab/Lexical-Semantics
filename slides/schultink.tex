@@ -69,8 +69,6 @@
 \setCJKmainfont{Noto Sans CJK SC}
 \usefonttheme{professionalfonts}
 \setsansfont{Linux Libertine O}
-\logo{NTU}
-\logo{\includegraphics[width=15mm]{img/UP_logo_FF_horizont_en.png}}
 
  \usepackage{qtree,avm,expex}
 \definelingstyle{cmn}{everygla=,
@@ -82,6 +80,15 @@ everyglb=\itshape,everyglc=\footnotesize}
 \usetheme{Boadilla}
 \usecolortheme{seahorse}
 \setbeamertemplate{navigation symbols}{}
+% ---- Section outline slide ----
+\AtBeginSection[]{
+  \begin{frame}
+    \frametitle{Roadmap}
+    \small
+    \tableofcontents[currentsection, hideothersubsections]%, hideallsubsections]
+  \end{frame}
+}
+\logo{\includegraphics[width=15mm]{img/UP_logo_FF_horizont_en.png}}
 
 \newcommand{\zhong}{\ensuremath{[\Big|]}}
 % NUS Meeting Room 1 (MR 1) 	COM1-03-19
@@ -332,8 +339,91 @@ everyglb=\itshape,everyglc=\footnotesize}
 \end{itemize}
 \end{frame}
 
+\begin{frame}{Exploit wordnet for a richer view}
+  \begin{itemize}
+  \item Once we have senses, we can look at supersenses
+    \begin{tcolorbox}
+      \wns{darkness}{1} (state) $\rightarrow$  \wns{darkness}{3} (state)  \\
+      \wns{darkness}{1} (state) $\rightarrow$  \wns{darkness}{4} (cognition) 
+    \end{tcolorbox}
+   \item Or indeed any hypernym
+    \begin{tcolorbox}
+      \wns{darkness}{1} (illumination|state|attribute|TOP) $\rightarrow$  \wns{darkness}{3} (wickedness|condition|sate|attribute|TOP)  \\
+      \wns{darkness}{1} (illumination|state|attribute|TOP)) $\rightarrow$  \wns{darkness}{4} (unenlightenment|ignorance|knowledge|\ldots{}|top) 
+    \end{tcolorbox}
+  \item We will use these to establish Conceptual Metaphor Labels
+    \begin{tcolorbox}
+      \wns{darkness}{1} $\rightarrow$  \wns{darkness}{3}  = GOODNESS IS LIGHT  \\
+      \wns{darkness}{1} $\rightarrow$  \wns{darkness}{4}  =  UNDERSTANDING IS LIGHT
+    \end{tcolorbox}
+  \end{itemize}
+\end{frame}
 
+\begin{frame}{Link to Sense-tagged corpora}
+ Finally, we combine this with examples from sense annotated corpora, giving frequencies of metaphorical and non-metaphorical uses.
 
+ \begin{tcolorbox}[title=Examples from \textit{The Adventure of the Speckled Band} (English)]
+   \begin{itemize}
+   \item \textit{Oh, sir, do you not think that you could help me, too, and at least throw a little light through the dense  \wns{darkness}{4} which surrounds me?}
+   \item \textit{``Do you know, Watson,'' said Holmes as we sat together in the gathering \wns{darkness}{1}, ``I have really some scruples as to taking you to-night.}
+   \item \textit{Then he turned down the lamp , and we were left in \wns{darkness}{1}.} 
+   \end{itemize}
+ \end{tcolorbox}
+
+We have at least one story manually annotated for  Bulgarian, English, Mandarin Chinese, Indonesian, Italian, Japanese and Polish, and automatically for Dutch and German. 
+ 
+\end{frame}
+
+\begin{frame}{Metaphor linked to wordnet and corpora: a richer view}
+  \centering
+  \includegraphics[width=0.9\textwidth]{img/bond_metaphor_plain.png}
+%  \caption{Metaphor viewed through the lexicon linked to corpora: a richer view}\label{fig:corpus}
+\end{frame}
+
+\subsection{Some new results}
+\begin{frame}{Differences Between Metaphors and Metonyms}
+  We can use the wordnet graph to compare the two
+
+  \begin{itemize}
+  \item For all trope pairs we measure the path distance between the source and target
+  \item We measure the depth in the hierarchy (distance from root)
+  \item We measure the number of synonyms of source and target
+  \item We also look at the distribution of the topics, \ldots
+  \end{itemize}
+  \begin{center}
+    These are new results (unpublished)
+  \end{center}
+\end{frame}
+
+\begin{frame}{Path Distance Comparison}
+  \begin{center}
+    \includegraphics[height=0.9\textheight]{img/path_distance_comparison_errorbar.png}
+  \end{center}
+\end{frame}
+\begin{frame}{Depth in Hierarchy}
+  \includegraphics[height=0.9\textheight]{img/depth_comparison_errorbar.png}
+\end{frame}
+\begin{frame}{Synonymy density (number of synonyms)}
+  \includegraphics[height=0.9\textheight]{img/synonyms_comparison_errorbar.png}
+\end{frame}
+\begin{frame}{Topic Heatmap for Metaphors}
+  \includegraphics[height=0.9\textheight]{img/metaphor_topic_heatmap.png}
+\end{frame}  
+
+\begin{frame}{Topic Heatmap for Metonyms}
+ \includegraphics[height=0.9\textheight]{img/metonym_topic_heatmap.png}  
+\end{frame}
+
+\begin{frame}{We have only just begun}
+
+Now investigating
+  \begin{itemize}
+\item Inclusiveness (Abstractness)
+\item Frequency
+\item Domain
+\item Sentiment
+\end{itemize}
+\end{frame}
 \section{Cross Lingual Exploration}
 \begin{frame}{Can we see how English metaphors are used cross-lingually?}
   \begin{itemize}
@@ -350,23 +440,185 @@ everyglb=\itshape,everyglc=\footnotesize}
     \bigskip
   \item ChainNet is made for English, but we can expect many of the
     tropes to work with other languages
-  \item And we have many wordnets linked to English in the Open Multilingual Wordnet
+  \item If only we had a large collection of lexicons, linked by senses to English!
     
 
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Corpus-attested lexicalized metaphors for many languages: a range of views}
+\subsection{The Open Multilingual Wordnet}
+\begin{frame}
+\frametitle{Introduction to Wordnets}
 
-  \includegraphics[width=0.5\textwidth]{img/bond_metaphor_plain.png} \fill
-
-  \begin{center}
-       \includegraphics[width=0.5\textwidth]{img/bond_metaphor_isl.png} \hfill
-  \end{center}
-
-\hfill  \includegraphics[width=0.5\textwidth]{img/bond_metaphor_desert.png}
-%  \caption{Corpus-attested lexicalized metaphors for many languages: a range of views}\label{fig:multi}
+\begin{itemize}
+    \item A wordnet is a lexical database that organizes words into sets of synonyms, called synsets.
+    \item Each synset represents a unique concept,
+      \\ capturing different senses of a word.
+    \item Synsets are connected by semantic relations like hypernyms (superordinate) and hyponyms (subordinate).
+    \item Wordnets are used in linguistic research, natural language processing (NLP), artificial intelligence, education and (a bit) language maintenance.
+\end{itemize}
 \end{frame}
+
+\begin{frame}
+\frametitle{History of Wordnets}
+
+\begin{itemize}
+\item Wordnet was first developed for English at Princeton University \citep{miller1995wordnet}.
+  
+    \item It was designed it as a model of human lexical memory.
+    \item It became a foundational tool for computational linguistics and NLP.
+    \item It has influenced the development of lexical resources for many other languages.
+    \item Currently the Open English WordNet is maintained by John
+      McCrae.  It is extending and revising the Princeton Wordnet.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Many people wanted to have wordnets}
+
+  \begin{itemize}
+   \item \textbf{EuroWordNet} \citep{_Vossen:1998}:  
+  Dutch, English, German, French, Spanish, Italian
+
+  \item \textbf{BalkaNet}:  
+  Bulgarian, Greek, Romanian, Serbian, Turkish
+
+  \item \textbf{Asian WordNet}:  
+  Japanese, Korean, Thai, Indonesian, Vietnamese, Mongolian, Burmese
+
+  \item \textbf{IndoWordNet}:  
+  Hindi, Bengali, Marathi, Gujarati, Punjabi, Urdu, Tamil, Telugu, Kannada, Malayalam, Odia, Assamese, Nepali, Konkani, Manipuri, Kashmiri, Sanskrit
+\end{itemize}
+
+And many individual projects not listed here.
+
+\end{frame}
+
+\begin{frame}{The synset for  \eng[tiger]{虎}}
+ \includegraphics[width=0.9\textwidth]{img/wn-jpn-tiger.pdf}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Multilingual Wordnets}
+
+\begin{itemize}
+    \item Over 50 hand built wordnets 
+    \item Automatically-built Wordnets exist for over 1,200 languages \\ from Swadesh, Wiktionary and more
+    \item Cross-lingual mappings help in tasks like machine translation and multilingual semantic analysis.
+    \item The Open Multilingual Wordnet (OMW) provide free access to linked open wordnets.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Challenges in Building Wordnets}
+
+\begin{itemize}
+    \item Developing wordnets requires careful analysis \\ impossible to automate
+    \item Word meaning can be culturally specific, \\ requires careful consideration of local concepts.
+    \item Data collection for under-resourced languages often involves fieldwork and expert collaboration.
+    \item Validation and refinement of synsets is an ongoing process, especially for evolving languages.
+    \item Many language resources are not open, so data cannot easily be shared.
+\end{itemize}
+\end{frame}
+
+% \begin{frame}
+% \frametitle{Building Wordnets for Under-resourced Languages}
+
+% \begin{itemize}
+%     \item Under-resourced languages may lack dictionaries, corpora, or standardized orthographies.
+%     \item Wordnets for these languages require extensive collaboration with native speakers.
+%     \item Data collection can involve workshops, interviews, and domain-specific lexicons.
+%     \item Wordnet development can support language preservation and revitalization efforts.
+%     \item These wordnets help document endangered languages and make them accessible for future research.
+% \end{itemize}
+% \end{frame}
+
+\begin{frame}
+\frametitle{Open Multilingual Wordnet (OMW)}
+
+\begin{itemize}
+    \item OMW is a free multilingual lexical database linking wordnets from many languages \citep{Bond:Foster:2013}
+    \item OMW includes wordnets for widely spoken languages
+    \item It also contains wordnets for under-resourced and endangered languages
+    \item Researchers can access and contribute to OMW to support cross-linguistic studies
+    \item The platform promotes collaborative development and data sharing across language communities
+    \item In particular it has pushed open-licenses for the wordnets
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Wordnets in the world 2008}
+\begin{center}
+   \noindent\includegraphics[width=1.0\textwidth]{img/wns-2008}
+\end{center}
+Green is free; Blue is research only; Brown costs money
+\end{frame}
+
+\begin{frame}{Wordnets in the world 2023}
+\begin{center}
+   \noindent\includegraphics[width=1.0\textwidth]{img/wns-2023}
+\end{center}
+Green is free; Blue is research only; Brown costs money
+\end{frame}
+
+\begin{frame}{The situation is much better!  But not perfect}
+  
+\begin{itemize}
+\item The map shows the situation only for the major language for each country
+  \begin{itemize}
+  \item India has over 450 living languages
+  \item Indonesia has over 700 living languages
+  \item Australia has over 100 indigenous languages and probably at least that many immigrant languages
+  \item Even Czechia recognizes Belarusian, German, Polish, Hungarian, Ukrainian and  Vietnamese as official minority languages
+  \end{itemize}
+\item We are missing most of the world's languages
+  \begin{itemize}
+  \item Most wordnets start by exploiting existing resources
+    \begin{itemize}
+    \item  bootstrap off English
+    \end{itemize}
+  \item But most of the world's languages do not have lexicons linked
+    to English!
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+
+% \begin{frame}
+% \frametitle{Conclusion of the Introduction}
+
+% \begin{itemize}
+%     \item Wordnets are essential resources for understanding the semantic structure of languages.
+%     \item They support a wide range of applications in NLP, linguistics, and AI.
+%     \item Wordnets are now being developed for many languages, including those with limited resources.
+%     \item Multilingual wordnets enable cross-linguistic research and better understanding of language relationships.
+%     \item Wordnets contribute to preserving linguistic diversity by documenting and organizing lexical data.
+% \end{itemize}
+% \end{frame}
+
+
+\begin{frame}{How are wordnets built?}
+
+  \begin{itemize}
+  \item Most new wordnets built be the \txx{expand} method --- the
+    structure of Engish is used as a base, and new lemmas are added to the synsets
+  \item Some wordnets are built by  the \txx{merge} method --- an existing lexical resources is merged with the English Wordnet
+  \item The IndoWordnet \citep{Bhattacharyya:2010} used a clever hybrid
+    \begin{itemize}
+    \item a new structure was made for Hindi, using existing lexical resources 
+    \item other Indic languages used this as a base for expand 
+    \item but it is not under an open license, \ldots
+    \end{itemize}
+
+  \end{itemize}
+  
+So we have many lexicons, linked to English senses, of various sizes and qualities, built with different methods by different people, \ldots
+  
+\end{frame}
+
+
+
 
 
 \begin{frame}{Measure the translation overlap with OMW}
@@ -382,9 +634,9 @@ everyglb=\itshape,everyglc=\footnotesize}
   \item So for example \eng{head} has 3 senses (really many more)
     \begin{enumerate}
     \item head, caput
-      \\ ヘッド, \ul{頭}, 頭部 
+      \\ ヘッド, \emp{頭}, 頭部 
     \item head, chief, top dog
-      \\ 大頭, 主任者, 御頭, 頭領, \ul{頭}
+      \\ 大頭, 主任者, 御頭, 頭領, \emp{頭}
     \item head,  head word
       \\ 主要語
     \end{enumerate}
@@ -549,645 +801,41 @@ Mean & 0.78 & 1.39 & 1.96 &  3,774\makebox[0mm]{~~~.3}
   \end{center}
 \end{frame}
 
-
-
-\begin{frame}[p]{Metaphor viewed through the lexicon linked to corpora: a richer view}
-  \centering
-  \includegraphics[width=0.9\textwidth]{img/bond_metaphor_plain.png}
-%  \caption{Metaphor viewed through the lexicon linked to corpora: a richer view}\label{fig:corpus}
+\begin{frame}{We will mark metaphor/metonomy in more languages}
+   \begin{tcolorbox}
+   \includegraphics{img/yami_cropped.png} \textit{yami}  \hfill (Japanese)\\ %闇 
+   \wns{yami}{1} --- absence of light or illumination  \hfill (Japanese wordnet)\\
+     \wns{yami}{2} --- an unilluminated area “he moved off into the darkness” \hfill (Japanese wordnet)\ \\
+     \wns{yami}{3} --- absence of moral or spiritual values “the powers of darkness”  \hfill (Japanese wordnet)\\\
+    \onew{\wns{yami}{4} --- an illegal market [\ldots ]} \hfill (not in English)
+  \end{tcolorbox}
+ \begin{tcolorbox}
+     \wns{yami}{1} $\rightarrow$  \wns{yami}{2} (metonymy) \\
+     \wns{yami}{1} $\rightarrow$  \wns{yami}{3} (metaphor) \\
+     \wns{yami}{3} $\rightarrow$  \wns{yami}{4} (metaphor)
+   \end{tcolorbox}
+   We can start by projecting from English, then use the morphological patterns, \ldots
 \end{frame}
 
+\begin{frame}{Corpus-attested lexicalized metaphors for many languages: a range of views}
+
+   \includegraphics[width=0.5\textwidth]{img/bond_metaphor_plain.png} \hfill
+
+   \begin{center}
+        \includegraphics[width=0.5\textwidth]{img/bond_metaphor_isl.png} \hfill
+   \end{center}
+
+ \hfill  \includegraphics[width=0.5\textwidth]{img/bond_metaphor_desert.png}
+% %  \caption{Corpus-attested lexicalized metaphors for many languages: a range of views}\label{fig:multi}
+\end{frame}
+
+ 
 
 
   
 
-\section{Wordnets}
-\begin{frame}
-\frametitle{Introduction to Wordnets}
 
-\begin{itemize}
-    \item A wordnet is a lexical database that organizes words into sets of synonyms, called synsets.
-    \item Each synset represents a unique concept,
-      \\ capturing different senses of a word.
-    \item Synsets are connected by semantic relations like hypernyms (superordinate) and hyponyms (subordinate).
-    \item Wordnets are used in linguistic research, natural language processing (NLP), artificial intelligence, education and (a bit) language maintenance.
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{History of Wordnets}
-
-\begin{itemize}
-\item Wordnet was first developed for English at Princeton University \citep{miller1995wordnet}.
-  
-    \item It was designed it as a model of human lexical memory.
-    \item It became a foundational tool for computational linguistics and NLP.
-    \item It has influenced the development of lexical resources for many other languages.
-    \item Currently the Open English WordNet is maintained by John
-      McCrae.  It is extending and revising the Princeton Wordnet.
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Wordnet Relations}
-  \begin{itemize}
-  \item Constitutive
-    \\  \wn{driver}{n}{1} \rel{hyponym} \wn{operator}{n}{1}
-    \\  \wn{driver}{n}{1} \rel{antonym} \wn{nondriver}{n}{1}
-    \\   \wn{driver}{n}{3} \rel{synonym} \wn{number one wood}{n}{1}	  
-   \\   \wn{golf club}{n}{1} \rel{meronym} \wn{clubhead}{n}{1}	  
-  \item Derivational
-    \\  \wn{driver}{n}{1} \rel{derived} \wn{drive}{v}{1} 
-  \item Descriptive
-    \\ \wn{driver}{n}{2} \rel{domain} \wn{computer science}{n}{1}
-  \item Implied (from e.g. definitions)
-    \\ \wn{driver}{n}{1} ``the \wn{operator}{n}{1} of a \wn{motor
-      vehicle}{n}{1}''
-    \\ \wn{driver}{n}{2} ``a \wn{program}{n}{3} that
-    \wn{determines}{v}{2} how a \wn{computer}{n}{2} will
-    \wn{communicate}{n}{1} with a \wn{peripheral device}{n}{1}''
-  \end{itemize}
-  Over 30 relations are defined, and more are being added \\
-  (such as \rel{metaphor}, \rel{metonymy}, \ldots)
-\end{frame}
-
-
-\begin{frame}{The synset for  \eng[tiger]{虎}}
- \includegraphics[width=0.9\textwidth]{img/wn-jpn-tiger.pdf}
-\end{frame}
-
-\begin{frame}
-\frametitle{Wordnet as a Graph}
-
-\begin{itemize}
-    \item Synsets can be represented as nodes, and semantic relations as edges.
-    \item Hypernymy links form a hierarchical tree, with more general concepts at higher levels.
-      \begin{itemize}
-      \item Actually a directed acyclic graph, as multiple inheritance is possible
-      \end{itemize}
-    \item Wordnets also include lateral connections like meronyms and antonyms.
-    \item The graph structure allows for efficient computation of semantic similarity.
-    \item Graph-based algorithms are used in tasks like word sense disambiguation and knowledge extraction.
-\end{itemize}
-\end{frame}
-
-
-
-\begin{frame}{Usage}
-  \begin{itemize}
-  \item Wordnets are used for 
-    \begin{itemize}
-    \item studying word similarity 
-    \item describing the meaning of texts
-    \item testing WSD algorithms
-    \item improving parse ranking
-    \item machine translation (not so much these days)
-    \item puzzle generation and solving
-    \item joke generation
-    \item distinguishing senses for word embeddings
-    \item language learning
-    \end{itemize}
-  \item They are still useful in the age of LLMs
-    \begin{itemize}
-    \item As a check on quality
-    \item For explicit reasoning
-    \item For languages with insufficient language data
-    \item For teaching
-    \item For vocabulary-wide testing
-    \end{itemize}
-  \end{itemize}
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Multilingual Wordnets}
-
-\begin{itemize}
-    \item    Over 50 hand built wordnets 
-    \item Automatically-built Wordnets exist for over 1,200 languages \\ from Swadesh, Wiktionary and more
-    \item Cross-lingual mappings help in tasks like machine translation and multilingual semantic analysis.
-    \item he Open Multilingual Wordnet (OMW) provide free access to linked open wordnets.
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Challenges in Building Wordnets}
-
-\begin{itemize}
-    \item Developing wordnets requires careful analysis \\ impossible to automate
-    \item Word meaning can be culturally specific, \\ requires careful consideration of local concepts.
-    \item Data collection for under-resourced languages often involves fieldwork and expert collaboration.
-    \item Validation and refinement of synsets is an ongoing process, especially for evolving languages.
-    \item Many language resources are not open, so data cannot easily be shared.
-\end{itemize}
-\end{frame}
-
-% \begin{frame}
-% \frametitle{Building Wordnets for Under-resourced Languages}
-
-% \begin{itemize}
-%     \item Under-resourced languages may lack dictionaries, corpora, or standardized orthographies.
-%     \item Wordnets for these languages require extensive collaboration with native speakers.
-%     \item Data collection can involve workshops, interviews, and domain-specific lexicons.
-%     \item Wordnet development can support language preservation and revitalization efforts.
-%     \item These wordnets help document endangered languages and make them accessible for future research.
-% \end{itemize}
-% \end{frame}
-
-\begin{frame}
-\frametitle{Open Multilingual Wordnet (OMW)}
-
-\begin{itemize}
-    \item OMW is a free multilingual lexical database linking wordnets from many languages \citep{Bond:Foster:2013}
-    \item OMW includes wordnets for widely spoken languages
-    \item It also contains wordnets for under-resourced and endangered languages
-    \item Researchers can access and contribute to OMW to support cross-linguistic studies
-    \item The platform promotes collaborative development and data sharing across language communities
-    \item In particular it has pushed open-licenses for the wordnets
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Wordnets in the world 2008}
-\begin{center}
-   \noindent\includegraphics[width=1.0\textwidth]{img/wns-2008}
-\end{center}
-Green is free; Blue is research only; Brown costs money
-\end{frame}
-
-\begin{frame}{Wordnets in the world 2023}
-\begin{center}
-   \noindent\includegraphics[width=1.0\textwidth]{img/wns-2023}
-\end{center}
-Green is free; Blue is research only; Brown costs money
-\end{frame}
-
-\begin{frame}{The situation is much better!  But not perfect}
-  
-\begin{itemize}
-\item However, it is showing the situation only for the major language for each country
-  \begin{itemize}
-  \item India has over 450 living languages
-  \item Indonesia has over 700 living languages
-  \item Australia has over 100 indigenous languages and probably at least that many immigrant languages
-  \item Even Czechia recognizes Belarusian, German, Polish, Hungarian, Ukrainian and  Vietnamese as official minority languages
-  \end{itemize}
-\item We are missing most of the world's languages
-  \begin{itemize}
-  \item Most wordnets start by exploiting existing resources
-    \begin{itemize}
-    \item  bootstrap off English
-    \end{itemize}
-  \item But most of the world's languages do not have lexicons linked
-    to English!
-  \end{itemize}
-\end{itemize}
-
-\end{frame}
-
-
-% \begin{frame}
-% \frametitle{Conclusion of the Introduction}
-
-% \begin{itemize}
-%     \item Wordnets are essential resources for understanding the semantic structure of languages.
-%     \item They support a wide range of applications in NLP, linguistics, and AI.
-%     \item Wordnets are now being developed for many languages, including those with limited resources.
-%     \item Multilingual wordnets enable cross-linguistic research and better understanding of language relationships.
-%     \item Wordnets contribute to preserving linguistic diversity by documenting and organizing lexical data.
-% \end{itemize}
-% \end{frame}
-
-
-\begin{frame}{How are wordnets built?}
-
-  \begin{itemize}
-  \item Most new wordnets built be the \txx{expand} method --- the
-    structure of Engish is used as a base, and new lemmas are added to the synsets
-  \item Some wordnets are built by  the \txx{merge} method --- an existing lexical resources is merged with the English Wordnet
-  \item The IndoWordnet \citep{Bhattacharyya:2010} used a clever hybrid
-    \begin{itemize}
-    \item a new structure was made for Hindi, using existing lexical resources 
-    \item other Indic languages used this as a base for expand 
-    \item but it is not under an open license, \ldots
-    \end{itemize}
-
-  \end{itemize}
-  
-  
-\end{frame}
-
-\section{Low Resource Languages (LRL)}
-
-\begin{frame}
-\frametitle{Challenges in Building Wordnets for Low-Resource Languages}
-
-\begin{itemize}
-    \item Many languages lack  lexical resources like dictionaries or corpora.
-    \item We have to build a foundational lexical database from scratch.
-    \item Fieldwork and collaboration with native speakers \\ \ \ \ are essential for data collection.
-    \item Cultural and contextual differences make \\  \ \ \ direct translations of concepts difficult.
-    \item The lack of standardized orthographies \\  \ \ \ adds complexity to digitization and documentation.
-\end{itemize}
-\end{frame}
-
-% \begin{frame}
-% \frametitle{Data Collection Challenges}
-
-% \begin{itemize}
-%     \item Workshops, interviews, and manual documentation are often necessary for word collection.
-%     \item Language consultants may be required for translating and interpreting lexical data.
-%     \item Typically language experts and computer experts are not the same people.
-%     \item Word meanings may vary by dialect or region, making consistent data collection difficult.
-%     \item Language communities with no history of standardisation may disagree as to what should be considered correct
-%     \item Time and cost constraints limit how much data can be collected.
-%       \\ also true for well-resourced languages!
-% \end{itemize}
-% \end{frame}
-
-% \begin{frame}
-% \frametitle{Semantic Structure Challenges}
-
-% \begin{itemize}
-%     \item Identifying and organizing synsets in under-resourced languages can be difficult.
-%     \item Concepts may not map directly onto concepts in other languages, such as English.
-%     \item Cultural concepts and practices often require unique synsets that do not exist in larger languages.
-%     \item Expert knowledge of the language's lexical semantics is essential for accurate synset creation.
-% \end{itemize}
-% \end{frame}
-
-% \begin{frame}
-% \frametitle{Technological Challenges}
-
-% \begin{itemize}
-%     \item Tools and resources for building wordnets, such as NLP software, are not readily available for low-resource languages.
-%     \item Manual annotation and digitization of handwritten data are time-consuming and error-prone.
-%     \item Often it is not just that you don't have, for example, a  part-of-speech tagger, but that no-one had yet identified what parts of speech are appropriate
-%     \item Collaboration between linguists and native speakers can be logistically challenging without reliable power, internet or software tools.
-% \end{itemize}
-% \end{frame}
-
-% \begin{frame}
-% \frametitle{Sociolinguistic and Cultural Challenges}
-
-% \begin{itemize}
-%     \item Some communities may resist linguistic documentation efforts due to concerns about language preservation.
-%     \item Native speakers may prioritize language revitalization over computational resources like wordnets.
-%     \item The process of documenting a language for a wordnet can introduce external cultural biases.
-%     \item[★] Collaboration with local communities is essential to ensure cultural respect and accuracy.
-%     \item[★] Ethical considerations are crucial when engaging with endangered language communities.
-% \end{itemize}
-% \end{frame}
-
-\begin{frame}
-\frametitle{Challenges in Data Validation and Accuracy}
-
-\begin{itemize}
-    \item Data collected from native speakers will contain inconsistencies or errors.
-    \item Language experts are often needed to validate synsets and relations.
-    \item Regular updates and revisions are necessary as languages evolve or more data is collected.
-    \item Data verification is particularly challenging for languages with no formal linguistic documentation, and few or no collections of text.
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Community Involvement}
-
-\begin{itemize}
-    \item Involving the language community is key to successful wordnet development.
-    \item Native speakers contribute cultural and contextual insights critical to building accurate wordnets.
-    \item Community workshops help ensure that the wordnet reflects the language as spoken by its speakers.
-    \item Community members often play a key role in digitizing and validating the wordnet.
-    \item Without community involvement, the wordnet may not reflect the real linguistic and cultural landscape.
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Wordnet is not designed to cover everything}
-
-  \begin{itemize}
-  \item The original Princeton wordnet only covered content words: nouns, verbs, adjectives and adverbs in English
-    \begin{itemize}
-    \item There was no need to cover every word class --- plenty of other dictionaries do that
-    \end{itemize}
-  \item But if a language has no dictionary, so the wordnet is going to be the \txx{only} lexicon --- then it needs to cover everything the community needs
-      \begin{itemize}
-      \item Other parts of speech
-      \item Usage notes
-      \item Audio
-      \item Spelling variation
-      \end{itemize}
-    \item And the data should be as accessible as possible
-      \begin{itemize}
-      \item to the community
-      \item to the field linguists
-      \item to other researchers
-      \end{itemize}
-  \end{itemize}
-  
-\end{frame}
-
-%\begin{frame}
-  
-%  \frametitle{Challenges in Maintaining Wordnets}
-
-% \begin{itemize}
-%     \item Maintenance requires continuous updates as the language changes or new words are added.
-%     \item Low-resource languages may not have sufficient funding or institutional support for long-term projects.
-%     \item Finding skilled annotators or linguists for updates can be difficult in smaller communities.
-%     \item Technical infrastructure (e.g., servers, hosting) must be sustained over time to keep the wordnet accessible.
-%     \item Support for open-source projects like wordnets may diminish without strong community or academic backing.
-% \end{itemize}
-% \end{frame}
-
-\begin{frame}
-\frametitle{Balancing Preservation and Innovation}
-
-\begin{itemize}
-    \item Wordnets can support language preservation efforts by documenting lexical data.
-    \item At the same time, they promote technological innovation, enabling computational uses of the language.
-    \item There is often tension between focusing on language preservation versus creating resources for NLP applications.
-    \item Balancing traditional language documentation with new technological tools is a key challenge.
-    \item Wordnets offer a way to bridge the gap between preserving linguistic heritage and advancing technology.
-\end{itemize}
-\end{frame}
-
-%\begin{frame}
-% \frametitle{Conclusion of the Challenges}
-
-% \begin{itemize}
-%     \item Building wordnets for languages with limited resources involves complex challenges, from data collection to validation.
-%     \item Close collaboration with native speakers and language communities is critical for success.
-%     \item Despite these challenges, wordnets play a vital role in documenting, preserving, and revitalizing low-resource languages.
-%     \item Addressing both linguistic and technical obstacles ensures that these languages remain accessible for future generations.
-%     \item Wordnets contribute to the global linguistic diversity and cultural preservation efforts.
-% \end{itemize}
-% \end{frame}
-
-
-\section{Case Studies}
-
-\subsection{Abui}
-
-\begin{frame}
-\frametitle{Case Study 1: The Abui Wordnet}
-
-\begin{itemize}
-    \item Abui (ISO 639-3: abz, abui1241) is a Timor-AlorPantar (TAP) language \citep{Kratochvil:2007}
-    \item Spoken by about 40 thousand speakers in Central Alor
-    \item  We worked with the village of Takalelang on the northern coast.
-    \item The Abui wordnet was developed as part of a fieldwork project documenting the language.
-    % \item Originally the data was stored in SIL toolbox, an NLP tool for field linguists
-    % \item Then the collection was expanded using Rapid Word Collection (RWC) workshops with local speakers.
-    % \item Words were collected across domains like plants, animals, emotions, and kinship.
-    \item Collected data is in the process of being (manually) digitized and structured into a wordnet format.
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Alor}
-\begin{center}
-   \noindent\includegraphics[width=1.0\textwidth]{img/alor-s.png}
-\end{center}
-\end{frame}
-
-\begin{frame}
-\frametitle{Toolbox to wordnet (Version 1)}
- \begin{tabular}{cc}
-  \includegraphics[width=0.4\textwidth]{img/ToolboxDictFormat-s.png}
-   &
- \begin{minipage}{0.5\linewidth}
-   \begin{itemize}
-   \item Uses the glosses to link to English, Malay and Indonesian wordnets
-   \item Intersection in 3 language has an accuracy of 0.99, 2 languages around 0.5 and 1 language 0.35
-     \begin{itemize}
-     \item Even though Malay and Indonesian are very similar!
-     \end{itemize}
-   \item Data made available at \url{https://github.com/fanacek/abuiwn}
-   \item This wordnet was built using other wordnets
-   \end{itemize}
-   \hfill \citep{kratochvil-morgado-da-costa-2022-abui}
- \end{minipage}
- \end{tabular}
- \end{frame}
-
-
-\begin{frame}{Rapid Words Construction (Version 2)}
-  
-\begin{itemize}
-    \item But we wanted more words!
-    \item Three RWC workshops were conducted with over 80 participants across multiple days.
-    \item Workshops focused on gathering words within specific semantic domains.
-    \item Participants included native speakers from different parts of the community, ensuring dialectal coverage.
-    \item Words were first handwritten, then digitized and annotated for semantic relations.
-    \item SIL domains were mapped to wordnet concepts, again using translation overlap \citep{Zulhelmy:Bond:Kratochvil:2014,Costa:Kratochvíl:Saad:Delpada:Lanma:Bond:Wolfová:2023}
-      \begin{itemize}
-      \item because the granularity is very different they do not often match one-to-one
-      \item so there is more manual work to be done
-      \end{itemize}
-    % \item Collaboration with linguists ensured accurate synset creation and semantic alignment.
-\end{itemize}
-\end{frame}
-
-\begin{frame}{It was a blast}
-  \includegraphics[width=1.0\textwidth]{img/WorkshopSmall-s.jpg}
-\end{frame}
-
-\begin{frame}{SIL semantic domain for water (1.3)}
-  \begin{tabular}{cc}
-    \includegraphics[width=0.4\textwidth]{img/sil-semdom-water.png}
-    &
-    \includegraphics[width=0.6\textwidth]{img/fieldwords-water.png}
-      
-  \end{tabular}
-\end{frame}
-
-\begin{frame}
-
-
-  \frametitle{Challenges in Building the Abui Wordnet}
-
-\begin{itemize}
-\item Data entry was the biggest bottleneck
-  \begin{itemize}
-  \item Only a native speaker can really digitize the data
-  \item There are only a handful who could
-  \item They often have other things to do
-  \end{itemize}
-\item Computational linguist time is also a  bottleneck
-  \begin{itemize}
-  \item Resource creation is rarely well-funded
-  \item It takes second place to other tasks
-  \end{itemize}
-\item Orthographic variation is also a problem
-  \begin{itemize}
-  \item The orthography is being refined as we record more data
-  \item It is hard to update older data
-  \end{itemize}
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Outcomes of the Abui Wordnet Project}
-
-\begin{itemize}
-    \item The Abui wordnet documented over 1,400 synsets and 3,600 senses
-    \item A new version with 2,500 synsets is on its way
-    \item It serves as a lexical resource for both linguistic research and the local community.
-    \item The project supported ongoing language documentation and preservation efforts.
-    \item Native speakers have been deeply involved in the project and are training in linguistics
-    \item The Abui wordnet was incorporated into the Open Multilingual Wordnet (OMW) project --- you can even find it in hugging face!
- \item We are currently working on annotating a text: \textit{Bukuuting bikaat-bikaat} ``The Speckled Band', which we translated from Indonesian 
- \\ for this we need a lemmatizer, \ldots
-    \end{itemize}
-\end{frame}
-
-%\begin{frame}
-% \frametitle{Significance of the Abui Wordnet}
-
-% \begin{itemize}
-%     \item The wordnet highlights the role of collaborative fieldwork in low-resource language documentation.
-%     \item It provides a linguistic resource for Abui speakers, researchers, and educators.
-%     \item The project helps preserve Abui by recording its lexical structure and key cultural concepts.
-%     \item It represents a model for other Papuan and low-resource languages in similar contexts.
-%     \item The Abui wordnet demonstrates how modern tools can assist in documenting oral traditions.
-%     \item We are currently working on annotating a text: \textit{Bukuuting bikaat-bikaat} ``The Speckled Band', which we translated from Indonesian
-% \\ for this we need a lemmatizer, \ldots
-% \end{itemize}
-% \end{frame}
-
-
-\subsection{Cantonese}
-
-\begin{frame}
-\frametitle{Case Study 2: The Cantonese Wordnet}
-
-\begin{itemize}
-    \item Cantonese is spoken by millions, but its written tradition is limited compared to Mandarin.
-    \item The Cantonese wordnet project aims to provide a lexical resource for this major Chinese variety.
-    \item The Cantonese wordnet includes everyday Cantonese vocabulary, colloquialisms, and slang.
-    \item It currently has senses, examples, a small sense-tagged corpus \citep{sio-costa-2019-building,sio:morgadodacosta:2022a}
-    \item It also has parts-of-speech not in the original wordnet: classifiers and aspect markers
-\end{itemize}
-\end{frame}
-\begin{frame}{Where is Cantonese (and other Chineses) spoken?}
-  \includegraphics[height=0.8\textheight]{img/cantonese-other-chinese-map.png}
-
-  From \citet{Zhenxing:2012}.
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Challenges in Building the Cantonese Wordnet}
-
-\begin{itemize}
-    \item Cantonese has a strong oral tradition but less standardized written forms.
-    \item Because of this there is quite a bit of variation
-    \item As Cantonese is a spoken variety, and there is some
-      variation in pronunciation, we decided to add audio to the wordnet
-      \begin{itemize}
-      \item This takes advantage of the extensions to the wordnet format from 2020
-      \item As far as we know we are the first people to add sound
-      \item We recorded some data ourselves
-      \item We harvested some data from Wikicommons
-        \begin{itemize}
-        \item Many entries were Mandarin with Cantonese pronunciation, not Cantonese
-        \item It is difficult to distinguish them
-        \item But essential to do so
-        \end{itemize}
-      \end{itemize}
-    \item It was sometimes hard to distinguish words from phrases
-      \begin{itemize}
-      \item Written Chinese does not show word boundaries
-      \item Linguists disagree on what should be a word
-      \end{itemize}
-
-\end{itemize}
-\end{frame}
-
-
-\begin{frame}{The OMW interface showing audio}
-    \includegraphics[width=1.0\textwidth]{img/nei5.png}
-
-    \begin{itemize}
-    \item This shows a word with two pronunciations
-      \begin{itemize}
-      \item nei5 is the standard pronunciation
-      \item lei5 is the `lazy' pronunciation \citep{Chen:2018}
-      \end{itemize}
-    \end{itemize}
-    
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Outcomes of the Cantonese Wordnet Project}
-
-\begin{itemize}
-\item The Cantonese wordnet is a carefully curated resource 
-  \begin{itemize}
-  \item 6,200 concepts
-  \item 17,350 senses
-  \item 2,138 audio examples, covering 2,859 senses
-    % (+ 5250 964) 6214 (+ 16300 1050) 17350
-  \end{itemize}
-    \item The project aids in preserving Cantonese as a separate linguistic entity from Mandarin.
-    \item The wordnet has been used as data to distinguish Mandarin from Cantonese
-    \item It serves as a basis for future research on Cantonese language technology development
-\end{itemize}
-\end{frame}
-
-%\begin{frame}
-% \frametitle{Significance of the Cantonese Wordnet}
-
-% \begin{itemize}
-%     \item The Cantonese wordnet serves as a reference for the vocabulary of the language.
-%     \item It supports the development of linguistic resources for non-Mandarin Chinese varieties.
-%     \item The wordnet helps capture the cultural and linguistic identity of Cantonese speakers.
-%     \item It contributes to the broader effort of documenting and preserving regional Chinese languages.
-%     \item The project highlights the importance of creating linguistic resources for spoken varieties.
-% \end{itemize}
-% \end{frame}
-
-\section{Advantages and disadvantages of using wordnets for LRL}
-
-\begin{frame}
-\frametitle{Advantages of Wordnets for Low-Resource Languages}
-
-\begin{itemize}
-    \item Wordnets help document and preserve linguistic data for endangered or under-documented languages.
-    \item They enable cross-linguistic comparison by aligning synsets with wordnets of other languages.
-    \item Wordnets provide a structured, searchable resource that benefits researchers and language communities.
-    \item They can be used to support language revitalization efforts and to create educational materials.
-      \begin{itemize}
-      \item Having an online presence can boost the social-status of a language
-      \end{itemize}
-    \item Wordnets help build other wordnets
-      \begin{itemize}
-      \item More languages allows better bootstrapping
-      \item Phenomena covered in one language make it easier for the next
-      \item The more data there is, the better the descriptions become
-      \end{itemize}
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Cultural and Linguistic Preservation}
-
-\begin{itemize}
-\item Wordnets should record and organize culturally significant concepts that may not exist in other languages.
-  \begin{itemize}
-  \item \emp{This has not been done as much as it should}
-  \item Adding and describing new concepts is the next great challenge!
-  \end{itemize}
-    \item They create a permanent record of a language's lexicon, supporting long-term preservation.
-    \item Wordnets reflect the unique cultural and cognitive world of speakers, documenting traditional knowledge.
-    \item In endangered languages, wordnets can capture the lexical heritage before it disappears.
-    \item They facilitate the transmission of traditional vocabulary to younger generations.
-\end{itemize}
-\end{frame}
-
-\section{Metaphors}
-
-
-
-
+\section{LLMs and Metaphors}
 
 
 \begin{frame}{Metaphor in Large Language Models}
@@ -1201,86 +849,213 @@ Green is free; Blue is research only; Brown costs money
     \item This is high enough to cause \txx{automation blindness}
     \item It is very hard for a human to spot mistakes
     \end{itemize}
-  \item Recent research shows that this accuracy goes down for
-    languages with less data and for less common senses
   \item There are also interesting questions of how much metaphor
     interpretation in multilingual models is effected by other languages
     \\ The DanNet group have found metaphors in Danish not found in English are less likely to be recognized
-  \item So it is important to
-    keep working on producing reliable
-    manually annotated data
+
   \end{itemize}%     
 
   
  \end{frame}
 
+% --------------------------------------------------------
+ \begin{frame}{Evaluating LLM-Generated Explanations of Metaphors
+     \citep{Pedersen:Soerensen:Nimb:Hansen:Olsen:Al-Laith:2025} }
 
-\begin{frame}{A metaphor of our research!}
+\begin{itemize}
+  \item Metaphors have culturally distinct imagery and semantics (e.g., agricultural or national norms).
+  \item Standard benchmarks (often English-centric) may hide biases against medium-resource languages.
+  \item  LLMs may transfer English knowledge inappropriately to other languages.
+\end{itemize}
 
-  \begin{center}
-  \includegraphics[width=0.75\textwidth]{img/bond_metaphor_diagram_1.png}
+\smallskip
+\textbf{Models evaluated:}
+\begin{itemize}
+  \item \textbf{ChatGPT-4o mini} via web/API (multilingual, but English-heavy training)
+  \item \textbf{Llama 3.1 405B}, large open model (multilingual but likewise English-biased).
+\end{itemize}
 
-  The state-of-the-art: scattered fragments
-
-\includegraphics[width=0.75\textwidth]{img/bond_metaphor_plain.png}
-
-A systematic collection: a richer view
-
-\end{center}
+\smallskip
+Tested on a  culturally sensitive evaluation dataset of Danish metaphors \& model explanations.
 \end{frame}
 
-\begin{frame}{Summary}
-  
-\begin{itemize}
-\item The combination of detailed annotation of meaning and
-  cross-lingual links allow us to explore differences in meaning
-  representation
-  \begin{itemize}
-  \item  Metonymy is based on association and contiguity
-    \\ \txx{more universal}
-  \item  Metaphor often requires analogical reasoning and cultural framing
-    \\ \txx{more culture and language specific}
-  \end{itemize}
-\item We don't know if the tropes are independently discovered, come from a common ancestor, or are borrowed (the same problem as with cognates in etymology)
+% --------------------------------------------------------
+\begin{frame}{Dataset and Experimental Design}
 
-\item LLMs may capture these regularities, but are hard to explore with
-\item Open shared lexicons allow us to look across languages
+  \textbf{Metaphor dataset:} 150 Danish expressions
+  \begin{itemize}
+  \item 75 single-word metaphors + 75 multiword idioms 
+  \item Divided into:
+    \begin{itemize}
+    \item \textbf{Culture-specific} Danish metaphors (e.g., farming/nautical, social norms)
+    \item \textbf{Cross-cultural} ones shared with English
+    \end{itemize}
+  \item Validated by native speakers and bilingual informants
+  \end{itemize}
+
+\medskip
+\textbf{Prompting setup:}
+\begin{itemize}
+\item Four prompt variants:
+  \begin{itemize}
+  \item In isolation vs. with context
+  \item Danish vs. English prompt language
+  \end{itemize}
+\item Each model generated 600 explanations (all combinations)
+\end{itemize}
+
+\medskip
+\textbf{Evaluation:}
+\begin{itemize}
+  \item Human expert judges explanations on a 4-point qualitative scale
 \end{itemize}
 
 \end{frame}
 
+% --------------------------------------------------------
+\begin{frame}{Key Findings and Discussion}
+
+\textbf{Main results:}
+\begin{itemize}
+  \item Both models explain \textbf{cross-cultural metaphors} far better than culture-specific ones
+  \item Models show a strong \textbf{English bias} — higher quality explanations are produced when metaphors overlap with English
+  \item Culture-specific sentiment and nuance are often lost in translation
+\end{itemize}
+
+\medskip
+\textbf{Implications:}
+\begin{itemize}
+  \item Bias arises not only from data distribution but also from \emph{erroneous transfer} of English metaphorical knowledge. 
+  \item Culturally grounded metaphor understanding in non-English languages remains a challenge for current multilingual LLMs
+\end{itemize}
+
+\end{frame}
+
+% --------------------------------------------------------
+\begin{frame}{Two examples}
+  \begin{exe}
+    \ex \eng{Han skød hendes argumenter ned.} \hfill Danish
+    \trans He shot down her arguments.
+  \end{exe}
+  \begin{itemize}
+  \item Correctly identifies metaphorical usage
+  \item Maps \textbf{physical attack} $\rightarrow$ \textbf{argumentation}
+  \item Produces fluent, accurate explanation
+  \end{itemize}
+
+  \begin{exe}
+    \ex \eng{Han har rent mel i posen.} \hfill Danish
+    \trans He has nothing to hide (Lit: He has clean flour in the bag.)
+  \end{exe}
+  \begin{itemize}
+  \item Plausible but wrong English-based metaphor
+    \\ “This metaphor refers to being prepared or well-supplied.”
+  \item Over-literal explanation
+    \\ “Clean flour symbolizes purity of intentions”
+    but without connecting it to social trust / transparency
+  \item Misses social–cultural grounding
+  \end{itemize}
+
+% LLMs handle metaphor well when it aligns with English conventions,  
+% but struggle with \emph{lexicalized, culturally grounded metaphors}.
+
+\end{frame}
+
+
+\begin{frame}{Summary}
+  
+\begin{itemize}
+\item The combination of detailed annotation of meaning (ChainNet \& Wordnet) and
+  cross-lingual links (Open Multilingual) allow us to explore differences in lexicalized metaphor
+  \begin{itemize}
+  \item  Metonymy is based on association and contiguity
+    \\ \txx{more universal} (average overlap 1.96 more than the baseline)
+  \item  Metaphor often requires analogical reasoning and cultural framing
+    \\ \txx{more culture and language specific} (average overlap 1.39 more than the baseline)
+  \item Metaphor pairs are further apart that Metonym pairs
+  \end{itemize}
+\item We have shown these results hold over many languages
+% \item We don't know if the tropes are independently discovered, come from a common ancestor, or are borrowed (the same problem as with cognates in etymology)
+
+% \item LLMs may capture these regularities, but are hard to explore with
+% \item Shared open lexicons allow us to look across languages
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Toward a broader understanding of Metaphor and Metonomy}
+  \begin{itemize}
+  \item Language is essential to our construction and transmission of knowledge
+  \item Metaphors are the scaffolding for this construction
+  \item For a full understanding of language we have to understand metaphors
+  \item At the highest level, metaphors are very culturally embedded, to speak well you must understand the culture as well
+    \begin{itemize}
+    \item And the same language speakers will have many sub-cultures
+    \end{itemize}
+  \item Understanding cross-linguistic differences will help us understand cross-cultural differences
+  \item Current metaphor research does not give us the comprehensive view we need to do this
+    \begin{center}
+      \large We are building an understanding based on a more complete view of language
+    \end{center}
+  \end{itemize}
+\end{frame}
 
 
 \section{Thanks}
 
-\begin{frame}{Thanks and disclaimer}
+\begin{frame}{Thanks and Resources}
 
   \begin{itemize}
-  \item Thanks to RegICON and Shikhar Kr Sarama for inviting me to present this work
-  \item Parts of this talk were presented at the Teanga Project and the Sprogteknologisk Konference 2024
+  \item Thanks a lot to LOT for inviting me to present this work
   \item Thanks to all the many people who have worked on these
-    resources, especially  Rowan Hall Maudslay, František Kratochvíl, Luís Morgado da Costa and Joanna Ut-Seong Sio.
-  \item I have talked about projects my lab has been involved in, as I know them best, but there are many other wordnets for LRL
-    \begin{itemize}
-    \item Amharic, Kurdish, Mansi, Moroccan Arabic, Sardinian, ASL, Uzbek, Welsh, Bodo, \ldots
-    \end{itemize}
-  \item There are also wordnets for ancient languages \begin{itemize}
-    \item Ancient Greek, Coptic, Latin, Qin Chinese, Sanskrit\ldots
-    \end{itemize}
+    resources, especially  Rowan Hall Maudslay, Luís Morgado da Costa and Joanna Ut-Seong Sio.
+   \item Parts of this talk were presented at the Sprogteknologisk Konference 2024 and RegICON 2025
   \item If you are interested in wordnets or metaphor, come and talk to me!
   \end{itemize}
-
+  \medskip
+  \hrule
+  \medskip
+  \begin{itemize}
+  \item ChainNet: \url{https://github.com/rowanhm/ChainNet}
+    \begin{itemize}
+    \item chainnet-xling: \url{https://github.com/bond-lab/chainnet-xling}
+    \end{itemize}
+  \item Open Multilingual Wordnet: \url{https:omwn.org}
+  \end{itemize}
 
   
 \end{frame}
 
+\begin{frame}{We used these Wordnets}
+  \begin{itemize}
+  \item The combined wordnets include 
+English \citep{_Fellbaum:1998}, 
+Albanian \citep{Ruci:2008}, 
+Arabic \citep{Black:Elkateb:Rodriguez:Alkhalifa:Vossen:Pease:Bertran:Fellbaum:2006}, 
+Chinese \citep{Huang:Hsieh:Hong:Chen:Su:Chen:Huang:2010}, 
+Danish \citep{Pedersen:2009}, 
+Finnish \citep{Linden:Carlson:2010}, 
+French \citep{Sagot:Fiser:2008}, 
+Hebrew \citep{Ordan:Wintner:2007},
+Indonesian and Malaysian (Nurril Hirfana et al., \citeyear{Noor:Sapuan:Bond:2011}), 
+Italian \citep{Pianta:Bentivogli:Girardi:2002,Toral:Bracale:Monachini:Soria:2010}, 
+Japanese \citep{Isahara:Bond:Uchimoto:Utiyama:Kanzaki:2008}, 
+Norwegian Bokm\r{a}l and Norwegian Nynorsk (Lars Nygaard, personal communication 2012),
+Persian \citep{Montazery:Faili:2010}, 
+Portuguese \citep{Paiva:Rademaker:2012};
+Polish \citep{Piasecki:Szpakowicz:Broda:2009}, 
+Thai \citep{Thoongsup:Charoenporn:Robkop:Sinthurahat:Mokarat:Sornlertlamvanich:Isahara:2009},
+and Basque, Catalan, Galician and Spanish \citep{Gonzalez-Agirre:Laparra:Rigau:2012}.
+\item Data is available from \url{https://github.com/omwn/omw-data}
+\item We used the python \defn{wn} module \citep{Goodman:Bond:2021}
+\end{itemize}
+\end{frame}
 
 \begin{frame}[allowframebreaks]
         \frametitle{References}
         \bibliographystyle{aclnat}
         \bibliography{abb,mtg,ling,nlp}
 \end{frame}
-
 
 
 \end{document}
