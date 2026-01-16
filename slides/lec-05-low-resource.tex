@@ -2,7 +2,7 @@
 \input{shared.tex}
 
 \title[Lexical Relations]{Methods in Lexical Semantics \\
-Evaluation, Applications, and Language Maintenance}
+Language Maintenance and Low Resource Languages}
 \author{Francis \textbf{Bond}}
 \institute[Palacký]{Department of Asian Studies,
 \\  Palacký University, Olomouc, Czechia
@@ -160,6 +160,118 @@ Evaluation, Applications, and Language Maintenance}
    \tableofcontents
  \end{frame}
 
+
+
+% =====================================================================
+% =========================
+% FAIR Data: Findable, Accessible, Interoperable, Reusable
+% =========================
+\section{Best Practices in Resource Management: FAIR and CARE}
+
+% --- FAIR intro
+\begin{frame}{Why FAIR Data?}
+\begin{itemize}
+  \item \txx{Findable} — So that other researchers (and future you) can actually discover your data.  
+ \\ \quad  \emph{If no one can find it, it might as well not exist.}
+
+  \item \txx{Accessible} — So that once found, data can be retrieved easily and safely.  
+ \\ \quad \emph{Access should be possible even years later, with clear rules if restrictions apply.}
+
+  \item \txx{Interoperable} — So that data from different projects can be combined or compared.  
+ \\ \quad  \emph{Shared formats and vocabularies let computers and people understand each other.}
+
+  \item \txx{Reusable} — So that data can be meaningfully used beyond its original purpose.  
+ \\ \quad  \emph{Good documentation and clear licensing allow others to build on your work.}
+\end{itemize}
+
+\medskip
+FAIR data makes research more transparent, verifiable, and sustainable.
+
+\tiny Sources: \citep{FAIR2016}, 
+\href{https://au-research.github.io/FAIR-data-101-training/}{FAIR Data 101} (accessed 2025-11-08)
+\end{frame}
+% =========================
+% Open Licences and the Open Definition
+% =========================
+\begin{frame}{Open licences and the Open Definition}
+\begin{itemize}
+  \item \textbf{Open data} means more than free access — it means legal permission to \emph{use, modify, and share} without discrimination.  
+  \item The \textbf{Open Definition} (Open Knowledge Foundation) states that data is open if \\
+  “anyone can freely access, use, modify, and share for any purpose” 
+  — subject only to requirements of attribution and share-alike.
+  \item Common open licences:  
+    \begin{itemize}
+      \item \textbf{CC BY} – reuse with attribution.  
+      \item \textbf{CC BY-SA} – reuse with attribution and same licence (share-alike).  
+      \item \textbf{CC0 /Public Domain} – no restrictions.  
+      \item \textbf{ODC BY/ODbL} – for databases; require attribution and share-alike.
+    \end{itemize}
+  \item Choosing the right licence ensures that your data remains reusable and legally safe.
+\end{itemize}
+\medskip
+\textit{Openness is a design choice—licensing makes it possible, clarity makes it trustworthy.}
+\end{frame}
+
+% =========================
+% When not to use open licences
+% =========================
+\begin{frame}{When not to use open licences}
+\begin{itemize}
+  \item Openness is a virtue, but not a universal rule.  
+  \item Some data should \emph{not} be released under open licences because openness could cause harm.
+  \item Examples include:
+    \begin{itemize}
+      \item Personal or medical information that identifies individuals.  
+      \item Cultural or linguistic materials shared under community protocols.  
+      \item Locations of endangered species or sacred sites.  
+      \item Data collected without full, informed consent for public reuse.
+    \end{itemize}
+  \item In such cases, use restricted or tiered access, or licences that reflect community agreements.
+\end{itemize}
+\medskip
+Responsible openness means balancing transparency with care, consent, and context.
+\end{frame}
+
+% =========================
+% CARE Principles: Introduction and Four Dimensions
+% =========================
+\section{CARE Principles for Indigenous and Community Data}
+
+% --- INTRODUCTION
+\begin{frame}{\txx{CARE}: what and why}
+\begin{itemize}
+  \item \txx{FAIR} focuses on making data easy to find and reuse.  
+  \item \txx{CARE} ensures that openness respects people, communities, and context.  
+  \item Developed by the \textbf{Global Indigenous Data Alliance (GIDA)}
+    \citep{CARE2020}.
+\begin{itemize}
+  \item \txx{Collective Benefit:} Who gains from sharing this data?  
+  \item \txx{Authority to Control:} Who decides how it can be used?  
+  \item \txx{Responsibility:} Are researchers accountable to those represented?  
+  \item \txx{Ethics:} How can openness coexist with respect and consent?
+\end{itemize}\end{itemize}
+\medskip
+CARE asks: who benefits, who decides, and how can openness support justice?
+
+\medskip
+Together, FAIR + CARE promote data that is both open and just.
+\end{frame}
+
+% --- Digital sustainability and green open research
+\begin{frame}{Towards green open research}
+\begin{itemize}
+  \item Each stage of the data lifecycle has environmental costs: storage, transfer, and computation.  
+  \item Good FAIR practice—clean metadata, smaller files, open formats—cuts energy use and prolongs data life.  
+  \item CARE principles promote community partnerships that reduce extractive, short-term projects.  
+  \item Reproducible workflows and open infrastructure avoid unnecessary duplication of effort and computation.
+\end{itemize}
+\begin{exampleblock}{Practical takeaway}
+When you make data open, make it \emph{efficiently} open: small, meaningful, reused, and responsibly hosted.
+\end{exampleblock}
+Sustainable openness means doing more with less—knowledge without waste.
+\end{frame}
+
+
 \section{Low Resource Languages (LRL)}
 
 \begin{frame}
@@ -313,20 +425,19 @@ Evaluation, Applications, and Language Maintenance}
 
 \begin{frame}
 \frametitle{Case Study 1: The Abui Wordnet}
-
 \begin{itemize}
     \item Abui (ISO 639-3: abz, abui1241) is a Timor-AlorPantar (TAP) language \citep{Kratochvil:2007}
-    \item Spoken by about 40 thousand speakers in an area stretching from the northern to the southern coast in Central Alor
-      \begin{itemize}
-      \item  We focus on the variety from the village of Takalelang (north coast).
-      \end{itemize}
+    \item Spoken by about 40 thousand speakers in Central Alor
+    \item  We worked with the village of Takalelang on the northern coast.
     \item The Abui wordnet was developed as part of a fieldwork project documenting the language.
-    \item Originally the data was stored in SIL toolbox, an NLP tool for field linguists
-    \item Then the collection was expanded using Rapid Word Collection (RWC) workshops with local speakers.
-    \item Words were collected across domains like plants, animals, emotions, and kinship.
+    % \item Originally the data was stored in SIL toolbox, an NLP tool for field linguists
+    % \item Then the collection was expanded using Rapid Word Collection (RWC) workshops with local speakers.
+    % \item Words were collected across domains like plants, animals, emotions, and kinship.
     \item Collected data is in the process of being (manually) digitized and structured into a wordnet format.
 \end{itemize}
 \end{frame}
+
+
 
 \begin{frame}{Alor}
 \begin{center}
@@ -420,18 +531,18 @@ Evaluation, Applications, and Language Maintenance}
     \item The project supported ongoing language documentation and preservation efforts.
     \item Native speakers have been deeply involved in the project and are training in linguistics
     \item The Abui wordnet was incorporated into the Open Multilingual Wordnet (OMW) project --- you can even find it in hugging face!
-\end{itemize}
-\end{frame}
+% \end{itemize}
+% \end{frame}
 
-\begin{frame}
-\frametitle{Significance of the Abui Wordnet}
+% \begin{frame}
+% \frametitle{Significance of the Abui Wordnet}
 
-\begin{itemize}
-    \item The wordnet highlights the role of collaborative fieldwork in low-resource language documentation.
-    \item It provides a linguistic resource for Abui speakers, researchers, and educators.
-    \item The project helps preserve Abui by recording its lexical structure and key cultural concepts.
-    \item It represents a model for other Papuan and low-resource languages in similar contexts.
-    \item The Abui wordnet demonstrates how modern tools can assist in documenting oral traditions.
+% \begin{itemize}
+%     \item The wordnet highlights the role of collaborative fieldwork in low-resource language documentation.
+%     \item It provides a linguistic resource for Abui speakers, researchers, and educators.
+%     \item The project helps preserve Abui by recording its lexical structure and key cultural concepts.
+%     \item It represents a model for other Papuan and low-resource languages in similar contexts.
+%     \item The Abui wordnet demonstrates how modern tools can assist in documenting oral traditions.
     \item We are currently working on annotating a text: \textit{Bukuuting bikaat-bikaat} ``The Speckled Band', which we translated from Indonesian
 \\ for this we need a lemmatizer, \ldots
 \end{itemize}
@@ -546,7 +657,7 @@ and Singapore.
 \frametitle{Challenges in Building the Cantonese Wordnet}
 
 \begin{itemize}
-    \item Cantonese has a strong oral tradition but less standardized written forms.
+    \item Cantonese has a strong oral tradition but not a standardized written forms.
     \item Because of this there is quite a bit of variation
     \item As Cantonese is a spoken variety, and there is some
       variation in pronunciation, we decided to add audio to the wordnet
